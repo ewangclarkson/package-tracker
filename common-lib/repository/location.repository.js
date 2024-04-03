@@ -2,18 +2,18 @@ const mongoose = require('mongoose');
 
 const locationSchema = new mongoose.Schema({
     // Define your schema fields
-    field1: {
-        type: String,
+    lat: {
+        type: Number,
         required: true,
     },
-    field2: {
+    lng: {
         type: Number,
         required: true,
     },
 });
 
-const LocationRepository = mongoose.model('Location',locationSchema);
+const locationRepository = mongoose.model('Location',locationSchema);
 module.exports={
     locationSchema,
-    LocationRepository
+    locationRepository
 }

@@ -1,4 +1,4 @@
-const {locationRepository} = require('../repository/location.repository');
+const {locationSchema,locationRepository} = require('../repository/location.repository');
 
 const LocationService = {
     async createLocation(locationRequest){

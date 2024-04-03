@@ -1,16 +1,18 @@
 {
   "name": "pk-common-lib",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "http/http.status.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watchAll --verbose"
   },
   "keywords": [],
-  "author": "ewangclarks",
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "jest": "^29.7.0",
     "mongoose": "^8.2.4"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
