@@ -14,7 +14,9 @@ module.exports = function (app) {
     app.use(helmet());
     app.use(compression());
     app.use(cors());
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
+    if (process.env.NODE_ENV !== 'production') app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
     app.use('/api/deliveries', deliveryApis);
     app.use('/',homeApis);
     app.use(error);
