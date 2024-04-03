@@ -1,8 +1,7 @@
 {
-  "name": "SuperApp - Delivery Service: production",
-  "db": {
-    "host": "mongodb://localhost",
-    "port": "27017",
-    "name": "superapp_prod"
+  "name": "SuperApp - Api Gateway: production",
+  "service": {
+    "package": "http://localhost:8001",
+    "delivery": "http://localhost:8001"
   }
 }

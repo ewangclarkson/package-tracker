@@ -9,9 +9,9 @@ main()
     .then(() => console.log(`You have successfully connected to ${dbUrl}`))
     .catch(() => new Error("Failed to connect to mongoDB"));
 
-async function main() {
+module.exports.connect = async function main() {
     return mongoose.connect(dbUrl);
 }
-module.exports.close = async function () {
+module.exports.disconnect = async function () {
     await mongoose.connection.close();
 }

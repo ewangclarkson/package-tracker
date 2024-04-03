@@ -4,8 +4,8 @@ const options = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Delivery Service Rest API',
-            description: 'This REST Api documentation for delivery service',
+            title: 'Package Service Rest API',
+            description: 'This REST Api documentation for package service',
             version: '1.0.0',
         },
         servers: [

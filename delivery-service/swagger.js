@@ -4,13 +4,13 @@ const options = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Course Management Rest API',
-            description: 'This REST Api documentation for the course management service',
+            title: 'Delivery Service Rest API',
+            description: 'This REST Api documentation for delivery service',
             version: '1.0.0',
         },
         servers: [
             {
-                url: "http://localhost:3000",
+                url: "http://localhost:8002",
                 description: "Development API server"
             }
         ],

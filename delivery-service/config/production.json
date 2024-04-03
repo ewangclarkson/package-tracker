@@ -1,11 +1,8 @@
 {
-  "name": "My Express Application Production",
-  "mail": {
-    "email": "ewangclarks@gmail.com"
-  },
+  "name": "SuperApp - Delivery Service: production",
   "db": {
     "host": "mongodb://localhost",
     "port": "27017",
-    "name": "playground"
+    "name": "superapp_prod"
   }
 }

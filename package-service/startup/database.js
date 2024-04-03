@@ -5,9 +5,7 @@ const dbUrl = config.get('db.host') + ':'
     + config.get('db.port') + '/'
     + config.get('db.name');
 
-main()
-    .then(() => console.log(`You have successfully connected to ${dbUrl}`))
-    .catch(() => new Error("Failed to connect to mongoDB"));
+
 
 module.exports.connect = async function main() {
     return mongoose.connect(dbUrl);

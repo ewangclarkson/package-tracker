@@ -1,5 +1,5 @@
 {
-  "name": "SuperApp - Delivery Service",
+  "name": "SuperApp - Package Service",
   "db": {
     "host": "mongodb://localhost",
     "port": "27017",
