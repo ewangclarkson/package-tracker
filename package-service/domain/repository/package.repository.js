@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
 const {locationSchema} = require('pk-common-lib/repository/location.repository');
 
-console.log(locationSchema);
 
 const packageSchema = new mongoose.Schema({
     _id: false,
     package_id: {
-        type: mongoose.schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         default: mongoose.Types.ObjectId,
         unique: true,
     },
     active_delivery: {
-        type: mongoose.schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     description: {

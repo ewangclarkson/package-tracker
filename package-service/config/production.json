@@ -4,5 +4,9 @@
     "host": "mongodb://localhost",
     "port": "27017",
     "name": "superapp_prod"
+  },
+  "app": {
+    "host": "http://localhost",
+    "port": 8001
   }
 }

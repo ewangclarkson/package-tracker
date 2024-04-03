@@ -1,4 +1,4 @@
-const deliveryService = require('../domain/service/delivery.service');
+const {deliveryService,validate} = require('../domain/service/delivery.service');
 const HttpStatus = require('pk-common-lib/http/http.status');
 
 const DeliveryController = {
@@ -17,7 +17,7 @@ const DeliveryController = {
         return res.status(HttpStatus.SUCCESS).send(deliveryObj);
     },
     async creatDelivery(req, res) {
-        const {value, error} = deliveryService.validate(req.body);
+        const {value, error} = validate.create(req.body);
         if (error) {return res.status(HttpStatus.BAD_REQUEST).send(error.details[0].message)};
 
         const deliveryObj = await deliveryService.createDelivery(req.body);
@@ -33,7 +33,7 @@ const DeliveryController = {
     },
 
     async updateDelivery(req, res) {
-        const {value, error} = deliveryService.validate(req.body);
+        const {value, error} = validate.update(req.body);
         if (error) {
             return res.status(HttpStatus.BAD_REQUEST).send(error.details[0].message)
         }

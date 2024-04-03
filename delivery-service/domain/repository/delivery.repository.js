@@ -4,12 +4,12 @@ const {locationSchema} = require('pk-common-lib/repository/location.repository')
 const deliverySchema = new mongoose.Schema({
     _id:false,
     delivery_id: {
-        type: mongoose.schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         default: mongoose.Types.ObjectId,
         unique: true,
     },
     package_id: {
-        type: mongoose.schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     pickup_time: {

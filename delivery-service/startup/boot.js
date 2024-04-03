@@ -17,7 +17,7 @@ module.exports = function (app) {
 
     if (process.env.NODE_ENV !== 'production') app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-    app.use('/api/deliveries', deliveryApis);
+    app.use('/api/delivery', deliveryApis);
     app.use('/',homeApis);
     app.use(error);
 };

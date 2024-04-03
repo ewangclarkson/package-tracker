@@ -1,4 +1,4 @@
-const packageService = require('../domain/service/package.service');
+const {packageService,validate} = require('../domain/service/package.service');
 const HttpStatus = require('pk-common-lib/http/http.status');
 
 const PackageController = {
@@ -17,7 +17,7 @@ const PackageController = {
         return res.status(HttpStatus.SUCCESS).send(packageObj);
     },
     async creatPackage(req, res) {
-        const {value, error} = packageService.validate(req.body);
+        const {value, error} = validate.create(req.body);
         if (error) {return res.status(HttpStatus.BAD_REQUEST).send(error.details[0].message)};
 
         const packageObj = await packageService.createPackage(req.body);
@@ -33,7 +33,7 @@ const PackageController = {
     },
 
     async updatePackage(req, res) {
-        const {value, error} = packageService.validate(req.body);
+        const {value, error} = validate.update(req.body);
         if (error) {
             return res.status(HttpStatus.BAD_REQUEST).send(error.details[0].message)
         }

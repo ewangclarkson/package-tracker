@@ -27,9 +27,11 @@ const PackageService = {
             },
             {new: true}
         );
-    },
+    }
+};
 
-    validate(packageRequest) {
+const validate={
+    create: function(packageRequest) {
         const schema = Joi.object({
             active_delivery_id: Joi.objectId(),
             description: Joi.string().required(),
@@ -42,9 +44,34 @@ const PackageService = {
             from_location: Joi.object({
                 lat: Joi.number().required(),
                 lng: Joi.number().required()
-            }),
+            }).required(),
             to_name: Joi.string().required(),
             to_address: Joi.string().required(),
+            to_location: Joi.object({
+                lat: Joi.number().required(),
+                lng: Joi.number().required()
+            }).required()
+
+        });
+
+        return schema.validate(packageRequest);
+    },
+    update: function(packageRequest) {
+        const schema = Joi.object({
+            active_delivery_id: Joi.objectId(),
+            description: Joi.string(),
+            weight: Joi.number(),
+            width: Joi.number(),
+            height: Joi.number(),
+            depth: Joi.number(),
+            from_name: Joi.string(),
+            from_address: Joi.string(),
+            from_location: Joi.object({
+                lat: Joi.number().required(),
+                lng: Joi.number().required()
+            }),
+            to_name: Joi.string(),
+            to_address: Joi.string(),
             to_location: Joi.object({
                 lat: Joi.number().required(),
                 lng: Joi.number().required()
@@ -54,7 +81,6 @@ const PackageService = {
 
         return schema.validate(packageRequest);
     }
+}
 
-};
-
-module.exports = PackageService;
+module.exports = {PackageService,validate};

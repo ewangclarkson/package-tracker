@@ -1,63 +1,115 @@
 const swaggerJsdoc = require('swagger-jsdoc');
+const config = require('config');
+const host = config.get('app.host') + ':'
+    + config.get('app.port');
 
 const options = {
     definition: {
         openapi: '3.0.0',
         info: {
             title: 'Delivery Service Rest API',
-            description: 'This REST Api documentation for delivery service',
+            description: 'REST Api documentation for delivery service',
             version: '1.0.0',
         },
         servers: [
             {
-                url: "http://localhost:8002",
+                url: host,
                 description: "Development API server"
             }
         ],
         components: {
             schemas: {
-                Course: {
+                Location: {
                     type: "object",
-                    required: ['_id', 'name', 'tags'],
+                    required: ['lat', 'lng'],
                     properties: {
-                        _id: {
-                            type: "string",
-                            description: 'The ID of the course'
+                        lat: {
+                            type: 'number',
+                            description: 'The latitude on the map'
                         },
-                        name: {
-                            type: "string",
-                            description: 'The name of the course'
-                        },
-                        author: {
-                            type: "string",
-                            description: 'The author of the course'
-                        },
-                        tags: {
-                            type: "array",
-                            description: 'The tags of the course'
-                        },
-                        isPublished: {
-                            type: "boolean",
-                            description: 'The published state of the course'
+                        lng: {
+                            type: 'number',
+                            description: 'The longitude on the map'
                         }
                     }
                 },
-                CourseRequest: {
+                Delivery: {
                     type: "object",
-                    required: ['name', 'author', 'tags'],
+                    required: ['delivery_id', 'package_id', 'description', 'pickup_time', 'start_time', 'end_time', 'location', 'status'],
                     properties: {
-                        name: {
+                        delivery_id: {
                             type: "string",
-                            description: 'The name of the course'
+                            description: 'The ID of the delivery',
+                            format: 'uuid'
                         },
-                        author: {
+                        package_id: {
                             type: "string",
-                            description: 'The author of the course'
+                            description: 'The ID of the package been delivered',
+                            format: 'uuid'
                         },
-                        tags: {
-                            type: "array",
-                            description: 'The tags of the course'
+                        pickup_time: {
+                            type: "date",
+                            description: 'The pickup time'
                         },
+                        start_time: {
+                            type: "date",
+                            description: 'The start time delivery'
+                        },
+                        end_time: {
+                            type: "date",
+                            description: 'The end time of the delivery'
+                        },
+                        location: {
+                            schema: {
+                                $ref: '#/components/schemas/Location'
+                            }
+                        },
+                        status: {
+                            enum: [
+                                'open',
+                                'picked-up',
+                                'in-transit',
+                                'delivered',
+                                'failed'
+                            ]
+                        },
+                    }
+                },
+                DeliveryRequest: {
+                    type: "object",
+                    required: ['active_delivery', 'description', 'weight', 'width', 'height', 'depth', 'from_name', 'from_address', 'from_location', 'to_name', 'to_address', 'to_location'],
+                    properties: {
+                        package_id: {
+                            type: "string",
+                            description: 'The ID of the package been delivered',
+                            format: 'uuid'
+                        },
+                        pickup_time: {
+                            type: "date",
+                            description: 'The pickup time'
+                        },
+                        start_time: {
+                            type: "date",
+                            description: 'The start time delivery'
+                        },
+                        end_time: {
+                            type: "date",
+                            description: 'The end time of the delivery'
+                        },
+                        location: {
+                            schema: {
+                                $ref: '#/components/schemas/Location'
+                            }
+                        },
+                        status: {
+                            enum: [
+                                'open',
+                                'picked-up',
+                                'in-transit',
+                                'delivered',
+                                'failed'
+                            ]
+                        }
                     }
                 }
             },
@@ -68,7 +120,7 @@ const options = {
                         "application/json":
                             {
                                 schema: {
-                                    $ref: '#/components/schemas/Course'
+                                    $ref: '#/components/schemas/Delivery'
                                 }
                             }
                     }
@@ -85,7 +137,7 @@ const options = {
                     description: "Resource not found",
                     content: {
                         'application/json': {
-                            example: 'Course id could not be found'
+                            example: 'Delivery id could not be found'
                         }
                     }
                 },
@@ -102,25 +154,25 @@ const options = {
                     content: {
                         'application/json': {
                             schema: {
-                                $ref: '#/components/schemas/Course'
+                                $ref: '#/components/schemas/Delivery'
                             }
                         }
                     }
                 }
-            },
-            securitySchemes: {
-                jwtAuth: {
-                    type: "http",
-                    scheme: "bearer",
-                    name: "Authorization",
-                    bearerFormat: "JWT",
-                }
-            }
+            }// ,
+            // securitySchemes: {
+            //     // jwtAuth: {
+            //     //     type: "http",
+            //     //     scheme: "bearer",
+            //     //     name: "Authorization",
+            //     //     bearerFormat: "JWT",
+            //     // }
+            // }
         },
-        security: [{
-            jwtAuth: []
-        }
-        ]
+        // security: [{
+        //     // jwtAuth: []
+        // }
+        // ]
     },
     apis: ['./routes/*.js'],
 }

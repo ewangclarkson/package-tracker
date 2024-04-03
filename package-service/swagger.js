@@ -1,62 +1,154 @@
 const swaggerJsdoc = require('swagger-jsdoc');
+const config = require('config');
+const host = config.get('app.host') + ':'
+    + config.get('app.port');
 
 const options = {
     definition: {
         openapi: '3.0.0',
         info: {
             title: 'Package Service Rest API',
-            description: 'This REST Api documentation for package service',
+            description: 'REST Api documentation for package service',
             version: '1.0.0',
         },
         servers: [
             {
-                url: "http://localhost:8001",
+                url: host,
                 description: "Development API server"
             }
         ],
         components: {
             schemas: {
-                Course: {
+                Location: {
                     type: "object",
-                    required: ['_id', 'name', 'tags'],
+                    required: ['lat', 'lng'],
                     properties: {
-                        _id: {
-                            type: "string",
-                            description: 'The ID of the course'
+                        lat: {
+                            type: 'number',
+                            description: 'The latitude on the map'
                         },
-                        name: {
-                            type: "string",
-                            description: 'The name of the course'
-                        },
-                        author: {
-                            type: "string",
-                            description: 'The author of the course'
-                        },
-                        tags: {
-                            type: "array",
-                            description: 'The tags of the course'
-                        },
-                        isPublished: {
-                            type: "boolean",
-                            description: 'The published state of the course'
+                        lng: {
+                            type: 'number',
+                            description: 'The longitude on the map'
                         }
                     }
                 },
-                CourseRequest: {
+                Package: {
                     type: "object",
-                    required: ['name', 'author', 'tags'],
+                    required: ['package_id', 'active_delivery', 'description', 'weight', 'width', 'height', 'depth', 'from_name', 'from_address', 'from_location', 'to_name', 'to_address', 'to_location'],
                     properties: {
-                        name: {
+                        package_id: {
                             type: "string",
-                            description: 'The name of the course'
+                            description: 'The ID of the package',
+                            format: 'uuid'
                         },
-                        author: {
+                        active_delivery_id: {
                             type: "string",
-                            description: 'The author of the course'
+                            description: 'The active deliver ID',
+                            format: 'uuid'
                         },
-                        tags: {
-                            type: "array",
-                            description: 'The tags of the course'
+                        description: {
+                            type: "string",
+                            description: 'The description of the package'
+                        },
+                        weight: {
+                            type: "number",
+                            description: 'The weight of the package in grams'
+                        },
+                        width: {
+                            type: "number",
+                            description: 'The width of the package in cm'
+                        },
+                        height: {
+                            type: "number",
+                            description: 'The height of the package in cm'
+                        },
+                        depth: {
+                            type: "number",
+                            description: 'The depth of the package in cm'
+                        },
+                        from_name: {
+                            type: "string",
+                            description: 'The source name of the package'
+                        },
+                        from_address: {
+                            type: "string",
+                            description: 'The source address of the package'
+                        },
+                        from_location: {
+                            schema: {
+                                $ref: '#/components/schemas/Location'
+                            }
+                        },
+                        to_name: {
+                            type: "string",
+                            description: 'The destination name of the package'
+                        },
+                        to_address: {
+                            type: "string",
+                            description: 'The destination address of the package'
+                        },
+                        to_location: {
+                            schema: {
+                                $ref: '#/components/schemas/Location'
+                            }
+                        },
+                    }
+                },
+                PackageRequest: {
+                    type: "object",
+                    required: ['active_delivery', 'description', 'weight', 'width', 'height', 'depth', 'from_name', 'from_address', 'from_location', 'to_name', 'to_address', 'to_location'],
+                    properties: {
+                        active_delivery_id: {
+                            type: "string",
+                            description: 'The active deliver ID',
+                            format: 'uuid'
+                        },
+                        description: {
+                            type: "string",
+                            description: 'The description of the package'
+                        },
+                        weight: {
+                            type: "number",
+                            description: 'The weight of the package in grams'
+                        },
+                        width: {
+                            type: "number",
+                            description: 'The width of the package in cm'
+                        },
+                        height: {
+                            type: "number",
+                            description: 'The height of the package in cm'
+                        },
+                        depth: {
+                            type: "number",
+                            description: 'The depth of the package in cm'
+                        },
+                        from_name: {
+                            type: "string",
+                            description: 'The source name of the package'
+                        },
+                        from_address: {
+                            type: "string",
+                            description: 'The source address of the package'
+                        },
+                        from_location: {
+                            schema: {
+                                $ref: '#/components/schemas/Location'
+                            }
+                        },
+                        to_name: {
+                            type: "string",
+                            description: 'The destination name of the package'
+                        },
+                        to_address: {
+                            type: "string",
+                            description: 'The destination address of the package'
+                        },
+                        to_location: {
+                            schema: {
+                                $ref: '#/components/schemas/Location'
+                            }
                         },
                     }
                 }
@@ -68,7 +160,7 @@ const options = {
                         "application/json":
                             {
                                 schema: {
-                                    $ref: '#/components/schemas/Course'
+                                    $ref: '#/components/schemas/Package'
                                 }
                             }
                     }
@@ -85,7 +177,7 @@ const options = {
                     description: "Resource not found",
                     content: {
                         'application/json': {
-                            example: 'Course id could not be found'
+                            example: 'Package id could not be found'
                         }
                     }
                 },
@@ -102,25 +194,25 @@ const options = {
                     content: {
                         'application/json': {
                             schema: {
-                                $ref: '#/components/schemas/Course'
+                                $ref: '#/components/schemas/Package'
                             }
                         }
                     }
                 }
-            },
-            securitySchemes: {
-                jwtAuth: {
-                    type: "http",
-                    scheme: "bearer",
-                    name: "Authorization",
-                    bearerFormat: "JWT",
-                }
-            }
+            }// ,
+            // securitySchemes: {
+            //     // jwtAuth: {
+            //     //     type: "http",
+            //     //     scheme: "bearer",
+            //     //     name: "Authorization",
+            //     //     bearerFormat: "JWT",
+            //     // }
+            // }
         },
-        security: [{
-            jwtAuth: []
-        }
-        ]
+        // security: [{
+        //     // jwtAuth: []
+        // }
+        // ]
     },
     apis: ['./routes/*.js'],
 }

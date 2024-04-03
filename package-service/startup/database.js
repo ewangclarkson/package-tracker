@@ -5,7 +5,6 @@ const dbUrl = config.get('db.host') + ':'
     + config.get('db.port') + '/'
     + config.get('db.name');
 
-console.log(dbUrl);
 
 module.exports.connect = async function main() {
     return mongoose.connect(dbUrl);

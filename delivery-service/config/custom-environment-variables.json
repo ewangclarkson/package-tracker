@@ -1,3 +1,5 @@
 {
-
+  "loggly": {
+    "token": "loggly_token"
+  }
 }

@@ -28,7 +28,7 @@
     "winston": "^3.13.0",
     "winston-loggly-bulk": "^3.3.0",
     "yaml": "^2.4.1",
-    "pk-common-lib": "1.0.2"
+    "pk-common-lib": "1.0.4"
   },
   "devDependencies": {
     "jest": "^29.7.0",

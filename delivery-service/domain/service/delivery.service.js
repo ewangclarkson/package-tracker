@@ -29,7 +29,25 @@ const DeliveryService = {
         );
     },
 
-    validate(deliveryRequest) {
+};
+const validate = {
+    update: function (deliveryRequest) {
+        const schema = Joi.object({
+            package_id: Joi.objectId(),
+            pickup_time: Joi.date(),
+            start_time: Joi.date(),
+            end_time: Joi.date(),
+            location: Joi.object({
+                lat: Joi.number(),
+                lng: Joi.number()
+            }),
+            status: Joi.string().valid('open', 'picked-up', 'in-transit', 'delivered', 'failed')
+
+        });
+
+        return schema.validate(deliveryRequest);
+    },
+    create: function (deliveryRequest) {
         const schema = Joi.object({
             package_id: Joi.objectId(),
             pickup_time: Joi.date().required(),
@@ -38,14 +56,13 @@ const DeliveryService = {
             location: Joi.object({
                 lat: Joi.number().required(),
                 lng: Joi.number().required()
-            }),
-            status: Joi.string().valid('open','picked-up','in-transit','delivered','failed')
+            }).required(),
+            status: Joi.string().valid('open', 'picked-up', 'in-transit', 'delivered', 'failed')
 
         });
 
         return schema.validate(deliveryRequest);
     }
+}
 
-};
-
-module.exports = DeliveryService;
+module.exports = {DeliveryService, validate};
