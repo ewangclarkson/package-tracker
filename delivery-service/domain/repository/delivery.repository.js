@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {locationSchema} = require('pk-common-lib/repository');
+const {locationSchema} = require('pk-common-lib/repository/location.repository');
 
 const deliverySchema = new mongoose.Schema({
     _id:false,

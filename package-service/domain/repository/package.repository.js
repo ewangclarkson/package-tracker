@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {locationSchema} = require('pk-common-lib/repository');
+const {locationSchema} = require('pk-common-lib/repository/location.repository');
 
 console.log(locationSchema);
 
