@@ -1,0 +1,11 @@
+{
+  "name": "My Express Application Development",
+  "mail": {
+    "email": "ewangclarks@gmail.com",
+  },
+  "db": {
+    "host": "mongodb://localhost",
+    "port": "27017",
+    "name": "playground"
+  }
+}
