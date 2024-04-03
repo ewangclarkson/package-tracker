@@ -26,6 +26,7 @@ build/
 
 # dependencies
 /node_modules
+/logging/logs.log
 
 # profiling files
 chrome-profiler-events*.json

@@ -3,7 +3,7 @@ const {Loggly} = require('winston-loggly-bulk');
 
 const logger = winston.createLogger({
     format: winston.format.json(),
-    defaultMeta: { service: 'package-service' },
+    defaultMeta: { service: 'PackageTracker:delivery-service' },
     transports: [
         new winston.transports.File({ filename: './logging/logs.log',  handleExceptions: true}),
         new Loggly({token: "5111d89f-dde5-4214-9e1e-00de70939e44", subdomain: "fonexpress", tags: ["Winston-NodeJS"], json: true})

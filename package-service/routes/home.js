@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/',(req,res) => {
 
-    res.send("Delivery Service is up and Running");
+    res.send("Package Service is up and Running");
 });
 
 module.exports = router;
