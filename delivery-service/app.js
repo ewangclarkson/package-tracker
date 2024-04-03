@@ -15,7 +15,7 @@ const startServer = function () {
         (exp) => logger.error(exp.message, exp));
 
     const port = process.env.PORT || 8002;
-    return app.listen(port, () => logger.info(`Listening ${config.get('name')} on port ${port}`));
+    return app.listen(port, () => console.log(`Listening ${config.get('name')} on port ${port}`));
 };
 
 const server = startServer();
