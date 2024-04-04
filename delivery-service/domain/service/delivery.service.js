@@ -4,7 +4,7 @@ Joi.objectId = require('joi-objectid')(Joi);
 const deliveryRepository = require('../repository/delivery.repository');
 
 
-const DeliveryService = {
+const deliveryService = {
 
     async getDeliveries() {
         return deliveryRepository.find();
@@ -65,4 +65,4 @@ const validate = {
     }
 }
 
-module.exports = {DeliveryService, validate};
+module.exports = {deliveryService, validate};
