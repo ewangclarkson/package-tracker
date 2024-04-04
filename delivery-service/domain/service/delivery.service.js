@@ -1,6 +1,6 @@
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
-
+const locationService = require('pk-common-lib/service/location.service');
 const deliveryRepository = require('../repository/delivery.repository');
 
 
@@ -11,7 +11,13 @@ const deliveryService = {
     },
 
     async createDelivery(deliveryRequest) {
-        return deliveryRepository.create(deliveryRequest);
+        let location = await locationService.getLocationByLatLng(deliveryRequest.location.lat, deliveryRequest.location.lng);
+        if (!location) location = await locationService.createLocation({
+            lat: deliveryRequest.location.lat,
+            lng: deliveryRequest.location.lng
+        });
+
+        return deliveryRepository.create({...deliveryRequest, location: location});
     },
 
     async getDeliveryById(id) {
@@ -22,12 +28,36 @@ const deliveryService = {
         return deliveryRepository.findOneAndDelete({delivery_id: id});
     },
     async updateDeliveryById(id, deliveryRequest) {
+
+        let location = await locationService.getLocationByLatLng(deliveryRequest.location.lat, deliveryRequest.location.lng);
+        if (!location) location = await locationService.createLocation({
+            lat: deliveryRequest.location.lat,
+            lng: deliveryRequest.location.lng
+        });
+
         return deliveryRepository.findOneAndUpdate({delivery_id: id}, {
-                $set: deliveryRequest
+                $set: {
+                    ...deliveryRequest,
+                    location: location
+                }
             },
             {new: true}
         );
     },
+
+    async updateDeliveryStatus(deliveryId, status) {
+        const delivery = await this.getDeliveryById(deliveryId);
+        if (((delivery.status === 'open') && (status === 'picked-up')))
+            delivery.pickup_time = new Date();
+
+        if (((delivery.status === 'picked-up') && (status === 'in-transit')))
+            delivery.start_time = new Date();
+
+        if (((delivery.status === 'in-transit') && (status === 'delivered')) || ((delivery.status === 'in-transit') && (status === 'failed')))
+            delivery.end_time = new Date();
+
+        return delivery.save();
+    }
 
 };
 const validate = {

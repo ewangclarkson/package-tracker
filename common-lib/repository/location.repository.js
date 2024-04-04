@@ -9,8 +9,8 @@ const locationSchema = new mongoose.Schema({
     lng: {
         type: Number,
         required: true,
-    },
-});
+    }
+},{id:false});
 
 const locationRepository = mongoose.model('Location',locationSchema);
 module.exports={

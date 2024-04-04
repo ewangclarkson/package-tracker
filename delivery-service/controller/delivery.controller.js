@@ -1,5 +1,4 @@
 const {deliveryService, validate} = require('../domain/service/delivery.service');
-const locationService = require('pk-common-lib/service/location.service');
 const HttpStatus = require('pk-common-lib/http/http.status');
 
 const DeliveryController = {
@@ -22,11 +21,7 @@ const DeliveryController = {
 
         if (error) {return res.status(HttpStatus.BAD_REQUEST).send(error.details[0].message)}
 
-        let location = await locationService.getLocationByLatLng(req.body.location.lat, req.body.location.lng);
-        if (!location) location = await locationService.createLocation({lat: req.body.location.lat, lng: req.body.location.lng});
-
-
-        const deliveryObj = await deliveryService.createDelivery({...req.body,location:location});
+        const deliveryObj = await deliveryService.createDelivery(req.body);
 
 
 
@@ -53,10 +48,7 @@ const DeliveryController = {
         }
 
 
-        let location = await locationService.getLocationByLatLng(req.body.location.lat, req.body.location.lng);
-        if (!location) location = await locationService.createLocation({lat: req.body.location.lat, lng: req.body.location.lng});
-
-        const deliveryObj = await deliveryService.updateDeliveryById(req.params.id, {...req.body,location:location});
+        const deliveryObj = await deliveryService.updateDeliveryById(req.params.id, req.body);
 
         return res.status(HttpStatus.SUCCESS).send(deliveryObj);
     }

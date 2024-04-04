@@ -22,12 +22,13 @@
     "joi-objectid": "^4.0.2",
     "mongoose": "^8.2.2",
     "nodemon": "^3.1.0",
+    "pk-common-lib": "1.0.7",
+    "socket.io": "^4.7.5",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "winston": "^3.13.0",
     "winston-loggly-bulk": "^3.3.0",
-    "yaml": "^2.4.1",
-    "pk-common-lib": "1.0.7"
+    "yaml": "^2.4.1"
   },
   "devDependencies": {
     "jest": "^29.7.0",

@@ -3,14 +3,13 @@ const request = require('supertest');
 const {connect, disconnect} = require('../../../startup/database');
 const deliveryRepository = require('../../../domain/repository/delivery.repository');
 const HttpStatus = require('pk-common-lib/http/http.status');
+const {server} = require('../../../app');
 
 
-let server;
 
 describe("/api/delivery", () => {
 
     beforeEach(async () => {
-        server = require('../../../app');
         let deliveries = [
             {
                 package_id: "7bd04177afccd02c49b2520e",
