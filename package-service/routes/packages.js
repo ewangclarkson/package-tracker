@@ -24,7 +24,7 @@ const {validObjectId} = require("pk-common-lib/middleware/validateobjectid");
  *    tags:
  *     - Package
  */
-router.get('/', PackageController.getPackages);
+router.get('', PackageController.getPackages);
 
 /** @openapi
  * /package/{id}:
@@ -80,7 +80,7 @@ router.get('/:id',validObjectId, PackageController.getPackage);
  *
  */
 
-router.post('/', PackageController.creatPackage);
+router.post('', PackageController.creatPackage);
 
 /** @openapi
  * /package/{id}:

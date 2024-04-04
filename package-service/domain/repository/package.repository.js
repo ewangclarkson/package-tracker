@@ -3,13 +3,12 @@ const {locationSchema} = require('pk-common-lib/repository/location.repository')
 
 
 const packageSchema = new mongoose.Schema({
-    _id: false,
     package_id: {
         type: mongoose.Schema.Types.ObjectId,
-        default: mongoose.Types.ObjectId,
+        default: () => new mongoose.Types.ObjectId(),
         unique: true,
     },
-    active_delivery: {
+    active_delivery_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
@@ -47,9 +46,9 @@ const packageSchema = new mongoose.Schema({
         type: String
     },
     to_location: locationSchema
-});
+},{id: false,});
 
-const PackageRepository = mongoose.model('Course', packageSchema);
+const PackageRepository = mongoose.model('Package', packageSchema);
 
 
 module.exports = PackageRepository;
