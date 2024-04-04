@@ -2,10 +2,9 @@ const mongoose = require('mongoose');
 const {locationSchema} = require('pk-common-lib/repository/location.repository');
 
 const deliverySchema = new mongoose.Schema({
-    _id:false,
     delivery_id: {
         type: mongoose.Schema.Types.ObjectId,
-        default: mongoose.Types.ObjectId,
+        default: () => new mongoose.Types.ObjectId(),
         unique: true,
     },
     package_id: {
@@ -30,8 +29,8 @@ const deliverySchema = new mongoose.Schema({
         enum: ['open','picked-up','in-transit','delivered','failed'],
         required: true,
     },
-});
+},{ id: false,});
 
-const PackageRepository = mongoose.model('Course', deliverySchema);
+const PackageRepository = mongoose.model('Delivery', deliverySchema);
 
 module.exports = PackageRepository;
