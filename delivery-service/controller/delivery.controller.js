@@ -5,8 +5,8 @@ const HttpStatus = require('pk-common-lib/http/http.status');
 const DeliveryController = {
 
     async getDeliveries(req, res) {
-        const deliverys = await deliveryService.getDeliverys();
-        return res.status(HttpStatus.SUCCESS).send(deliverys);
+        const deliveries = await deliveryService.getDeliveries();
+        return res.status(HttpStatus.SUCCESS).send(deliveries);
     },
 
     async getDelivery(req, res) {

@@ -49,7 +49,7 @@ const validate = {
     },
     create: function (deliveryRequest) {
         const schema = Joi.object({
-            package_id: Joi.objectId(),
+            package_id: Joi.objectId().required(),
             pickup_time: Joi.date().required(),
             start_time: Joi.date().required(),
             end_time: Joi.date().required(),
