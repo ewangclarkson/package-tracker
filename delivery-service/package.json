@@ -20,7 +20,6 @@
     "helmet": "^7.1.0",
     "joi": "^17.12.2",
     "joi-objectid": "^4.0.2",
-    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.2",
     "nodemon": "^3.1.0",
     "swagger-jsdoc": "^6.2.8",
@@ -28,7 +27,7 @@
     "winston": "^3.13.0",
     "winston-loggly-bulk": "^3.3.0",
     "yaml": "^2.4.1",
-    "pk-common-lib": "1.0.5"
+    "pk-common-lib": "1.0.7"
   },
   "devDependencies": {
     "jest": "^29.7.0",

@@ -10,6 +10,7 @@ const helmet = require("helmet");
 
 const packageServiceHost = config.get('service.package');
 const deliveryServiceHost = config.get('service.delivery');
+const userServiceHost = config.get('service.user')
 
 
 const startServer = function () {
@@ -21,6 +22,7 @@ const startServer = function () {
 
     app.use("/package-service", proxy(packageServiceHost));
     app.use("/delivery-service", proxy(deliveryServiceHost));
+    app.use("/user-service", proxy(userServiceHost));
 
     process.on("uncaughtException",
         (exp) => logger.error(exp.message, exp));

@@ -1,6 +1,6 @@
 {
   "name": "pk-common-lib",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "",
   "main": "http/http.status.js",
   "scripts": {
@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "config": "^3.3.11",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.4"
   },
   "devDependencies": {

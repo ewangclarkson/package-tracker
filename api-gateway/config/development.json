@@ -2,6 +2,7 @@
   "name": "SuperApp - Api Gateway: development",
   "service": {
     "package": "http://localhost:8001",
-    "delivery": "http://localhost:8002"
+    "delivery": "http://localhost:8002",
+    "user": "http://localhost:8003"
   }
 }

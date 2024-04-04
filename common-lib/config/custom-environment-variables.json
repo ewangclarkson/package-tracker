@@ -1,10 +1,4 @@
 {
-  "loggly": {
-    "token": "loggly_token"
-  },
-  "bcrypt": {
-    "salt": "bcrypt_salt"
-  },
   "jwt": {
     "privateKey": "jwt_private_key"
   }
