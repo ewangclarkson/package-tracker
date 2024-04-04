@@ -4,7 +4,7 @@ Joi.objectId = require('joi-objectid')(Joi);
 const packageRepository = require('../repository/package.repository');
 
 
-const PackageService = {
+const packageService = {
 
     async getPackages() {
         return packageRepository.find();
@@ -83,4 +83,4 @@ const validate={
     }
 }
 
-module.exports = {PackageService,validate};
+module.exports = {packageService,validate};
