@@ -1,0 +1,15 @@
+{
+  "name": "SuperApp - Package Service: development",
+  "db": {
+    "host": "mongodb://localhost",
+    "port": "27017",
+    "name": "superapp"
+  },
+  "app": {
+    "host": "http://localhost",
+    "port": 8003
+  },
+  "jwt": {
+    "expiresIn": "1h"
+  }
+}

@@ -1,0 +1,356 @@
+/*
+ * loggly.js: Transport for logginh to remote Loggly API
+ *
+ * (C) 2010 Charlie Robbins
+ * MIT LICENCE
+ *
+ */
+
+var cloneDeep = require('lodash.clonedeep'),
+  loggly = require('node-loggly-bulk'),
+  util = require('util'),
+  winston = require('winston'),
+  Transport = require('winston-transport'),
+  Stream = require('stream').Stream;
+
+//
+// Remark: This should be at a higher level.
+//
+var code = /\u001b\[(\d+(;\d+)*)?m/g;
+
+var timerFunctionForProcessExit = null;
+
+//
+// ### function Loggly (options)
+// #### @options {Object} Options for this instance.
+// Constructor function for the Loggly transport object responsible
+// for persisting log messages and metadata to Loggly; 'LaaS'.
+//
+var Loggly = (exports.Loggly = function(options) {
+  options = options || {};
+
+  //
+  // Small amount of backwards compatibility with 0.x.x
+  //
+  if (options.inputToken && !options.token) {
+    options.token = options.inputToken;
+  }
+
+  Transport.call(this, options);
+  if (!options.subdomain) {
+    throw new Error('Loggly Subdomain is required');
+  } else if (!options || !options.token) {
+    throw new Error('Loggly Customer token is required.');
+  }
+
+  this.name = 'loggly';
+  var tags = options.tags || options.tag || options.id;
+  if (tags && !Array.isArray(tags)) {
+    tags = [tags];
+  }
+
+  this.client = loggly.createClient({
+    subdomain: options.subdomain,
+    json: options.json || false, //TODO: should be false
+    proxy: options.proxy || null,
+    token: options.token,
+    tags: tags,
+    isBulk: options.isBulk || false,
+    bufferOptions: options.bufferOptions || {
+      size: 500,
+      retriesInMilliSeconds: 30 * 1000
+    },
+    networkErrorsOnConsole: options.networkErrorsOnConsole || false
+  });
+
+  this.timestamp = options.timestamp === false ? false : true;
+  this.stripColors = options.stripColors || false;
+});
+
+//
+// Helper function to call process.exit() after waiting
+// 10 seconds.
+//
+var flushLogsAndExit = (exports.flushLogsAndExit = function() {
+  if (timerFunctionForProcessExit === null) {
+    timerFunctionForProcessExit = setInterval(function() {
+      process.exit();
+    }, 10000);
+  }
+});
+
+//
+// Inherit from `winston.Transport`.
+//
+util.inherits(Loggly, Transport);
+
+//
+// Define a getter so that `winston.transports.Loggly`
+// is available and thus backwards compatible.
+//
+winston.transports.Loggly = Loggly;
+winston.transports.flushLogsAndExit = flushLogsAndExit;
+
+//
+// Expose the name of this Transport on the prototype
+//
+Loggly.prototype.name = 'loggly';
+
+const validateMetadata = meta => {
+  if (meta == null) {
+    return {};
+  } else if (typeof meta !== 'object') {
+    return { metadata: meta };
+  } else {
+    return cloneDeep(meta);
+  }
+};
+
+//
+// ### function log (meta, callback)
+// #### @meta {Object} event data
+// #### @callback {function} Continuation to respond to when complete.
+// Core logging method exposed to Winston. Metadata is optional.
+//
+Loggly.prototype.log = function(meta, callback) {
+  const data = validateMetadata(meta);
+
+  if (this.silent) {
+    return callback(null, true);
+  }
+
+  if (this.timestamp && !data.timestamp) {
+    data.timestamp = new Date().toISOString();
+  }
+
+  if (this.stripColors) {
+    data.message = ('' + data.message).replace(code, '');
+  }
+
+  const splats = data[Symbol.for('splat')];
+  if (splats && splats.length > 0) {
+    let details =
+      typeof splats[0] === 'object' ? splats.slice(1, splats.length) : splats; //ignore the first object, it's already included in root
+    if (splats[0].details !== undefined) {
+      //overwrites the original details prop, so we need to include it
+      details = [{ details: splats[0].details }, ...details];
+    }
+    if (details.length) data.details = details;
+  }
+
+  const self = this;
+
+  //
+  // Helper function for responded to logging.
+  //
+  function logged(err, result) {
+    self.emit('logged');
+    if (err) {
+      console.error('Loggly Error:', err);
+    }
+    callback && callback(err, result);
+  }
+
+  const result =
+    data && data.tags
+      ? this.client.log(data, data.tags, logged)
+      : this.client.log(data, logged);
+
+  return result;
+};
+
+//
+// ### function stream (options)
+// #### @options {Object} Set stream options
+// Returns a log stream.
+//
+Loggly.prototype.stream = function(maybeOptions) {
+  var self = this,
+    options = maybeOptions || {},
+    stream = new Stream(),
+    last,
+    start = options.start,
+    row = 0;
+
+  if (start === -1) {
+    start = null;
+  }
+
+  if (start == null) {
+    last = new Date(0).toISOString();
+  }
+
+  stream.destroy = function() {
+    this.destroyed = true;
+  };
+
+  // Unfortunately, we
+  // need to poll here.
+  (function check() {
+    self.query(
+      {
+        from: last || 'NOW-1DAY',
+        until: 'NOW'
+      },
+      function(err, results) {
+        if (stream.destroyed) return;
+
+        if (err) {
+          stream.emit('error', err);
+          return setTimeout(check, 2000);
+        }
+
+        var result = results[results.length - 1];
+        if (result && result.timestamp) {
+          if (last == null) {
+            last = result.timestamp;
+            return;
+          }
+          last = result.timestamp;
+        } else {
+          return;
+        }
+
+        results.forEach(function(log) {
+          if (start == null || row > start) {
+            stream.emit('log', log);
+          }
+          row++;
+        });
+
+        setTimeout(check, 2000);
+      }
+    );
+  })();
+
+  return stream;
+};
+
+//
+// ### function query (options)
+// #### @options {Object} Set stream options
+// #### @callback {function} Callback
+// Query the transport.
+//
+
+Loggly.prototype.query = function(options, callback) {
+  var self = this,
+    context = this.extractContext(options);
+  options = this.loglify(options);
+  options = this.extend(options, context);
+
+  this.client.search(options).run(function(err, logs) {
+    return err ? callback(err) : callback(null, self.sanitizeLogs(logs));
+  });
+};
+
+//
+// ### function formatQuery (query)
+// #### @query {string|Object} Query to format
+// Formats the specified `query` Object (or string) to conform
+// with the underlying implementation of this transport.
+//
+Loggly.prototype.formatQuery = function(query) {
+  return query;
+};
+
+//
+// ### function formatResults (results, options)
+// #### @results {Object|Array} Results returned from `.query`.
+// #### @options {Object} **Optional** Formatting options
+// Formats the specified `results` with the given `options` according
+// to the implementation of this transport.
+//
+Loggly.prototype.formatResults = function(results, _options) {
+  return results;
+};
+
+//
+// ### function extractContext (obj)
+// #### @obj {Object} Options has to extract Loggly 'context' properties from
+// Returns a separate object containing all Loggly 'context properties in
+// the object supplied and removes those properties from the original object.
+// [See Loggly Search API](http://wiki.loggly.com/retrieve_events#optional)
+//
+Loggly.prototype.extractContext = function(obj) {
+  var context = {};
+
+  [
+    'start',
+    'from',
+    'until',
+    'order',
+    'callback',
+    'size',
+    'format',
+    'fields'
+  ].forEach(function(key) {
+    if (obj[key]) {
+      context[key] = obj[key];
+      delete obj[key];
+    }
+  });
+
+  context = this.normalizeQuery(context);
+  context.from = context.from.toISOString();
+  context.until = context.until.toISOString();
+
+  context.from = context.from || '-1d';
+  context.until = context.until || 'now';
+  context.size = context.size || 50;
+
+  return context;
+};
+
+//
+// ### function loglify (obj)
+// #### @obj {Object} Search query to convert into an `AND` loggly query.
+// Creates an `AND` joined loggly query for the specified object
+//
+// e.g. `{ foo: 1, bar: 2 }` => `json.foo:1 AND json.bar:2`
+//
+Loggly.prototype.loglify = function(obj) {
+  var opts = [];
+
+  Object.keys(obj).forEach(function(key) {
+    if (
+      key !== 'query' &&
+      key !== 'fields' &&
+      key !== 'start' &&
+      key !== 'rows' &&
+      key !== 'limit' &&
+      key !== 'from' &&
+      key !== 'until'
+    ) {
+      if (key == 'tag') {
+        opts.push(key + ':' + obj[key]);
+      } else {
+        opts.push('json.' + key + ':' + obj[key]);
+      }
+    }
+  });
+
+  if (obj.query) {
+    opts.unshift(obj.query);
+  }
+  return { query: opts.join(' AND ') };
+};
+
+//
+// ### function sanitizeLogs (logs)
+// #### @logs {Object} Data returned from Loggly to sanitize
+// Sanitizes the log information returned from Loggly so that
+// users cannot gain access to critical information such as:
+//
+// 1. IP Addresses
+// 2. Input names
+// 3. Input IDs
+//
+Loggly.prototype.sanitizeLogs = function(logs) {
+  return logs;
+};
+
+Loggly.prototype.extend = function(destination, source) {
+  for (var property in source) destination[property] = source[property];
+  return destination;
+};
