@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/auth/auth.service";
 import {StorageService} from "../../../services/storage/local/storage.service";
 import {LoginResponse} from "../../../models/login-response.model";
-import {Roles} from "../../../roles";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {UserResponse} from "../../../models/user-response.model";

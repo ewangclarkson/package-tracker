@@ -1,0 +1,9 @@
+.app-title{
+  color: white;
+}
+
+@media (max-width: 383px) {
+  .app-title{
+    font-size: 16px;
+  }
+}

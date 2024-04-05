@@ -1,0 +1,22 @@
+<header class="header">
+  <div class="header__logo hidden-sm-down">
+    <h1><a href="/">Gozem</a><img src="/assets/resources/images/gozem-logo-hq.png" width="50"/>
+      <br/><i class="app-title">Africa SuperApp</i></h1>
+  </div>
+
+  <form class="search">
+    <div class="search__inner">
+      <input type="text" class="search__text"
+             placeholder=""/>
+    </div>
+  </form>
+  <div class="user" style="position: absolute;right: 0px">
+    <div class="user__info">
+      <img class="user__img" src="/assets/resources/images/flag.png" alt=""/>
+      <div>
+        <div class="user__email">{{username}}<br/>
+          <a class="text-white" href="#" onClick={logout}>Logout</a></div>
+      </div>
+    </div>
+  </div>
+</header>

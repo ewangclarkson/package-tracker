@@ -568,6 +568,7 @@ textarea.form-control {
   border-radius: 2px;
   margin: 0 0 1.5rem 0;
   position: relative;
+  float: right;
 }
 
 .user .dropdown-menu {

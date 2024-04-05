@@ -18,6 +18,7 @@ import {CommonModule} from "@angular/common";
 import {AuthGuard} from "./guards/auth/auth.guard";
 import {DriverGuard} from "./guards/driver/driver.guard";
 import {AdminGuard} from "./guards/admin/admin.guard";
+import {HeaderComponent} from "./components/header/header.component";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {AdminGuard} from "./guards/admin/admin.guard";
     AdminComponent,
     LoginComponent,
     CustomerComponent,
+    HeaderComponent,
     ErrorComponent
   ],
   imports: [

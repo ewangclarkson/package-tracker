@@ -3,7 +3,7 @@ import {UserResponse} from "../../../models/user-response.model";
 
 const USER_KEY = 'auth-user';
 const TOKEN_EXPIRY_DATE = 'expires-in';
-
+const TOKEN = 'token';
 
 @Injectable({
   providedIn: 'root'
@@ -50,5 +50,11 @@ export class StorageService {
     }
 
     return false;
+  }
+
+  public logout(){
+    this.remove(USER_KEY);
+    this.remove(TOKEN_EXPIRY_DATE);
+    this.remove(TOKEN);
   }
 }
