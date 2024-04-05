@@ -1,0 +1,65 @@
+<div class="login">
+  <div class="login__block active" id="l-login">
+    <div class="login__block__header">
+      <img src="/assets/resources/images/gozem-logo-hq.png"/>
+      Hi there! Please Sign in
+
+    </div>
+    <div class="login__block__body">
+      <form
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate>
+
+        <div class="form-group form-group--left">
+          <label>{{"email" | translate}}</label>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            [(ngModel)]="form.email"
+            required
+            #email="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+          />
+          <i class="form-group__bar"></i>
+          @if(email.errors && f.submitted){
+          <div class="required">Email is required!</div>
+          }
+
+        </div>
+
+        <div class="form-group form-group--left">
+          <label>{{"password" | translate}}</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            [(ngModel)]="form.password"
+            required
+            minlength="5"
+            #password="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
+          />
+          <i class="form-group__bar"></i>
+          @if (password.errors && f.submitted) {
+          <div class="invalid-feedback">
+            @if (password.errors['required']) {
+          <div class="required">Password is required</div>
+          }
+          @if (password.errors['minlength']) {
+          <div class="required">Password must be at least 6 characters</div>
+          }
+          </div>
+          }
+        </div>
+        <br/>
+        <app-loader *ngIf="isLoading"></app-loader>
+        <button type="submit" class="btn login__block__btn">{{"login" | translate}}</button>
+
+      </form>
+      <br/><br/>
+    </div>
+  </div>
+</div>

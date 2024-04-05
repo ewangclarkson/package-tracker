@@ -29,6 +29,15 @@ export  bcrypt_salt=10
 export loggly_token=5111d89f-dde5-4214-9e1e-00de70939e44
 nodemon app.js &
 
+
+cd ..
+cd web
+echo "Running the web"
+pwd
+rm -f package-lock.json
+npm install
+npm start &
+
 cd ..
 cd api-gateway
 echo "Running the api gateway"
