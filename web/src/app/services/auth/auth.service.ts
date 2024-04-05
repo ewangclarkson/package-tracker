@@ -16,9 +16,7 @@ export class AuthService {
 
   private apiUrl = environment.userApiUrl;
 
-  constructor(private router: Router,
-              private http: HttpClient,
-              private storageService: StorageService) {
+  constructor(private http: HttpClient) {
   }
 
   register(registerUserRequest: UserRequest): Observable<UserResponse> {
@@ -27,10 +25,5 @@ export class AuthService {
 
   login(loginRequest: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/api/users/login`, loginRequest);
-  }
-
-  logout() {
-    this.storageService.remove("token");
-    return this.router.navigate(['/']);
   }
 }

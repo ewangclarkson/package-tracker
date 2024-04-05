@@ -7,7 +7,7 @@ import {
 } from '@angular/router';
 import {Inject, Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {Roles} from "../../roles";
+import {Roles} from "../../constants/roles";
 import {StorageService} from "../../services/storage/local/storage.service";
 import {DOCUMENT} from "@angular/common";
 import {environment} from "../../../environments/environment";

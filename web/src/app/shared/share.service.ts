@@ -1,5 +1,5 @@
 import {Injectable } from '@angular/core';
-import {Roles} from "../roles";
+import {Roles} from "../constants/roles";
 import {Router} from "@angular/router";
 
 @Injectable({
