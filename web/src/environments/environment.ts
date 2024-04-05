@@ -5,4 +5,5 @@ export const environment = {
   userApiUrl:`${apiHost}/user-service`,
   packageApiUrl:`${apiHost}/package-service`,
   deliveryApiUrl:`${apiHost}/delivery-service`,
+  wsHost:'wss://localhost:8000'
 };
