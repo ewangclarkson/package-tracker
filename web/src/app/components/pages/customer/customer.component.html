@@ -9,8 +9,11 @@
             width="100%" height="100%"
             [center]="center"
             [zoom]="zoom"
-            (mapClick)="moveMap($event)"
+            (mapClick)="addMarker($event)"
             (mapMousemove)="move($event)">
+            @for (position of markerPositions; track position) {
+            <map-marker [position]="position" [options]="markerOptions" />
+            }
           </google-map>
         </div>
 
