@@ -17,7 +17,7 @@ const webHost = config.get('service.web');
 const startServer = function () {
 
     app.use(express.json());
-    app.use(helmet());
+    app.use(helmet({contentSecurityPolicy: false}));
     app.use(compression());
     app.use(cors());
 
@@ -30,7 +30,7 @@ const startServer = function () {
         (exp) => logger.error(exp.message, exp));
 
     const port = process.env.PORT || 8000;
-     app.listen(port, () => console.log(`Listening ${config.get('name')} on port ${port}`));
+    app.listen(port, () => console.log(`Listening ${config.get('name')} on port ${port}`));
 };
 
 

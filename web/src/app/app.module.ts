@@ -19,6 +19,7 @@ import {AuthGuard} from "./guards/auth/auth.guard";
 import {DriverGuard} from "./guards/driver/driver.guard";
 import {AdminGuard} from "./guards/admin/admin.guard";
 import {HeaderComponent} from "./components/header/header.component";
+import {GoogleMapsModule} from "@angular/google-maps";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {HeaderComponent} from "./components/header/header.component";
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
+    GoogleMapsModule
   ],
   providers: [
     AuthGuard,
