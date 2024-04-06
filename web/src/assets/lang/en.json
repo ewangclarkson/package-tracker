@@ -1,6 +1,26 @@
 {
   "login": "Login",
   "password": "Password",
-  "email": "Email Address"
+  "email": "Email Address",
+  "search_placeholder_p": "Search for packages, files, documents...",
+  "search_placeholder_d": "Search for deliveries, files, documents...",
+  "track": "Track",
+  "invalid_package": "Invalid package ID",
+  "package_load_success": "Package loaded successfully",
+  "no_delivery": " Active delivery could not be found or not set",
+  "width": "Width",
+  "weight": "Weight",
+  "height": "Height",
+  "from_name": "Sender Name",
+  "from_address": "Sender Address",
+  "to_name": "Receiver Name",
+  "to_address": "Receiver Address",
+  "description": "Description",
+  "package_details": "Package Details",
+  "delivery_details": "Delivery Details",
+  "pickup_time": "Pickup Time",
+  "start_time": "Time Delivery Started",
+  "end_time": "Time Delivery Ends",
+  "status": "Delivery Status"
 
 }

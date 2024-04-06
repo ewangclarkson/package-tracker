@@ -25,9 +25,7 @@ const PackageController = {
         if(!toLocation) toLocation =await locationService.createLocation({lat:req.body.to_location.lat,lng:req.body.to_location.lng});
 
         let fromLocation = await locationService.getLocationByLatLng(req.body.from_location.lat, req.body.from_location.lng);
-        if (!toLocation) fromLocation = await locationService.createLocation({
-            lat: req.body.from_location.lat,
-            lng: req.body.from_location.lng
+        if (!fromLocation) fromLocation = await locationService.createLocation({lat: req.body.from_location.lat, lng: req.body.from_location.lng
         });
 
         const packageObj = await packageService.createPackage({...req.body,from_location:fromLocation,to_location:toLocation});
@@ -58,10 +56,7 @@ const PackageController = {
         if(!toLocation) toLocation =await locationService.createLocation({lat:req.body.to_location.lat,lng:req.body.to_location.lng});
 
         let fromLocation = await locationService.getLocationByLatLng(req.body.from_location.lat, req.body.from_location.lng);
-        if (!toLocation) fromLocation = await locationService.createLocation({
-            lat: req.body.from_location.lat,
-            lng: req.body.from_location.lng
-        });
+        if (!fromLocation) fromLocation = await locationService.createLocation({lat: req.body.from_location.lat, lng: req.body.from_location.lng});
 
         const packageObj = await packageService.updatePackageById(req.params.id, {...req.body,from_location:fromLocation,to_location:toLocation});
 

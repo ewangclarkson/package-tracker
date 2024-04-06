@@ -1,0 +1,11 @@
+<form class="search search--focus" >
+  <input
+    type="text"
+    name="search"
+    class="search__text"
+    placeholder="{{searchPlaceHolder}}"
+    [(ngModel)]="searchValue"
+    (change)="onSearchValueChange()"
+  >
+  <i class="zmdi zmdi-search search__helper"></i>
+</form>

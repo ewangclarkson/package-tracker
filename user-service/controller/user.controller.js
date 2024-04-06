@@ -74,9 +74,8 @@ const UserController = {
 
         const userDetails = _.pick(user, ['_id', 'name', 'email', 'phoneNumber', 'roles']);
         const token = await userService.generateJwtToken(userDetails);
-        const currentDate = new Date();
-        const expiry = config.get('jwt.expiresIn');
-        const expiresIn= new Date(currentDate.getTime() + (parseInt(expiry.charAt(0)) * 60 * 60 * 1000));
+
+        const expiresIn= new Date(new Date().getTime() + (parseInt(config.get('jwt.expiresIn').charAt(0)) * 60 * 60 * 1000));
 
         return res.status(HttpStatus.SUCCESS).send({
             accessToken: token,

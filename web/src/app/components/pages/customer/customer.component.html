@@ -3,22 +3,118 @@
   <section class="content">
     <div class="card">
       <div class="card-body">
-        Customer
-        <div class="map" *ngIf="displayMap">
-          <google-map
-            width="100%" height="100%"
-            [center]="center"
-            [zoom]="zoom"
-            (mapClick)="addMarker($event)"
-            (mapMousemove)="move($event)">
-            @for (position of markerPositions; track position) {
-            <map-marker [position]="position" [options]="markerOptions" />
-            }
-          </google-map>
+        <div class="row">
+          <div class="col-sm-9">
+            <app-search [class.toggled]="mobileSearchValue" [(mobileSearchStatus)]="mobileSearchValue"
+                        [searchPlaceHolder]="'search_placeholder_p' | translate"></app-search>
+          </div>
+          <div class="col-sm-3">
+            <button class="btn login__block__btn text-white" (click)="onTrack()"
+                    style="width: 100px;padding-top: 10px;padding-bottom: 10px;margin-top: 0px">{{"track" | translate}}</button>
+          </div>
         </div>
-
-        <div>Latitude: {{display?.lat}}</div>
-        <div>Longitude: {{display?.lng}}</div>
+        <br/>
+        <div class="row" *ngIf="packageResponse !=null && !isLoading && deliveryResponse!=null">
+          <div class="col-sm-4">
+            <div class="card" style="margin-right: 0px">
+              <div class="card-body">
+                <table className="table table-responsive">
+                  <thead>
+                  <tr>
+                    <th colspan="6"><h3>{{"package_details" | translate}}</h3></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <th><b>{{"description" | translate}}:</b></th>
+                    <td>{{packageResponse.description}}</td>
+                  </tr>
+                  <tr>
+                    <th><b>{{"weight" | translate}}:</b></th>
+                    <td>{{packageResponse.weight}} grams</td>
+                  </tr>
+                  <tr>
+                    <th><b>{{"width" | translate}}:</b></th>
+                    <td>{{packageResponse.width}} cm</td>
+                  </tr>
+                  <tr>
+                    <th><b>{{"height" | translate}}:</b></th>
+                    <td>{{packageResponse.height}} cm</td>
+                  </tr>
+                  <tr>
+                    <th><b>{{"depth" | translate}}:</b></th>
+                    <td>{{packageResponse.depth}} cm</td>
+                  </tr>
+                  <tr>
+                    <th><b>{{"from_name" | translate}}:</b></th>
+                    <td>{{packageResponse.from_name}}</td>
+                  </tr>
+                  <tr>
+                    <th><b>{{"from_address" | translate}}:</b></th>
+                    <td>{{packageResponse.from_address}}</td>
+                  </tr>
+                  <tr>
+                    <th><b>{{"to_name" | translate}}:</b></th>
+                    <td>{{packageResponse.to_name}}</td>
+                  </tr>
+                  <tr>
+                    <th><b>{{"to_address" | translate}}:</b></th>
+                    <td>{{packageResponse.to_address}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <table className="table table-responsive">
+                  <thead>
+                  <tr>
+                    <th colspan="6"><h3>{{"delivery_details" | translate}}</h3></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <th><b>{{"pickup_time" | translate}}:</b></th>
+                    <td>{{deliveryResponse.pickup_time |  date:'medium'}}</td>
+                  </tr>
+                  <tr>
+                    <th><b>{{"start_time" | translate}}:</b></th>
+                    <td>{{deliveryResponse.start_time |  date:'medium'}}</td>
+                  </tr>
+                  <tr>
+                    <th><b>{{"end_time" | translate}}:</b></th>
+                    <td>{{deliveryResponse.end_time | date:'medium'}}</td>
+                  </tr>
+                  <tr>
+                    <th><b>{{"status" | translate}}:</b></th>
+                    <td>{{deliveryResponse.status}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <div class="map" *ngIf="displayMap">
+              <google-map
+                width="100%" height="100%"
+                [center]="center"
+                [zoom]="zoom"
+              >
+                <!--(mapClick)="addMarker($event)"
+                (mapMousemove)="move($event)"-->
+                @for (position of markerPositions; track position) {
+                <map-marker [position]="position" [options]="markerOptions" />
+                }
+              </google-map>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="packageResponse ==null && !isLoading">
+          <br/><br/><br/> <br/><br/><br/> <br/><br/><br/>
+        </div>
+        <app-loader *ngIf="isLoading"></app-loader>
       </div>
     </div>
   </section>

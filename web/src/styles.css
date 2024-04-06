@@ -143,11 +143,6 @@ button,
   -webkit-appearance: button;
 }
 
-input[type="checkbox"] {
-  box-sizing: border-box;
-  padding: 0;
-}
-
 [type="number"]::-webkit-inner-spin-button,
 [type="number"]::-webkit-outer-spin-button {
   height: auto;
@@ -233,6 +228,7 @@ hr {
 
 .btn:focus, .btn.focus {
   outline: 0;
+  color: white;
   box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
 }
 
@@ -404,9 +400,11 @@ textarea.form-control {
 .zmdi-edit:before {
   content: '\f158';
 }
+
 .zmdi-arrow-left:before {
   content: '\f2ea';
 }
+
 .text-white {
   color: white;
 }
@@ -479,88 +477,6 @@ textarea.form-control {
 
 .header__logo > h1 > a {
   color: #FFFFFF;
-}
-
-.search {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  margin-right: 2.5rem;
-  position: relative;
-}
-
-@media (max-width: 1199.98px) {
-  .search {
-    padding: 0 1.5rem;
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    background-color: #FFFFFF;
-    z-index: 21;
-    display: flex;
-  }
-
-  .search:not(.search--toggled) {
-    -webkit-transform: translate3d(0, -105%, 0);
-    transform: translate3d(0, -105%, 0);
-  }
-}
-
-.search__inner {
-  position: relative;
-}
-
-@media (max-width: 1199.98px) {
-  .search__inner {
-    max-width: 600px;
-    margin: 0 auto;
-    width: 100%;
-  }
-}
-
-.search__text {
-  border: 0;
-  border-radius: 2px;
-  height: 2.9rem;
-  padding: 0 1rem 0 3rem;
-  width: 100%;
-  transition: background-color 300ms, color 300ms;
-}
-
-@media (min-width: 992px) {
-  .search__text {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #FFFFFF;
-  }
-
-  .search__text::placeholder {
-    color: #FFFFFF;
-    opacity: 1;
-  }
-
-  .search__text:focus {
-    background-color: #FFFFFF;
-    color: #495057;
-  }
-
-  .search__text:focus::placeholder {
-    color: #606a73;
-    opacity: 1;
-  }
-}
-
-@media (max-width: 1199.98px) {
-  .search__text {
-    background-color: #f6f6f6;
-    color: #495057;
-  }
-
-  .search__text::placeholder {
-    color: #606a73;
-    opacity: 1;
-  }
 }
 
 .user {
@@ -708,16 +624,20 @@ textarea.form-control {
   width: 30%;
   padding: 5px;
 }
-.mb-2{
+
+.mb-2 {
   margin-bottom: 0.5rem !important;
 }
+
 .bg-red {
   background-color: #ff6b68 !important;
 }
-.fm-input-width{
+
+.fm-input-width {
   width: 60%;
 }
-.pt-13{
+
+.pt-13 {
   padding-top: 13px;
 }
 
@@ -753,8 +673,104 @@ button.close {
   -moz-appearance: none;
   appearance: none;
 }
+.row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px
+}
 
+.col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9 {
+  position: relative;
+  width: 100%;
+  padding-right: 10px;
+  padding-left: 10px
+}
 
+@media (min-width: 468px) {
+  .col-sm-1 {
+    -ms-flex: 0 0 8.333333%;
+    flex: 0 0 8.333333%;
+    max-width: 8.333333%
+  }
+
+  .col-sm-2 {
+    -ms-flex: 0 0 16.666667%;
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%
+  }
+
+  .col-sm-3 {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%
+  }
+
+  .col-sm-4 {
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%
+  }
+
+  .col-sm-5 {
+    -ms-flex: 0 0 41.666667%;
+    flex: 0 0 41.666667%;
+    max-width: 41.666667%
+  }
+
+  .col-sm-6 {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%
+  }
+
+  .col-sm-7 {
+    -ms-flex: 0 0 58.333333%;
+    flex: 0 0 58.333333%;
+    max-width: 58.333333%
+  }
+
+  .col-sm-8 {
+    -ms-flex: 0 0 66.666667%;
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%
+  }
+
+  .col-sm-9 {
+    -ms-flex: 0 0 75%;
+    flex: 0 0 75%;
+    max-width: 75%
+  }
+
+  .col-sm-10 {
+    -ms-flex: 0 0 83.333333%;
+    flex: 0 0 83.333333%;
+    max-width: 83.333333%
+  }
+
+  .col-sm-11 {
+    -ms-flex: 0 0 91.666667%;
+    flex: 0 0 91.666667%;
+    max-width: 91.666667%
+  }
+
+  .col-sm-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%
+  }
+}
+
+.login__block__btn {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.login__block__btn, .login__block__btn:hover, .login__block__btn:focus {
+  color: #FFFFFF;
+}
 
 
 

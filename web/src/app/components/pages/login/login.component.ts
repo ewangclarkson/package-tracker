@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
         this.storageService.set(USER_KEY, JSON.stringify(response.userDetails));
         this.storageService.set(TOKEN_EXPIRY_DATE, response.expiresIn);
         this.storageService.set(TOKEN, response.accessToken);
-        this.sharedService.redirect(response.roles);
+        this.sharedService.redirect(response.userDetails.roles);
       },
       (err) => {
         this.toastr.error(err.message);

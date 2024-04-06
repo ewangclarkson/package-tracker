@@ -19,7 +19,7 @@ const startServer = function () {
      io = new Server(server);
 
 
-    require('./sockets/package.sockets')(io);
+    require('./sockets/delivery.socket')(io);
     require('./startup/boot')(app);
 
     process.on("uncaughtException",

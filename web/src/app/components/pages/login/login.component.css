@@ -83,15 +83,6 @@
   padding: 1rem;
 }
 
-.login__block__btn {
-  margin-top: 0.5rem;
-  width: 100%;
-}
-
-.login__block__btn, .login__block__btn:hover, .login__block__btn:focus {
-  color: #FFFFFF;
-}
-
 .login__block__btn:hover {
   opacity: 0.9;
 }

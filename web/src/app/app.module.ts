@@ -20,6 +20,7 @@ import {DriverGuard} from "./guards/driver/driver.guard";
 import {AdminGuard} from "./guards/admin/admin.guard";
 import {HeaderComponent} from "./components/header/header.component";
 import {GoogleMapsModule} from "@angular/google-maps";
+import {SearchComponent} from "./components/search/search.component";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {GoogleMapsModule} from "@angular/google-maps";
     LoginComponent,
     CustomerComponent,
     HeaderComponent,
-    ErrorComponent
+    ErrorComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,
