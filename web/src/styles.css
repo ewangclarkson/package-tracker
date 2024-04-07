@@ -1,10 +1,4 @@
 @charset "UTF-8";
-@font-face {
-  font-family: 'Material-Design-Iconic-Font';
-  src: url('./assets/fonts/Material-Design-Iconic-Font.woff2?v=2.2.0') format('woff2'), url('./assets/fonts/Material-Design-Iconic-Font.woff?v=2.2.0') format('woff'), url('./assets/fonts/Material-Design-Iconic-Font.ttf?v=2.2.0') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
 
 *,
 *::before,
@@ -84,11 +78,6 @@ svg {
   overflow: hidden;
   vertical-align: middle;
 }
-
-table {
-  border-collapse: collapse;
-}
-
 caption {
   padding-top: 1rem 1.5rem;
   padding-bottom: 1rem 1.5rem;
@@ -97,9 +86,6 @@ caption {
   caption-side: bottom;
 }
 
-th {
-  text-align: inherit;
-}
 
 label {
   display: inline-block;
@@ -368,42 +354,6 @@ textarea.form-control {
   right: 50%;
 }
 
-.zmdi {
-  display: inline-block;
-  font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.zmdi-account-circle:before {
-  content: '\f205';
-}
-
-.zmdi-long-arrow-right:before {
-  content: '\f301';
-}
-
-.zmdi-more-vert:before {
-  content: '\f19b';
-}
-
-.zmdi-account-add:before {
-  content: '\f1ff';
-}
-
-.zmdi-check-all:before {
-  content: '\f267';
-}
-
-.zmdi-edit:before {
-  content: '\f158';
-}
-
-.zmdi-arrow-left:before {
-  content: '\f2ea';
-}
 
 .text-white {
   color: white;

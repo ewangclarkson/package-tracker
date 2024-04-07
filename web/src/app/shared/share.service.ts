@@ -11,7 +11,7 @@ export class ShareService {
   ) { }
 
   redirect(roles :string[]) {
-    if (roles.includes(Roles.ADMIN) && roles.includes(Roles.DRIVER)) {
+    if (roles.includes(Roles.ADMIN)) {
       return this.router.navigate(["/admin"]);
     }
     if (roles.includes(Roles.DRIVER)) {

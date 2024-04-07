@@ -1,0 +1,4 @@
+td {
+  max-width: 110px; /* Adjust the maximum width as per your requirement */
+  word-wrap: break-word;
+}

@@ -19,8 +19,8 @@ export class PackageService {
     return this.http.get<PackageResponse>(`${this.apiUrl}/api/package/${packageId}`);
   }
 
-  getPackages(): Observable<PackageResponse> {
-    return this.http.get<PackageResponse>(`${this.apiUrl}/api/package`);
+  getPackages(): Observable<PackageResponse[]> {
+    return this.http.get<PackageResponse[]>(`${this.apiUrl}/api/package`);
   }
 
   createPackage(packageRequest: PackageRequest): Observable<PackageResponse> {

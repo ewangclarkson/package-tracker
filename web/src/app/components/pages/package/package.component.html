@@ -1,0 +1,84 @@
+<main class="main">
+  <app-header></app-header>
+  <section class="content">
+    <div class="card">
+      <div class="card-body">
+        <br/>
+        <app-loader *ngIf="isLoading"></app-loader>
+
+        <h3>{{"package_list" | translate}}</h3>
+        <button class="btn login__block__btn text-white"
+                style="padding-top: 10px;padding-bottom: 10px;float: right;width: 220px">{{"create_package" | translate}}</button>
+        <br/>
+        <div style="overflow-x: auto;width: 100%">
+          <table id="packageDatatable">
+            <thead>
+            <tr>
+              <th><b>{{"sn" | translate | uppercase}}</b></th>
+              <th><b>{{"package_id" | translate | uppercase}}</b></th>
+              <th><b>{{"active_delivery_id" | translate | uppercase}}</b></th>
+              <th><b>{{"description" | translate | uppercase}}</b></th>
+              <th><b>{{"weight" | translate | uppercase}}</b></th>
+              <th><b>{{"width" | translate | uppercase}}</b></th>
+              <th><b>{{"height" | translate | uppercase}}</b></th>
+              <th><b>{{"depth" | translate | uppercase}}</b></th>
+              <th><b>{{"from_name" | translate | uppercase}}</b></th>
+              <th><b>{{"from_address" | translate | uppercase}}</b></th>
+              <th><b>{{"to_name" | translate | uppercase}}</b></th>
+              <th><b>{{"to_address" | translate | uppercase}}</b></th>
+            </tr>
+            </thead>
+            <tbody *ngIf="!isLoading && packageList.length >0">
+            <tr *ngFor="let pkg of packageList; let j = index">
+              <td>{{j + 1}}</td>
+              <td>{{pkg.package_id}}</td>
+              <td>{{pkg.active_delivery_id}}</td>
+              <td>{{pkg.description}}</td>
+              <td>{{pkg.weight}}cm</td>
+              <td>{{pkg.width}}cm</td>
+              <td>{{pkg.height}}cm</td>
+              <td>{{pkg.depth}}cm</td>
+              <td>{{pkg.from_name}}</td>
+              <td>{{pkg.from_address}}</td>
+              <td>{{pkg.to_name}}</td>
+              <td>{{pkg.to_address}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <br/><br/>
+        <h3>{{"delivery_list" | translate}}</h3>
+        <button class="btn login__block__btn text-white"
+                style="width: 220px;padding-top: 10px;padding-bottom: 10px;float: right">{{"create_delivery" | translate}}</button>
+        <br/>
+        <div style="overflow-x: auto;width: 100%">
+          <table id="deliveryDatatable">
+            <thead>
+            <tr>
+              <th><b>{{"sn" | translate | uppercase}}</b></th>
+              <th><b>{{"delivery_id" | translate | uppercase}}</b></th>
+              <th><b>{{"package_id" | translate | uppercase}}</b></th>
+              <th><b>{{"pickup_time" | translate | uppercase}}</b></th>
+              <th><b>{{"start_time" | translate | uppercase}}</b></th>
+              <th><b>{{"end_time" | translate | uppercase}}</b></th>
+              <th><b>{{"status" | translate | uppercase}}</b></th>
+            </tr>
+            </thead>
+            <tbody *ngIf="!isLoading && deliveryList.length >0">
+            <tr *ngFor="let delivery of deliveryList; let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{delivery.delivery_id}}</td>
+              <td>{{delivery.package_id}}</td>
+              <td>{{delivery.pickup_time | date:'medium'}}</td>
+              <td>{{delivery.start_time | date:'medium'}}</td>
+              <td>{{delivery.end_time}}</td>
+              <td>{{delivery.status}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

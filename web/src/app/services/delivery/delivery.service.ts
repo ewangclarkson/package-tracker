@@ -19,8 +19,8 @@ export class DeliveryService {
     return this.http.get<DeliveryResponse>(`${this.apiUrl}/api/delivery/${deliveryId}`);
   }
 
-  getDeliveries(): Observable<DeliveryResponse> {
-    return this.http.get<DeliveryResponse>(`${this.apiUrl}/api/delivery`);
+  getDeliveries(): Observable<DeliveryResponse[]> {
+    return this.http.get<DeliveryResponse[]>(`${this.apiUrl}/api/delivery`);
   }
 
   createDelivery(deliveryRequest: DeliveryRequest): Observable<DeliveryResponse> {

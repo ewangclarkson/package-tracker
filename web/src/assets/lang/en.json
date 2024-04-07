@@ -31,5 +31,19 @@
   "picked_up": "Picked Up",
   "in_transit": "In Transit",
   "delivered": "Delivered",
-  "failed": "Failed"
+  "failed": "Failed",
+  "package_list": "Package List",
+  "delivery_list": "Delivery List",
+  "create_package": "Create Package",
+  "create_delivery": "Create Delivery",
+  "sn": "S/N",
+  "package_id": "Package ID",
+  "active_delivery_id": "Active Delivery ID",
+  "delivery_id": "Delivery ID",
+  "unexpected_error_d": "An unexpected error occurred while loading the deliveries",
+  "unexpected_error_p": "An unexpected error occurred while loading the packages",
+  "no_deliveries": "No deliveries found",
+  "no_packages": "No packages found",
+  "packages_loaded": "Packages loaded successfully",
+  "deliveries_loaded": "Deliveries loaded successfully"
 }

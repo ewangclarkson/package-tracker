@@ -1,18 +1,17 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 import {SharedModule} from "./shared/shared.module";
 import {CoreModule} from "./core.module";
 import {ToastrModule} from "ngx-toastr";
 import {DriverComponent} from "./components/pages/driver/driver.component";
-import {AdminComponent} from "./components/pages/admin/admin.component";
 import {LoginComponent} from "./components/pages/login/login.component";
 import {CustomerComponent} from "./components/pages/customer/customer.component";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
-import {ErrorComponent} from "./components/pages/error/error/error.component";
+import {ErrorComponent} from "./components/pages/error/error.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule} from "@angular/common";
 import {AuthGuard} from "./guards/auth/auth.guard";
@@ -23,14 +22,18 @@ import {GoogleMapsModule} from "@angular/google-maps";
 import {SearchComponent} from "./components/search/search.component";
 import {environment} from "../environments/environment";
 import {SocketIoConfig, SocketIoModule} from "ngx-socket-io";
+import {PackageComponent} from "./components/pages/package/package.component";
+import {DeliveryComponent} from "./components/pages/delivery/delivery.component";
+import {DataTablesModule} from "angular-datatables";
 
-const config: SocketIoConfig = { url: environment.wsHost, options: {} };
+const config: SocketIoConfig = {url: environment.wsHost, options: {}};
 
 @NgModule({
   declarations: [
     AppComponent,
     DriverComponent,
-    AdminComponent,
+    PackageComponent,
+    DeliveryComponent,
     LoginComponent,
     CustomerComponent,
     HeaderComponent,
@@ -48,7 +51,8 @@ const config: SocketIoConfig = { url: environment.wsHost, options: {} };
     CoreModule,
     SharedModule,
     GoogleMapsModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    DataTablesModule
   ],
   providers: [
     AuthGuard,
@@ -57,4 +61,5 @@ const config: SocketIoConfig = { url: environment.wsHost, options: {} };
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
