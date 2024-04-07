@@ -32,20 +32,22 @@ export class PackageComponent implements OnInit {
   ngOnInit(): void {
     this.getPackages();
     this.getDeliveries();
-    setTimeout(()=>{
-      $('#packageDatatable').DataTable( {
-        pagingType: 'full_numbers',
-        pageLength: 5,
-        processing: true,
-        lengthMenu : [5, 10, 25],
-      } );
-      $('#deliveryDatatable').DataTable( {
-        pagingType: 'full_numbers',
-        pageLength: 5,
-        processing: true,
-        lengthMenu : [5, 10, 25],
-      } );
-    }, 1);
+    $(document).ready(() => {
+      setTimeout(() => {
+        $('#packageDatatable').DataTable({
+          pagingType: 'full_numbers',
+          pageLength: 5,
+          processing: true,
+          lengthMenu: [5, 10, 25],
+        });
+        $('#deliveryDatatable').DataTable({
+          pagingType: 'full_numbers',
+          pageLength: 5,
+          processing: true,
+          lengthMenu: [5, 10, 25],
+        });
+      }, 2);
+    });
   }
 
 
