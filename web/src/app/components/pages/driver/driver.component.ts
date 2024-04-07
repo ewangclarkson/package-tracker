@@ -82,7 +82,6 @@ export class DriverComponent implements OnInit {
                 this.toastr.success(this.translate.getMessage("delivery_load_success"));
               },
               (er) => {
-                alert(JSON.stringify(er));
                 this.toastr.error(this.translate.getMessage("no_package"));
               }
             )
@@ -90,7 +89,6 @@ export class DriverComponent implements OnInit {
         this.isLoading = false;
       },
       (err) => {
-        alert(JSON.stringify(err));
         this.toastr.error(this.translate.getMessage("invalid_delivery"));
         this.isLoading = false;
       }
@@ -130,7 +128,15 @@ export class DriverComponent implements OnInit {
   }
 
   changeState(status: Status) {
-    this.webSocketService.sendMessage(Events.STATUS_CHANGE, status);
+    this.webSocketService.sendMessage(Events.STATUS_CHANGE, {
+      delivery_id: this.deliveryResponse!.delivery_id,
+      status: status
+    });
+    this.deliveryService.getDelivery(this.mobileSearchValue).subscribe(
+      (response: DeliveryResponse) => {
+        this.deliveryResponse = response;
+      }
+    );
   }
 
 }
