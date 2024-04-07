@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<any | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const user = this.storageService.getCurrentUser();
-    if (user && user.roles.includes(Roles.USER)) {
+    if (user && user.roles.includes(Roles.USER) && this.storageService.isLoggedIn()) {
       return true;
     } else {
       this.document.location.href=this.apiUrl;

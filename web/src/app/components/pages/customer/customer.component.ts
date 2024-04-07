@@ -4,12 +4,8 @@ import {ToastrService} from "ngx-toastr";
 import {TranslationService} from "../../../services/translation/translation.service";
 import {PackageService} from "../../../services/package/package.service";
 import {DeliveryService} from "../../../services/delivery/delivery.service";
-import {LoginResponse} from "../../../models/login-response.model";
 import {DeliveryResponse} from "../../../models/delivery-response.model";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 import {WebsocketService} from "../../../services/socket/websocket.service";
-import {environment} from "../../../../environments/environment";
-import {Status} from "../../../constants/status";
 import {Events} from "../../../constants/events";
 
 @Component({
@@ -34,20 +30,13 @@ export class CustomerComponent {
   markerOptions: google.maps.MarkerOptions = {draggable: false};
   markerPositions: google.maps.LatLngLiteral[] = [];
 
-  // addMarker(event: google.maps.MapMouseEvent) {
-  //   if (event.latLng != null) {
-  //     console.log(event.latLng);
-  //     this.markerPositions.push(event.latLng.toJSON())
-  //   }
-  //   ;
-  // }
-
 
   constructor(
     private toastr: ToastrService,
     private translate: TranslationService,
     private packageService: PackageService,
     private deliveryService: DeliveryService,
+    private webSocketService: WebsocketService
   ) {
   }
 
@@ -68,7 +57,7 @@ export class CustomerComponent {
     if (this.mobileSearchValue.length == 0) this.toastr.error(this.translate.getMessage("invalid_package"));
 
     this.isLoading = true;
-    this.markerPositions=[];
+    this.markerPositions = [];
     this.packageService.getPackage(this.mobileSearchValue).subscribe(
       (response: PackageResponse) => {
         if (response.active_delivery_id.length > 0) {
@@ -79,8 +68,17 @@ export class CustomerComponent {
                 this.deliveryResponse = resp;
                 this.setMarkerPosition(response.from_location.lat, response.from_location.lng);
                 this.setMarkerPosition(response.to_location.lat, response.to_location.lng);
-                this.setMapCurrentPositions();
-
+                this.setMapCurrentPositions(resp.location.lat,resp.location.lng);
+                this.webSocketService.getMessage(Events.DELIVERY_UPDATED)
+                  .subscribe((delivery: DeliveryResponse) => {
+                    if (delivery.delivery_id == this.deliveryResponse!.delivery_id) {
+                      this.deliveryResponse = delivery!;
+                      this.markerPositions = [];
+                      this.setMarkerPosition(response.from_location.lat, response.from_location.lng);
+                      this.setMarkerPosition(response.to_location.lat, response.to_location.lng);
+                      this.setMapCurrentPositions(delivery.location.lat,delivery.location.lng);
+                    }
+                  });
 
                 this.toastr.success(this.translate.getMessage("package_load_success"));
               },
@@ -102,15 +100,12 @@ export class CustomerComponent {
     this.markerPositions.push({lat: latitude, lng: longitude});
   }
 
-  setMapCurrentPositions() {
+  setMapCurrentPositions(latitude:number,longitude:number) {
     setTimeout(() => {
-      navigator.geolocation.getCurrentPosition(position => {
-        const {latitude, longitude} = position.coords;
         this.center.lat = latitude;
         this.center.lng = longitude;
         this.markerPositions.push({lat: latitude, lng: longitude});
         this.displayMap = true;
-      });
     }, 100);
   }
 }

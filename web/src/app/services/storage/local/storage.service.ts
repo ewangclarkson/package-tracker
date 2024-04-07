@@ -3,7 +3,7 @@ import {UserResponse} from "../../../models/user-response.model";
 
 const USER_KEY = 'auth-user';
 const TOKEN_EXPIRY_DATE = 'expires-in';
-const TOKEN = 'token';
+const TOKEN = 'accessToken';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +45,7 @@ export class StorageService {
     const user = this.get(USER_KEY);
     const expiresIn = this.get(TOKEN_EXPIRY_DATE);
 
-    if (user && (new Date().getTime() < Number(expiresIn))) {
+    if (user && (new Date() <= new Date(expiresIn!))) {
       return true;
     }
 

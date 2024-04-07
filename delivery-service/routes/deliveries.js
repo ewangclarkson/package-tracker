@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const DeliveryController = require('../controller/delivery.controller');
 const {validObjectId} = require("pk-common-lib/middleware/validateobjectid");
+const {auth,admin,driver}= require("pk-common-lib/middleware/auth");
 
 /**
  * @openapi
@@ -24,7 +25,7 @@ const {validObjectId} = require("pk-common-lib/middleware/validateobjectid");
  *    tags:
  *     - Delivery
  */
-router.get('/', DeliveryController.getDeliveries);
+router.get('/',[auth,admin],DeliveryController.getDeliveries);
 
 /** @openapi
  * /delivery/{id}:
@@ -53,7 +54,7 @@ router.get('/', DeliveryController.getDeliveries);
  *     style: simple
  */
 
-router.get('/:id',validObjectId, DeliveryController.getDelivery);
+router.get('/:id',[auth,validObjectId], DeliveryController.getDelivery);
 
 
 /** @openapi
@@ -80,7 +81,7 @@ router.get('/:id',validObjectId, DeliveryController.getDelivery);
  *
  */
 
-router.post('/', DeliveryController.creatDelivery);
+router.post('/',[auth,admin], DeliveryController.creatDelivery);
 
 /** @openapi
  * /delivery/{id}:
@@ -116,7 +117,7 @@ router.post('/', DeliveryController.creatDelivery);
  */
 
 
-router.put('/:id',validObjectId, DeliveryController.updateDelivery);
+router.put('/:id',[validObjectId,auth,driver], DeliveryController.updateDelivery);
 
 
 /** @openapi
@@ -145,6 +146,6 @@ router.put('/:id',validObjectId, DeliveryController.updateDelivery);
  *        type: string
  *     style: simple
  */
-router.delete('/:id', validObjectId,DeliveryController.deleteDelivery);
+router.delete('/:id', [validObjectId,auth,admin],DeliveryController.deleteDelivery);
 
 module.exports = router;

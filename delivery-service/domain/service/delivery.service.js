@@ -30,10 +30,7 @@ const deliveryService = {
     async updateDeliveryById(id, deliveryRequest) {
 
         let location = await locationService.getLocationByLatLng(deliveryRequest.location.lat, deliveryRequest.location.lng);
-        if (!location) location = await locationService.createLocation({
-            lat: deliveryRequest.location.lat,
-            lng: deliveryRequest.location.lng
-        });
+        if (!location) location = await locationService.createLocation({lat: deliveryRequest.location.lat, lng: deliveryRequest.location.lng});
 
         return deliveryRepository.findOneAndUpdate({delivery_id: id}, {
                 $set: {

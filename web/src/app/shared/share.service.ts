@@ -11,12 +11,13 @@ export class ShareService {
   ) { }
 
   redirect(roles :string[]) {
-    if (roles.includes(Roles.ADMIN)) {
-      this.router.navigate(["/admin"]);
+    if (roles.includes(Roles.ADMIN) && roles.includes(Roles.DRIVER)) {
+      return this.router.navigate(["/admin"]);
     }
     if (roles.includes(Roles.DRIVER)) {
-      this.router.navigate(["/driver"]);
+      return this.router.navigate(["/driver"]);
     }
-    this.router.navigate(["/customer"]);
+
+   return  this.router.navigate(["/customer"]);
   }
 }

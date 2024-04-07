@@ -16,7 +16,11 @@ const startServer = function () {
 
     const server = http.createServer(app);
 
-     io = new Server(server);
+     io = require("socket.io")(server, {
+        cors: {
+            origin: config.get("origin"),
+        }
+    });
 
 
     require('./sockets/delivery.socket')(io);

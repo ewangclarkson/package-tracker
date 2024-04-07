@@ -1,5 +1,8 @@
 {
   "loggly": {
     "token": "loggly_token"
+  },
+  "jwt": {
+    "privateKey": "jwt_private_key"
   }
 }

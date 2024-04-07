@@ -6,6 +6,7 @@ echo "Running the Package Service"
 pwd
 rm -f package-lock.json
 npm install
+export jwt_private_key=5111d89f-dde5
 export loggly_token=5111d89f-dde5-4214-9e1e-00de70939e44
 nodemon app.js &
 
@@ -15,6 +16,7 @@ echo "Running the Delivery Service"
 pwd
 rm -f package-lock.json
 npm install
+export jwt_private_key=5111d89f-dde5
 export loggly_token=5111d89f-dde5-4214-9e1e-00de70939e44
 nodemon app.js &
 

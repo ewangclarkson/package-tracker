@@ -8,5 +8,8 @@
   "app": {
     "host": "http://localhost",
     "port": 8001
+  },
+  "jwt": {
+    "expiresIn": "1h"
   }
 }

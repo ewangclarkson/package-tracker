@@ -21,6 +21,10 @@ import {AdminGuard} from "./guards/admin/admin.guard";
 import {HeaderComponent} from "./components/header/header.component";
 import {GoogleMapsModule} from "@angular/google-maps";
 import {SearchComponent} from "./components/search/search.component";
+import {environment} from "../environments/environment";
+import {SocketIoConfig, SocketIoModule} from "ngx-socket-io";
+
+const config: SocketIoConfig = { url: environment.wsHost, options: {} };
 
 @NgModule({
   declarations: [
@@ -43,7 +47,8 @@ import {SearchComponent} from "./components/search/search.component";
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     AuthGuard,

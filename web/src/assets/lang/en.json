@@ -2,8 +2,8 @@
   "login": "Login",
   "password": "Password",
   "email": "Email Address",
-  "search_placeholder_p": "Search for packages, files, documents...",
-  "search_placeholder_d": "Search for deliveries, files, documents...",
+  "search_placeholder_p": "Enter Package ID...",
+  "search_placeholder_d": "Enter Delivery ID",
   "track": "Track",
   "invalid_package": "Invalid package ID",
   "package_load_success": "Package loaded successfully",
@@ -21,6 +21,15 @@
   "pickup_time": "Pickup Time",
   "start_time": "Time Delivery Started",
   "end_time": "Time Delivery Ends",
-  "status": "Delivery Status"
-
+  "status": "Delivery Status",
+  "logout": "Logout",
+  "superapp": "Africa SuperApp",
+  "submit": "Submit",
+  "invalid_delivery": "Invalid delivery ID",
+  "delivery_load_success": "Delivery loaded successfully",
+  "no_package": " No package set under this delivery",
+  "picked_up": "Picked Up",
+  "in_transit": "In Transit",
+  "delivered": "Delivered",
+  "failed": "Failed"
 }

@@ -9,7 +9,7 @@ import {ShareService} from "../../../shared/share.service";
 
 const USER_KEY = 'auth-user';
 const TOKEN_EXPIRY_DATE = 'expires-in';
-const TOKEN = 'token';
+const TOKEN = 'accessToken';
 
 @Component({
   selector: 'app-login',

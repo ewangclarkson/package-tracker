@@ -14,8 +14,8 @@ const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
   {path: 'customer', component: CustomerComponent, canActivate: [AuthGuard]},
-  {path: 'driver', component: DriverComponent, canActivate: [AuthGuard, DriverGuard]},
-  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard]},
+  {path: 'driver', component: DriverComponent, canActivate: [DriverGuard]},
+  {path: 'admin', component: AdminComponent, canActivate: [AdminGuard]},
   {path: '**', component: ErrorComponent},
 ];
 

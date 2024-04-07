@@ -3,6 +3,8 @@ import {StorageService} from "../../services/storage/local/storage.service";
 import {HttpEvent, HttpHandler, HttpRequest} from "@angular/common/http";
 import {Observable} from "rxjs";
 
+const TOKEN = 'accessToken';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +14,7 @@ export class AuthInterceptorService {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.storageService.get('accessToken');
+    const token = this.storageService.get(TOKEN);
     req = req.clone({
       url: req.url,
       setHeaders: {

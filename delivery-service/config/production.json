@@ -8,5 +8,9 @@
   "app": {
     "host": "http://localhost",
     "port": 8002
-  }
+  },
+  "jwt": {
+    "expiresIn": "1h"
+  },
+  "origin": "http://localhost:8000"
 }

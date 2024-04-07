@@ -26,7 +26,7 @@ export class AdminGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const user = this.storageService.getCurrentUser();
-    if (user && user.roles.includes(Roles.ADMIN)) {
+    if (user && user.roles.includes(Roles.ADMIN) && this.storageService.isLoggedIn()) {
       return true;
     } else {
       this.document.location.href=this.apiUrl;
