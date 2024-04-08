@@ -29,7 +29,7 @@ const startServer = function () {
     process.on("uncaughtException",
         (exp) => logger.error(exp.message, exp));
 
-    const port = config.get('app.port');
+    const port = process.env.PORT || config.get('app.port');
     return server.listen(port, () => console.log(`Listening ${config.get('name')} on port ${port}`));
 };
 
