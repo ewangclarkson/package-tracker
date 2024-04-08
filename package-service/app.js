@@ -1,3 +1,5 @@
+const {RPCObserver} =require("./brokers/rpc");
+
 const express = require('express');
 const app = express();
 const logger = require('./logging/logger');
@@ -14,6 +16,11 @@ const startServer = function () {
 
 
     require('./startup/boot')(app);
+
+    RPCObserver("PACKAGE_SERVICE_QUEUE")
+        .then(() => console.log("consume success"))
+        .catch((err) => "Error occurred while saving the data");
+
 
     process.on("uncaughtException",
         (exp) => logger.error(exp.message, exp));

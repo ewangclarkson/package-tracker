@@ -70,7 +70,6 @@ export class PackageComponent implements OnInit {
   ngOnInit(): void {
     this.getPackages();
     this.getDeliveries();
-    this.displayDatatable();
   }
 
   displayDatatable() {
@@ -100,6 +99,7 @@ export class PackageComponent implements OnInit {
 
         if (response.length > 0) this.toastr.success(this.translate.getMessage("deliveries_loaded"));
         this.isLoading = false;
+        this.displayDatatable();
       },
       (err) => {
         this.toastr.error(this.translate.getMessage("unexpected_error_d"));

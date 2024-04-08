@@ -53,6 +53,7 @@
   "enter_to": "Enter destination",
   "enter_from": "Enter source",
   "invalid_package_request": "All form fields are mandatory",
+  "invalid_delivery_request": "All form fields are mandatory",
   "package_created": "The package was successfully created",
   "delivery_created": "The delivery was successfully created",
   "add_delivery":"Add a New Delivery",

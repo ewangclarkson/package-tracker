@@ -26,12 +26,8 @@ import {PackageComponent} from "./components/pages/package/package.component";
 import {DeliveryComponent} from "./components/pages/delivery/delivery.component";
 import {DataTablesModule} from "angular-datatables";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
 import {PlaceAutocompleteComponent} from "./components/place-autocomplete/place-autocomplete.component";
-import {MatSelectModule} from "@angular/material/select";
-import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
-import { MatAutocompleteModule} from "@angular/material/autocomplete";
+
 
 const config: SocketIoConfig = {url: environment.wsHost, options: {}};
 

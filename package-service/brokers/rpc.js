@@ -1,6 +1,6 @@
 const amqplib = require('amqplib');
 const config = require("config");
-import {v4 as uuidv4} from 'uuid';
+const {packageService} = require("../domain/service/package.service");
 
 let amqpLibConnection = null;
 
@@ -16,57 +16,28 @@ const getChannel = async () => {
 };
 
 
-const RPCObserver = async (RPC_QUEUE_NAME, fakeResponse) => {
+const RPCObserver = async (RPC_QUEUE_NAME) => {
     const channel = await getChannel();
     await channel.assertQueue(RPC_QUEUE_NAME, {
         durable: false
     });
 
     channel.prefetch(1);
-    channel.consume(RPC_QUEUE_NAME, (msg) => {
+    channel.consume(RPC_QUEUE_NAME, async (msg) => {
             if (msg.content) {
                 const payload = JSON.parse(msg.content.toString());
-                const response = {fakeResponse, payload};
-                channel.sendToQueue(msg.properties.replayTo, Buffer.from(JSON.stringify(response)), {
+                const response = await packageService.updatePackageById(payload.package_id, {active_delivery_id: payload.delivery_id});
+
+                channel.sendToQueue(msg.properties.replyTo, Buffer.from(JSON.stringify(response)), {
                     correlationId: msg.properties.correlationId
                 });
+                channel.ack(msg);
             }
-        },
-        {noAck: false}
-    );
-};
-
-
-const requestData = async (RPC_QUEUE_NAME, payload, uuid) => {
-
-    const channel = getChannel();
-    const q = await channel.assertQueue("", {exclusive: true});
-
-    channel.sendToQueue(RPC_QUEUE_NAME, Buffer.from(JSON.stringify(payload)),
-        {
-            replayTo:q.name,
-            correlationId: uuid
         });
-
-    return new Promise((resolve, reject) => {
-        channel.consume(q.queue,(msg) =>{
-            if(msg.properties.correlationId === uuid){
-                resolve(JSON.parse(msg.content.toString()));
-            }else{
-                reject("data not found")
-            }
-        },{noAck: true})
-    });
-}
-
-const RPCRequest = async (RPC_QUEUE_NAME, payload) => {
-    const uuid = uuidv4();
-    return  requestData(RPC_QUEUE_NAME, payload, uuid);
 };
 
-module.exports={
+module.exports = {
     getChannel,
-    RPCObserver,
-    RPCRequest
+    RPCObserver
 }
 

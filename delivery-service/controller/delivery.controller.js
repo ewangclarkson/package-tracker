@@ -1,5 +1,8 @@
 const {deliveryService, validate} = require('../domain/service/delivery.service');
 const HttpStatus = require('pk-common-lib/http/http.status');
+const {RPCRequest} = require("../brokers/rpc");
+
+const RPC_QUEUE_NAME = "PACKAGE_SERVICE_QUEUE";
 
 const DeliveryController = {
 
@@ -19,12 +22,17 @@ const DeliveryController = {
     async creatDelivery(req, res) {
         const {value, error} = validate.create(req.body);
 
-        if (error) {return res.status(HttpStatus.BAD_REQUEST).send(error.details[0].message)}
+        if (error) {
+            return res.status(HttpStatus.BAD_REQUEST).send(error.details[0].message)
+        }
 
         const deliveryObj = await deliveryService.createDelivery(req.body);
 
-
-
+        const response = await RPCRequest(RPC_QUEUE_NAME, {
+            package_id: deliveryObj.package_id,
+            delivery_id: deliveryObj.delivery_id
+        });
+console.log(response);
         return res.status(HttpStatus.CREATED).send(deliveryObj);
     },
     async deleteDelivery(req, res) {
@@ -46,7 +54,6 @@ const DeliveryController = {
         if (!exist) {
             return res.status(HttpStatus.NOT_FOUND).send("Could not find the delivery with the given id")
         }
-
 
         const deliveryObj = await deliveryService.updateDeliveryById(req.params.id, req.body);
 

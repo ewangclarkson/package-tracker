@@ -1,10 +1,12 @@
 <main class="main">
   <app-header></app-header>
   <section class="content">
-        <div class="card" *ngIf="showAddPackage==false && showAddDelivery==false && showList ==true">
+    <br/>
+
+
+    <div class="card" *ngIf="showAddPackage==false && showAddDelivery==false && showList ==true ">
+      <app-loader *ngIf="isLoading"></app-loader>
           <div class="card-body">
-            <br/>
-            <app-loader *ngIf="isLoading"></app-loader>
 
             <h3>{{"package_list" | translate}}</h3>
             <button class="btn login__block__btn text-white"
@@ -82,6 +84,7 @@
         </div>
 
         <div class="card" *ngIf="showAddPackage==true && showAddDelivery==false && showList ==false">
+
           <div class="card-body">
             <h3>{{"add_package" | translate}}</h3><br/>
             <form
@@ -293,6 +296,7 @@
                   </div>
                 </div>
               </div><br/>
+              <app-loader *ngIf="isLoading"></app-loader>
               <div class="row">
                 <div class="col-sm-6">
                   <button type="submit" class="btn login__block__btn">{{"create_package" | translate}}</button><br/><br/><br/>
@@ -423,6 +427,7 @@
             </datalist>
           </div>
           <br/>
+          <app-loader *ngIf="isLoading"></app-loader>
           <div class="row">
             <div class="col-sm-6">
               <button type="submit" class="btn login__block__btn">{{"create_delivery" | translate}}</button>
