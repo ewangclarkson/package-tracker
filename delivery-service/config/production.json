@@ -15,6 +15,6 @@
   "origin": "http://localhost:8000",
   "rabbitMq": {
     "prefix": "amqps://avczmdaq:",
-    "host": "@chimpanzee.rmq.cloudamqp.com/avczmdaq",
+    "host": "@chimpanzee.rmq.cloudamqp.com/avczmdaq"
   }
 }

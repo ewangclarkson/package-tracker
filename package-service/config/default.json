@@ -14,6 +14,6 @@
   },
   "rabbitMq": {
     "prefix": "amqps://avczmdaq:",
-    "host": "@chimpanzee.rmq.cloudamqp.com/avczmdaq",
+    "host": "@chimpanzee.rmq.cloudamqp.com/avczmdaq"
   }
 }
