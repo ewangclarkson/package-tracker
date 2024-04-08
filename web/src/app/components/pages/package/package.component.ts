@@ -70,10 +70,10 @@ export class PackageComponent implements OnInit {
   ngOnInit(): void {
     this.getPackages();
     this.getDeliveries();
-     this.displayDatatable();
+    this.displayDatatable();
   }
 
-  displayDatatable(){
+  displayDatatable() {
     setTimeout(() => {
       $('#packageDatatable').DataTable({
         pagingType: 'full_numbers',
@@ -149,7 +149,20 @@ export class PackageComponent implements OnInit {
       (response: PackageResponse) => {
         this.packageList.push(response);
         this.toastr.success(this.translate.getMessage("package_created"));
-        this.show(true,false,false);
+        this.packageRequest = {
+          description: undefined,
+          weight: undefined,
+          width: undefined,
+          height: undefined,
+          depth: undefined,
+          from_name: '',
+          from_address: '',
+          from_location: undefined,
+          to_name: '',
+          to_address: '',
+          to_location: undefined
+        };
+        this.show(true, false, false);
         this.isLoading = false;
       },
       (err) => {
@@ -173,7 +186,7 @@ export class PackageComponent implements OnInit {
     this.showList = showList;
     this.showAddDelivery = showAddDelivery;
     this.showAddPackage = showAddPackage;
-    this.showList ? this.displayDatatable():'';
+    this.showList ? this.displayDatatable() : '';
   }
 
   onAddDelivery() {
@@ -191,7 +204,15 @@ export class PackageComponent implements OnInit {
       (response: DeliveryResponse) => {
         this.deliveryList.push(response);
         this.toastr.success(this.translate.getMessage("delivery_created"));
-        this.show(true,false,false);
+        this.deliveryRequest = {
+          package_id: undefined,
+          pickup_time: undefined,
+          start_time: undefined,
+          end_time: undefined,
+          location: undefined,
+          status: undefined
+        };
+        this.show(true, false, false);
         this.isLoading = false;
       },
       (err) => {
