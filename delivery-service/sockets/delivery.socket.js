@@ -3,8 +3,6 @@ const {deliveryService} = require('../domain/service/delivery.service');
 module.exports = function (io) {
     io.on('connection', (socket) => {
         socket.on('location_changed',  async ({delivery_id, location}) => {
-            console.log(delivery_id);
-            console.log(location);
             const newDelivery = await deliveryService.updateDeliveryById(delivery_id, {location: location});
             socket.broadcast.emit("delivery_updated", newDelivery);
         });

@@ -103,18 +103,16 @@ export class DriverComponent implements OnInit {
   setCurrentMapInformation() {
     navigator.geolocation.getCurrentPosition(position => {
       const {latitude, longitude} = position.coords;
-      if ((latitude == this.center.lat) && (longitude == this.center.lng)) {
-      } else {
-        if (this.center.lat !== 0 && this.center.lng !== 0) {
-          this.webSocketService.sendMessage(Events.LOCATION_CHANGE, {
-            delivery_id: this.deliveryResponse!.delivery_id,
-            location: {lat: latitude, lng: longitude}
-          });
-        }
-      }
+      // if ((latitude == this.center.lat) && (longitude == this.center.lng)) {
+      // } else {
+        this.webSocketService.sendMessage(Events.LOCATION_CHANGE, {
+          delivery_id: this.deliveryResponse!.delivery_id,
+          location: {lat: latitude, lng: longitude}
+        });
+      //}
       this.center.lat = latitude;
       this.center.lng = longitude;
-      this.markerPositions.length ==3?this.markerPositions.pop():'';
+      this.markerPositions.length == 3 ? this.markerPositions.pop() : '';
       this.markerPositions.push({lat: latitude, lng: longitude});
       this.showMap = true;
     });

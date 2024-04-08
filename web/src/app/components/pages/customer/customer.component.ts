@@ -71,6 +71,7 @@ export class CustomerComponent {
                 this.setMapCurrentPositions(resp.location.lat,resp.location.lng);
                 this.webSocketService.getMessage(Events.DELIVERY_UPDATED)
                   .subscribe((delivery: DeliveryResponse) => {
+
                     if (delivery.delivery_id == this.deliveryResponse!.delivery_id) {
                       this.deliveryResponse = delivery!;
                       this.markerPositions.pop();
