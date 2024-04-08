@@ -99,6 +99,7 @@ export class DriverComponent implements OnInit {
     this.markerPositions.push({lat: latitude, lng: longitude});
   }
 
+
   setCurrentMapInformation() {
     navigator.geolocation.getCurrentPosition(position => {
       const {latitude, longitude} = position.coords;
@@ -107,12 +108,13 @@ export class DriverComponent implements OnInit {
         if (this.center.lat !== 0 && this.center.lng !== 0) {
           this.webSocketService.sendMessage(Events.LOCATION_CHANGE, {
             delivery_id: this.deliveryResponse!.delivery_id,
-            location: {lat: this.center.lat, lng: this.center.lng}
+            location: {lat: latitude, lng: longitude}
           });
         }
       }
       this.center.lat = latitude;
       this.center.lng = longitude;
+      this.markerPositions.length ==3?this.markerPositions.pop():'';
       this.markerPositions.push({lat: latitude, lng: longitude});
       this.showMap = true;
     });
