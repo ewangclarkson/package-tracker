@@ -4,5 +4,8 @@
   },
   "jwt": {
     "privateKey": "jwt_private_key"
+  },
+  "rabbitMq": {
+    "password": "amqp_password"
   }
 }

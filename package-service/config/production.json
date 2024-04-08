@@ -11,5 +11,9 @@
   },
   "jwt": {
     "expiresIn": "1h"
+  },
+  "rabbitMq": {
+    "prefix": "amqps://avczmdaq:",
+    "host": "@chimpanzee.rmq.cloudamqp.com/avczmdaq",
   }
 }
