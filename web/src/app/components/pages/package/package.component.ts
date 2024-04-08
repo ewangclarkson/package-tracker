@@ -43,10 +43,20 @@ export class PackageComponent implements OnInit {
     location: undefined,
     status: undefined
   };
-  deliveryOptions: DeliveryResponse[] = [];
+
   fromLocation?: PlaceSearchResult | undefined;
   toLocation?: PlaceSearchResult | undefined;
   deliveryLocation?: PlaceSearchResult;
+  statusOptions: Status[] = [
+    Status.OPEN,
+    Status.PICKEDUP,
+    Status.INTRANSIT,
+    Status.DELIVERED,
+    Status.FAILED
+  ];
+  showList: boolean = true;
+  showAddPackage: boolean = false;
+  showAddDelivery: boolean = false;
 
   constructor(
     private toastr: ToastrService,
@@ -60,22 +70,24 @@ export class PackageComponent implements OnInit {
   ngOnInit(): void {
     this.getPackages();
     this.getDeliveries();
-    $(document).ready(() => {
-      setTimeout(() => {
-        $('#packageDatatable').DataTable({
-          pagingType: 'full_numbers',
-          pageLength: 5,
-          processing: true,
-          lengthMenu: [5, 10, 25],
-        });
-        $('#deliveryDatatable').DataTable({
-          pagingType: 'full_numbers',
-          pageLength: 5,
-          processing: true,
-          lengthMenu: [5, 10, 25],
-        });
-      }, 2);
-    });
+     this.displayDatatable();
+  }
+
+  displayDatatable(){
+    setTimeout(() => {
+      $('#packageDatatable').DataTable({
+        pagingType: 'full_numbers',
+        pageLength: 5,
+        processing: true,
+        lengthMenu: [5, 10, 25],
+      });
+      $('#deliveryDatatable').DataTable({
+        pagingType: 'full_numbers',
+        pageLength: 5,
+        processing: true,
+        lengthMenu: [5, 10, 25],
+      });
+    }, 2);
   }
 
 
@@ -123,7 +135,6 @@ export class PackageComponent implements OnInit {
   }
 
   onAddPackage() {
-    alert(JSON.stringify(this.fromLocation));
     if (!this.isValidPackageRequest()) {
       this.toastr.error("invalid_package_request");
     }
@@ -138,6 +149,7 @@ export class PackageComponent implements OnInit {
       (response: PackageResponse) => {
         this.packageList.push(response);
         this.toastr.success(this.translate.getMessage("package_created"));
+        this.show(true,false,false);
         this.isLoading = false;
       },
       (err) => {
@@ -149,25 +161,37 @@ export class PackageComponent implements OnInit {
 
   isValidDeliveryRequest() {
     return ((this.deliveryRequest.package_id != undefined) && (this.deliveryRequest.package_id.length > 0)
-      && (this.deliveryRequest.pickup_time != undefined) && (this.deliveryRequest.pickup_time.length>0 != undefined)
-      && (this.deliveryRequest.start_time != undefined) && (this.deliveryRequest.start_time.length>0 != undefined)
-      && (this.deliveryRequest.end_time != undefined) && (this.deliveryRequest.end_time.length>0 != undefined)
-      && (this.deliveryRequest.status != undefined) && (this.deliveryRequest.status.length>0 != undefined) && (this.deliveryLocation != undefined)
+      && (this.deliveryRequest.pickup_time != undefined) && (this.deliveryRequest.pickup_time.length > 0 != undefined)
+      && (this.deliveryRequest.start_time != undefined) && (this.deliveryRequest.start_time.length > 0 != undefined)
+      && (this.deliveryRequest.end_time != undefined) && (this.deliveryRequest.end_time.length > 0 != undefined)
+      && (this.deliveryRequest.status != undefined) && (this.deliveryRequest.status.length > 0 != undefined) && (this.deliveryLocation != undefined)
     );
   }
 
+
+  show(showList: boolean, showAddPackage: boolean, showAddDelivery: boolean) {
+    this.showList = showList;
+    this.showAddDelivery = showAddDelivery;
+    this.showAddPackage = showAddPackage;
+    this.showList ? this.displayDatatable():'';
+  }
 
   onAddDelivery() {
     if (!this.isValidDeliveryRequest()) {
       this.toastr.error("invalid_delivery_request");
     }
     this.isLoading = true;
-    const destination: Location = {lat: this.deliveryLocation!.location!.lat(), lng: this.deliveryLocation!.location!.lng()};
+    const destination: Location = {
+      lat: this.deliveryLocation!.location!.lat(),
+      lng: this.deliveryLocation!.location!.lng()
+    };
     this.deliveryService.createDelivery({
-      ...this.deliveryRequest, location: destination}).subscribe(
+      ...this.deliveryRequest, location: destination
+    }).subscribe(
       (response: DeliveryResponse) => {
         this.deliveryList.push(response);
         this.toastr.success(this.translate.getMessage("delivery_created"));
+        this.show(true,false,false);
         this.isLoading = false;
       },
       (err) => {

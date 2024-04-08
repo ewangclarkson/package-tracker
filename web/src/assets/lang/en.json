@@ -58,5 +58,6 @@
   "add_delivery":"Add a New Delivery",
   "delivery_location": "Location",
   "enter_location": "Enter location",
-  "package": "Package"
+  "package": "Package",
+  "cancel": "Cancel"
 }

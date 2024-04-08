@@ -61,11 +61,6 @@ const config: SocketIoConfig = {url: environment.wsHost, options: {}};
     GoogleMapsModule,
     SocketIoModule.forRoot(config),
     DataTablesModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    NgxMatSelectSearchModule,
-    MatAutocompleteModule,
     ReactiveFormsModule
   ],
   providers: [

@@ -1,14 +1,14 @@
 <main class="main">
   <app-header></app-header>
   <section class="content">
-    <!--    <div class="card">
+        <div class="card" *ngIf="showAddPackage==false && showAddDelivery==false && showList ==true">
           <div class="card-body">
             <br/>
             <app-loader *ngIf="isLoading"></app-loader>
 
             <h3>{{"package_list" | translate}}</h3>
             <button class="btn login__block__btn text-white"
-                    style="padding-top: 10px;padding-bottom: 10px;float: right;width: 220px">{{"create_package" | translate}}</button>
+                    style="padding-top: 10px;padding-bottom: 10px;float: right;width: 220px" (click)="show(false,true,false);">{{"create_package" | translate}}</button>
             <br/>
             <div style="overflow-x: auto;width: 100%">
               <table id="packageDatatable">
@@ -50,7 +50,7 @@
             <br/><br/>
             <h3>{{"delivery_list" | translate}}</h3>
             <button class="btn login__block__btn text-white"
-                    style="width: 220px;padding-top: 10px;padding-bottom: 10px;float: right">{{"create_delivery" | translate}}</button>
+                    style="width: 220px;padding-top: 10px;padding-bottom: 10px;float: right" (click)="show(false,false,true)">{{"create_delivery" | translate}}</button>
             <br/>
             <div style="overflow-x: auto;width: 100%">
               <table id="deliveryDatatable">
@@ -79,229 +79,236 @@
               </table>
             </div>
           </div>
-        </div>-->
+        </div>
 
-    <!--    <div class="card">-->
-    <!--      <div class="card-body">-->
-    <!--        <h3>{{"add_package" | translate}}</h3><br/>-->
-    <!--        <form-->
-    <!--          name="form"-->
+        <div class="card" *ngIf="showAddPackage==true && showAddDelivery==false && showList ==false">
+          <div class="card-body">
+            <h3>{{"add_package" | translate}}</h3><br/>
+            <form
+              name="form"
 
-    <!--          class="search add-form"-->
-    <!--          (ngSubmit)="f.form.valid && onAddPackage()"-->
-    <!--          #f="ngForm"-->
-    <!--          novalidate>-->
-    <!--          <div class="row">-->
-    <!--            <div class="col-sm-6">-->
-    <!--              <div class="form-group form-group&#45;&#45;left">-->
-    <!--                <label>{{"description" | translate}}</label>-->
-    <!--                <input-->
-    <!--                  type="text"-->
-    <!--                  class="search__text"-->
-    <!--                  placeholder="Enter description"-->
-    <!--                  name="description"-->
-    <!--                  [(ngModel)]="packageRequest!.description"-->
-    <!--                  required-->
-    <!--                  #description="ngModel"-->
-    <!--                  [ngClass]="{ 'is-invalid': f.submitted && description.errors }"-->
-    <!--                />-->
-    <!--                <i class="form-group__bar"></i>-->
-    <!--                @if(description.errors && f.submitted){-->
-    <!--                <div class="required">Description is required!</div>-->
-    <!--                }-->
-    <!--              </div>-->
-    <!--            </div>-->
-    <!--            <div class="col-sm-6">-->
-    <!--              <div class="form-group form-group&#45;&#45;left">-->
-    <!--                <label>{{"depth" | translate}}</label>-->
-    <!--                <input-->
-    <!--                  type="number"-->
-    <!--                  class="search__text"-->
-    <!--                  placeholder="Enter depth"-->
-    <!--                  name="depth"-->
-    <!--                  [(ngModel)]="packageRequest!.depth"-->
-    <!--                  required-->
-    <!--                  #depth="ngModel"-->
-    <!--                  [ngClass]="{ 'is-invalid': f.submitted && depth.errors }"-->
-    <!--                />-->
-    <!--                <i class="form-group__bar"></i>-->
-    <!--                @if(depth.errors && f.submitted){-->
-    <!--                <div class="required">Depth is required!</div>-->
-    <!--                }-->
-    <!--              </div>-->
-    <!--            </div>-->
-    <!--          </div>-->
+              class="search add-form"
+              (ngSubmit)="f.form.valid && onAddPackage()"
+              #f="ngForm"
+              novalidate>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group form-group--left">
+                    <label>{{"description" | translate}}</label>
+                    <input
+                      type="text"
+                      class="search__text"
+                      placeholder="Enter description"
+                      name="description"
+                      [(ngModel)]="packageRequest!.description"
+                      required
+                      #description="ngModel"
+                      [ngClass]="{ 'is-invalid': f.submitted && description.errors }"
+                    />
+                    <i class="form-group__bar"></i>
+                    @if(description.errors && f.submitted){
+                    <div class="required">Description is required!</div>
+                    }
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group form-group--left">
+                    <label>{{"depth" | translate}}</label>
+                    <input
+                      type="number"
+                      class="search__text"
+                      placeholder="Enter depth"
+                      name="depth"
+                      [(ngModel)]="packageRequest!.depth"
+                      required
+                      #depth="ngModel"
+                      [ngClass]="{ 'is-invalid': f.submitted && depth.errors }"
+                    />
+                    <i class="form-group__bar"></i>
+                    @if(depth.errors && f.submitted){
+                    <div class="required">Depth is required!</div>
+                    }
+                  </div>
+                </div>
+              </div>
 
-    <!--          <br/>-->
-    <!--          <div class="form-group form-group&#45;&#45;left">-->
-    <!--            <label>{{"weight" | translate}}</label>-->
-    <!--            <input-->
-    <!--              type="number"-->
-    <!--              class="search__text"-->
-    <!--              placeholder="Enter weight"-->
-    <!--              name="weight"-->
-    <!--              [(ngModel)]="packageRequest!.weight"-->
-    <!--              required-->
-    <!--              #weight="ngModel"-->
-    <!--              [ngClass]="{ 'is-invalid': f.submitted && weight.errors }"-->
-    <!--            />-->
-    <!--            <i class="form-group__bar"></i>-->
-    <!--            @if(weight.errors && f.submitted){-->
-    <!--            <div class="required">Weight is required</div>-->
-    <!--            }-->
-    <!--          </div>-->
-    <!--          <br/>-->
-    <!--          <div class="row">-->
-    <!--            <div class="col-sm-6">-->
-    <!--              <div class="form-group form-group&#45;&#45;left">-->
-    <!--                <label>{{"width" | translate}}</label>-->
-    <!--                <input-->
-    <!--                  type="number"-->
-    <!--                  class="search__text"-->
-    <!--                  placeholder="Enter width"-->
-    <!--                  name="width"-->
-    <!--                  [(ngModel)]="packageRequest!.width"-->
-    <!--                  required-->
-    <!--                  #width="ngModel"-->
-    <!--                  [ngClass]="{ 'is-invalid': f.submitted && width.errors }"-->
-    <!--                />-->
-    <!--                <i class="form-group__bar"></i>-->
-    <!--                @if(width.errors && f.submitted){-->
-    <!--                <div class="required">Width is required!</div>-->
-    <!--                }-->
-    <!--              </div>-->
-    <!--            </div>-->
-    <!--            <div class="col-sm-6">-->
-    <!--              <div class="form-group form-group&#45;&#45;left">-->
-    <!--                <label>{{"height" | translate}}</label>-->
-    <!--                <input-->
-    <!--                  type="number"-->
-    <!--                  class="search__text"-->
-    <!--                  placeholder="Enter height"-->
-    <!--                  name="height"-->
-    <!--                  [(ngModel)]="packageRequest!.height"-->
-    <!--                  required-->
-    <!--                  #height="ngModel"-->
-    <!--                  [ngClass]="{ 'is-invalid': f.submitted && height.errors }"-->
-    <!--                />-->
-    <!--                <i class="form-group__bar"></i>-->
-    <!--                @if(height.errors && f.submitted){-->
-    <!--                <div class="required">Height is required!</div>-->
-    <!--                }-->
-    <!--              </div>-->
-    <!--            </div>-->
-    <!--          </div>-->
-    <!--          <br/>-->
-    <!--          <div class="row">-->
-    <!--            <div class="col-sm-6">-->
-    <!--              <div class="form-group form-group&#45;&#45;left">-->
-    <!--                <label>{{"from_name" | translate}}</label>-->
-    <!--                <input-->
-    <!--                  type="text"-->
-    <!--                  class="search__text"-->
-    <!--                  placeholder="Enter source name"-->
-    <!--                  name="width"-->
-    <!--                  [(ngModel)]="packageRequest!.from_name"-->
-    <!--                  required-->
-    <!--                  #fromName="ngModel"-->
-    <!--                  [ngClass]="{ 'is-invalid': f.submitted && fromName.errors }"-->
-    <!--                />-->
-    <!--                <i class="form-group__bar"></i>-->
-    <!--                @if(fromName.errors && f.submitted){-->
-    <!--                <div class="required">From name is required!</div>-->
-    <!--                }-->
-    <!--              </div>-->
-    <!--            </div>-->
-    <!--            <div class="col-sm-6">-->
-    <!--              <div class="form-group form-group&#45;&#45;left">-->
-    <!--                <label>{{"from_address" | translate}}</label>-->
-    <!--                <input-->
-    <!--                  type="text"-->
-    <!--                  class="search__text"-->
-    <!--                  placeholder="Enter source address"-->
-    <!--                  name="from_address"-->
-    <!--                  [(ngModel)]="packageRequest!.from_address"-->
-    <!--                  required-->
-    <!--                  #fromAddress="ngModel"-->
-    <!--                  [ngClass]="{ 'is-invalid': f.submitted && fromAddress.errors }"-->
-    <!--                />-->
-    <!--                <i class="form-group__bar"></i>-->
-    <!--                @if(fromAddress.errors && f.submitted){-->
-    <!--                <div class="required">Height is required!</div>-->
-    <!--                }-->
-    <!--              </div>-->
-    <!--            </div>-->
-    <!--          </div>-->
-    <!--          <br/>-->
-    <!--          <div class="row">-->
+              <br/>
+              <div class="form-group form-group--left">
+                <label>{{"weight" | translate}}</label>
+                <input
+                  type="number"
+                  class="search__text"
+                  placeholder="Enter weight"
+                  name="weight"
+                  [(ngModel)]="packageRequest!.weight"
+                  required
+                  #weight="ngModel"
+                  [ngClass]="{ 'is-invalid': f.submitted && weight.errors }"
+                />
+                <i class="form-group__bar"></i>
+                @if(weight.errors && f.submitted){
+                <div class="required">Weight is required</div>
+                }
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group form-group--left">
+                    <label>{{"width" | translate}}</label>
+                    <input
+                      type="number"
+                      class="search__text"
+                      placeholder="Enter width"
+                      name="width"
+                      [(ngModel)]="packageRequest!.width"
+                      required
+                      #width="ngModel"
+                      [ngClass]="{ 'is-invalid': f.submitted && width.errors }"
+                    />
+                    <i class="form-group__bar"></i>
+                    @if(width.errors && f.submitted){
+                    <div class="required">Width is required!</div>
+                    }
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group form-group--left">
+                    <label>{{"height" | translate}}</label>
+                    <input
+                      type="number"
+                      class="search__text"
+                      placeholder="Enter height"
+                      name="height"
+                      [(ngModel)]="packageRequest!.height"
+                      required
+                      #height="ngModel"
+                      [ngClass]="{ 'is-invalid': f.submitted && height.errors }"
+                    />
+                    <i class="form-group__bar"></i>
+                    @if(height.errors && f.submitted){
+                    <div class="required">Height is required!</div>
+                    }
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group form-group--left">
+                    <label>{{"from_name" | translate}}</label>
+                    <input
+                      type="text"
+                      class="search__text"
+                      placeholder="Enter source name"
+                      name="width"
+                      [(ngModel)]="packageRequest!.from_name"
+                      required
+                      #fromName="ngModel"
+                      [ngClass]="{ 'is-invalid': f.submitted && fromName.errors }"
+                    />
+                    <i class="form-group__bar"></i>
+                    @if(fromName.errors && f.submitted){
+                    <div class="required">From name is required!</div>
+                    }
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group form-group--left">
+                    <label>{{"from_address" | translate}}</label>
+                    <input
+                      type="text"
+                      class="search__text"
+                      placeholder="Enter source address"
+                      name="from_address"
+                      [(ngModel)]="packageRequest!.from_address"
+                      required
+                      #fromAddress="ngModel"
+                      [ngClass]="{ 'is-invalid': f.submitted && fromAddress.errors }"
+                    />
+                    <i class="form-group__bar"></i>
+                    @if(fromAddress.errors && f.submitted){
+                    <div class="required">Height is required!</div>
+                    }
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div class="row">
 
-    <!--          </div>-->
-    <!--          <div class="row">-->
-    <!--            <div class="col-sm-6">-->
-    <!--              <div class="form-group form-group&#45;&#45;left">-->
-    <!--                <label>{{"to_name" | translate}}</label>-->
-    <!--                <input-->
-    <!--                  type="text"-->
-    <!--                  class="search__text"-->
-    <!--                  placeholder="Enter receiver name"-->
-    <!--                  name="to_name"-->
-    <!--                  [(ngModel)]="packageRequest!.to_name"-->
-    <!--                  required-->
-    <!--                  #toName="ngModel"-->
-    <!--                  [ngClass]="{ 'is-invalid': f.submitted && toName.errors }"-->
-    <!--                />-->
-    <!--                <i class="form-group__bar"></i>-->
-    <!--                @if(toName.errors && f.submitted){-->
-    <!--                <div class="required">Receiver name is required!</div>-->
-    <!--                }-->
-    <!--              </div>-->
-    <!--            </div>-->
-    <!--            <div class="col-sm-6">-->
-    <!--              <div class="form-group form-group&#45;&#45;left">-->
-    <!--                <label>{{"to_address" | translate}}</label>-->
-    <!--                <input-->
-    <!--                  type="text"-->
-    <!--                  class="search__text"-->
-    <!--                  placeholder="Enter destination"-->
-    <!--                  name="height"-->
-    <!--                  [(ngModel)]="packageRequest!.to_address"-->
-    <!--                  required-->
-    <!--                  #toAddress="ngModel"-->
-    <!--                  [ngClass]="{ 'is-invalid': f.submitted && toAddress.errors }"-->
-    <!--                />-->
-    <!--                <i class="form-group__bar"></i>-->
-    <!--                @if(toAddress.errors && f.submitted){-->
-    <!--                <div class="required">Receiver address is required!</div>-->
-    <!--                }-->
-    <!--              </div>-->
-    <!--            </div>-->
-    <!--          </div>-->
-    <!--          <br/>-->
-    <!--          <div class="row">-->
-    <!--            <div class="col-sm-6">-->
-    <!--              <div class="form-group form-group&#45;&#45;left">-->
-    <!--                <label>{{"from_location" | translate}}</label>-->
-    <!--                <app-place-autocomplete [placeholder]="'enter_from' | translate"-->
-    <!--                                        (placeChanged)="fromLocation = $event"></app-place-autocomplete>-->
-    <!--              </div>-->
-    <!--            </div>-->
-    <!--            <div class="col-sm-6">-->
-    <!--              <div class="form-group form-group&#45;&#45;left">-->
-    <!--                <label>{{"to_location" | translate}}</label>-->
-    <!--                <app-place-autocomplete [placeholder]="'enter_to' | translate"-->
-    <!--                                        (placeChanged)="toLocation =$event"></app-place-autocomplete>-->
-    <!--              </div>-->
-    <!--            </div>-->
-    <!--          </div><br/>-->
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group form-group--left">
+                    <label>{{"to_name" | translate}}</label>
+                    <input
+                      type="text"
+                      class="search__text"
+                      placeholder="Enter receiver name"
+                      name="to_name"
+                      [(ngModel)]="packageRequest!.to_name"
+                      required
+                      #toName="ngModel"
+                      [ngClass]="{ 'is-invalid': f.submitted && toName.errors }"
+                    />
+                    <i class="form-group__bar"></i>
+                    @if(toName.errors && f.submitted){
+                    <div class="required">Receiver name is required!</div>
+                    }
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group form-group--left">
+                    <label>{{"to_address" | translate}}</label>
+                    <input
+                      type="text"
+                      class="search__text"
+                      placeholder="Enter destination"
+                      name="height"
+                      [(ngModel)]="packageRequest!.to_address"
+                      required
+                      #toAddress="ngModel"
+                      [ngClass]="{ 'is-invalid': f.submitted && toAddress.errors }"
+                    />
+                    <i class="form-group__bar"></i>
+                    @if(toAddress.errors && f.submitted){
+                    <div class="required">Receiver address is required!</div>
+                    }
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group form-group--left">
+                    <label>{{"from_location" | translate}}</label>
+                    <app-place-autocomplete [placeholder]="'enter_from' | translate"
+                                            (placeChanged)="fromLocation = $event"></app-place-autocomplete>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group form-group--left">
+                    <label>{{"to_location" | translate}}</label>
+                    <app-place-autocomplete [placeholder]="'enter_to' | translate"
+                                            (placeChanged)="toLocation =$event"></app-place-autocomplete>
+                  </div>
+                </div>
+              </div><br/>
+              <div class="row">
+                <div class="col-sm-6">
+                  <button type="submit" class="btn login__block__btn">{{"create_package" | translate}}</button><br/><br/><br/>
+                </div>
+                <div class="col-sm-6">
+                  <p class="btn login__block__btn" style="color: white;background-color: red" (click)="show(true,false,false)">{{"cancel" | translate}}</p>
+                </div>
+              </div>
+              <br/><br/><br/>
 
-    <!--          <button type="submit" class="btn login__block__btn">{{"create_package" | translate}}</button><br/><br/><br/>-->
+            </form>
 
-    <!--        </form>-->
+          </div>
+        </div>
 
-    <!--      </div>-->
-    <!--    </div>-->
-
-    <div class="card">
+    <div class="card" *ngIf="showAddPackage==false && showAddDelivery==true && showList ==false" >
       <div class="card-body">
         <h3>{{"add_delivery" | translate}}</h3><br/>
         <form
@@ -313,23 +320,32 @@
           novalidate>
           <div class="form-group form-group--left">
             <label>{{"package" | translate}}</label>
-<!--            <mat-form-field>-->
-<!--              <input matinput [matAutocomplete]="auto" class="search__text"/>-->
-<!--              <mat-autocomplete autoActiveFirstOption #-->
-<!--            </mat-form-field>-->
-<!--            <mat-select  placeholder="search package ..." #singleSelect>-->
-<!--              <mat-option>-->
-<!--                <ngx-mat-select-search [class.search__text] ngModel (ngModelChange)="filterMyOptions($event)"></ngx-mat-select-search>-->
-<!--              </mat-option>-->
-<!--              <mat-option *ngFor="let pk of packageList" [value]="pk">-->
-<!--                {{pk.description}}-->
-<!--              </mat-option>-->
-<!--            </mat-select>-->
-          </div><br/>
+            <input
+              type="text"
+              class="search__text"
+              name="package"
+              placeholder="search package"
+              [(ngModel)]="deliveryRequest!.package_id"
+              required
+              list="package"
+              #packageSearch="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && packageSearch.errors }"
+            />
+            <i class="form-group__bar"></i>
+            @if(packageSearch.errors && f.submitted){
+            <div class="required">Package  is required</div>
+            }
+            <datalist id="package" style="width: 100%">
+              <option *ngFor="let pk of packageList" [value]="pk!.package_id"
+                      style="width: 100%">{{pk!.description}} </option>
+            </datalist>
+
+          </div>
+          <br/>
           <div class="form-group form-group--left">
             <label>{{"pickup_time" | translate}}</label>
             <input
-              type="date"
+              type="datetime-local"
               class="search__text"
               name="pickup_time"
               [(ngModel)]="deliveryRequest!.pickup_time"
@@ -346,7 +362,7 @@
           <div class="form-group form-group--left">
             <label>{{"start_time" | translate}}</label>
             <input
-              type="date"
+              type="datetime-local"
               class="search__text"
               name="start_time"
               [(ngModel)]="deliveryRequest!.start_time"
@@ -363,7 +379,7 @@
           <div class="form-group form-group--left">
             <label>{{"end_time" | translate}}</label>
             <input
-              type="date"
+              type="datetime-local"
               class="search__text"
               name="pickup_time"
               [(ngModel)]="deliveryRequest!.end_time"
@@ -383,8 +399,38 @@
                                     (placeChanged)="deliveryLocation = $event"></app-place-autocomplete>
           </div>
           <br/>
-
-          <button type="submit" class="btn login__block__btn">{{"create_package" | translate}}</button>
+          <div class="form-group form-group--left">
+            <label>{{"status" | translate}}</label>
+            <input
+              type="text"
+              class="search__text"
+              name="status"
+              placeholder="Search status"
+              [(ngModel)]="deliveryRequest!.status"
+              required
+              list="status"
+              #status="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && status.errors }"
+            />
+            <i class="form-group__bar"></i>
+            @if(status.errors && f.submitted){
+            <div class="required">Status is required</div>
+            }
+            <datalist id="status" style="width: 100%">
+              <option *ngFor="let stOption of statusOptions" [value]="stOption"
+                      style="width: 100%">{{stOption}}
+              </option>
+            </datalist>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="col-sm-6">
+              <button type="submit" class="btn login__block__btn">{{"create_delivery" | translate}}</button>
+            </div>
+            <div class="col-sm-6">
+              <p class="btn login__block__btn" style="color: white;background-color: red" (click)="show(true,false,false)">{{"cancel" | translate}}</p>
+            </div>
+          </div>
           <br/><br/><br/>
 
         </form>
