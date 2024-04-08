@@ -1,0 +1,30 @@
+
+
+.search__text {
+  border: 2px solid black;
+  border-radius: 2px;
+  height: 2.9rem;
+  padding: 0 1rem 0 3rem;
+  width: 100%;
+  transition: background-color 300ms, color 300ms;
+}
+
+
+td {
+  max-width: 100px; /* Adjust the maximum width as per your requirement */
+  word-wrap: break-word;
+}
+
+.add-form{
+  width: 40%;
+}
+
+@media (max-width: 785px) {
+  .add-form{
+    width: 100%;
+  }
+}
+
+.required{
+  color: red;
+}

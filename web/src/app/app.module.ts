@@ -10,7 +10,7 @@ import {DriverComponent} from "./components/pages/driver/driver.component";
 import {LoginComponent} from "./components/pages/login/login.component";
 import {CustomerComponent} from "./components/pages/customer/customer.component";
 import {HttpClientModule} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ErrorComponent} from "./components/pages/error/error.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule} from "@angular/common";
@@ -25,6 +25,13 @@ import {SocketIoConfig, SocketIoModule} from "ngx-socket-io";
 import {PackageComponent} from "./components/pages/package/package.component";
 import {DeliveryComponent} from "./components/pages/delivery/delivery.component";
 import {DataTablesModule} from "angular-datatables";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {PlaceAutocompleteComponent} from "./components/place-autocomplete/place-autocomplete.component";
+import {MatSelectModule} from "@angular/material/select";
+import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
+import { MatAutocompleteModule} from "@angular/material/autocomplete";
 
 const config: SocketIoConfig = {url: environment.wsHost, options: {}};
 
@@ -38,7 +45,8 @@ const config: SocketIoConfig = {url: environment.wsHost, options: {}};
     CustomerComponent,
     HeaderComponent,
     ErrorComponent,
-    SearchComponent
+    SearchComponent,
+    PlaceAutocompleteComponent
   ],
   imports: [
     CommonModule,
@@ -52,12 +60,19 @@ const config: SocketIoConfig = {url: environment.wsHost, options: {}};
     SharedModule,
     GoogleMapsModule,
     SocketIoModule.forRoot(config),
-    DataTablesModule
+    DataTablesModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    NgxMatSelectSearchModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthGuard,
     DriverGuard,
-    AdminGuard
+    AdminGuard,
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

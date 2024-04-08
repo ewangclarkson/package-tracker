@@ -45,5 +45,18 @@
   "no_deliveries": "No deliveries found",
   "no_packages": "No packages found",
   "packages_loaded": "Packages loaded successfully",
-  "deliveries_loaded": "Deliveries loaded successfully"
+  "deliveries_loaded": "Deliveries loaded successfully",
+  "add_package": "Create a New Package",
+  "depth": "Depth",
+  "from_location": "Source Location",
+  "to_location": "Destination Location",
+  "enter_to": "Enter destination",
+  "enter_from": "Enter source",
+  "invalid_package_request": "All form fields are mandatory",
+  "package_created": "The package was successfully created",
+  "delivery_created": "The delivery was successfully created",
+  "add_delivery":"Add a New Delivery",
+  "delivery_location": "Location",
+  "enter_location": "Enter location",
+  "package": "Package"
 }

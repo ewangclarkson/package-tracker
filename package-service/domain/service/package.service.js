@@ -33,7 +33,7 @@ const packageService = {
 const validate={
     create: function(packageRequest) {
         const schema = Joi.object({
-            active_delivery_id: Joi.objectId().required(),
+           // active_delivery_id: Joi.objectId().required(),
             description: Joi.string().required(),
             weight: Joi.number().required(),
             width: Joi.number().required(),

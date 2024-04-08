@@ -10,7 +10,7 @@ const packageSchema = new mongoose.Schema({
     },
     active_delivery_id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        //required: true
     },
     description: {
         type: String,

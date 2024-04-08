@@ -1,16 +1,15 @@
 import {Location} from "./location.model";
 
 export interface PackageRequest {
-  active_delivery_id: string,
-  description: string,
-  weight: number,
-  width: number,
-  height: number,
-  depth: number,
-  from_name: string,
-  from_address: string,
-  from_location: Location,
-  to_name: string,
-  to_address: string,
-  to_location: Location
+  description: string | undefined,
+  weight: number  | undefined,
+  width: number  | undefined,
+  height: number  | undefined,
+  depth: number  | undefined,
+  from_name: string  | undefined,
+  from_address: string | undefined,
+  from_location: Location | undefined,
+  to_name: string | undefined,
+  to_address: string | undefined,
+  to_location: Location  | undefined
 }
