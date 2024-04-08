@@ -1,9 +1,6 @@
 {
   "name": "SuperApp - Package Service: test",
   "db": {
-    "host": "mongodb://localhost",
-    "port": "27017",
-    "name": "superapp_test"
   },
   "app": {
     "host": "http://localhost",

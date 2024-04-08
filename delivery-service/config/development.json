@@ -1,9 +1,7 @@
 {
   "name": "SuperApp - Delivery Service: development",
   "db": {
-    "host": "mongodb://localhost",
-    "port": "27017",
-    "name": "superapp"
+
   },
   "app": {
     "host": "http://localhost",
