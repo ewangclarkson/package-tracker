@@ -3,10 +3,11 @@ const request = require('supertest');
 const {connect, disconnect} = require('../../../startup/database');
 const packageRepository = require('../../../domain/repository/package.repository');
 const HttpStatus = require('pk-common-lib/http/http.status');
+const {generateToken} = require('pk-common-lib/middleware/auth');
 
 
 let server;
-
+let token;
 describe("/api/package", () => {
 
     beforeEach(async () => {
@@ -53,6 +54,13 @@ describe("/api/package", () => {
                 }
             }
         ];
+        token = await generateToken({
+            _id: "615af9a616d3bb001e0d5e2f",
+            name: "Nasa Vallery",
+            email: "ewangclarks@gmail.com",
+            phoneNumber: 673676301,
+            roles: ['USER', 'DRIVER', 'ADMIN'],
+        });
         await packageRepository.insertMany(packages);
     });
 
@@ -65,7 +73,7 @@ describe("/api/package", () => {
 
     describe('GET /', () => {
         it('should return a list of packages', async () => {
-            const resp = await request(server).get('/api/package');
+            const resp = await request(server).get('/api/package').set("Authorization", "Bearer " + token);;
             expect(resp.status).toBe(HttpStatus.SUCCESS);
             expect(resp.body.length).toEqual(2);
             expect(resp.body.some((p) => p.description === 'Bag of laptops')).toBeTruthy();
@@ -74,7 +82,7 @@ describe("/api/package", () => {
     });
    describe('GET /:id', () => {
         it('should return a 404 status code if the package does not exist', async () => {
-            const resp = await request(server).get('/api/package/6609af6e87555f3d88a34147');
+            const resp = await request(server).get('/api/package/6609af6e87555f3d88a34147').set("Authorization", "Bearer " + token);;
             expect(resp.status).toBe(HttpStatus.NOT_FOUND);
         });
 
@@ -100,7 +108,7 @@ describe("/api/package", () => {
                 }
             });
 
-            const resp = await request(server).get(`/api/package/${packageObj.package_id}`);
+            const resp = await request(server).get(`/api/package/${packageObj.package_id}`).set("Authorization", "Bearer " + token);;
             expect(resp.status).toBe(HttpStatus.SUCCESS);
             expect(resp.body.description).toEqual(packageObj.description);
         });
@@ -109,7 +117,7 @@ describe("/api/package", () => {
     describe('DELETE /:id', () => {
 
         it('should return 404 if the given id does not exist', async () => {
-            const resp = await request(server).delete(`/api/package/6609af6e87555f3d88a34147`);
+            const resp = await request(server).delete(`/api/package/6609af6e87555f3d88a34147`).set("Authorization", "Bearer " + token);;
             expect(resp.status).toEqual(HttpStatus.NOT_FOUND);
         });
 
@@ -134,7 +142,7 @@ describe("/api/package", () => {
                     lng: 71
                 }
             });
-            const resp = await request(server).delete(`/api/package/${packageObj.package_id}`);
+            const resp = await request(server).delete(`/api/package/${packageObj.package_id}`).set("Authorization", "Bearer " + token);;
             expect(resp.status).toEqual(HttpStatus.SUCCESS);
         });
     });
@@ -142,7 +150,6 @@ describe("/api/package", () => {
     describe('POST /', () => {
         it('should return status code 400 if validation fails', async () => {
             const packageObj = {
-                description: "Bag of laptops",
                 weight: 200,
                 width: 300,
                 height: 300,
@@ -161,14 +168,13 @@ describe("/api/package", () => {
                 }
             };
 
-            const resp = await request(server).post('/api/package').send(packageObj);
+            const resp = await request(server).post('/api/package').send(packageObj).set("Authorization", "Bearer " + token);;
             expect(resp.status).toBe(HttpStatus.BAD_REQUEST);
 
         });
 
         it('should return status code 201 and create package', async () => {
             const packageObj = {
-                active_delivery_id: "9e304a25b1b43d48b2e2f6ce",
                 description: "Bag of laptops",
                 weight: 200,
                 width: 300,
@@ -187,7 +193,7 @@ describe("/api/package", () => {
                     lng: 71
                 }
             };
-            const resp = await request(server).post('/api/package').send(packageObj);
+            const resp = await request(server).post('/api/package').send(packageObj).set("Authorization", "Bearer " + token);;
             expect(resp.status).toBe(HttpStatus.CREATED);
             expect(resp.body).toHaveProperty('weight', 200);
         });
@@ -217,7 +223,7 @@ describe("/api/package", () => {
                 }
             };
 
-            const resp = await request(server).put('/api/package/605a1e7d843de62e8c60b2cb').send(packageObj);
+            const resp = await request(server).put('/api/package/605a1e7d843de62e8c60b2cb').send(packageObj).set("Authorization", "Bearer " + token);;
 
             expect(resp.status).toBe(HttpStatus.NOT_FOUND);
 
@@ -247,7 +253,7 @@ describe("/api/package", () => {
 
             const packageObj = await packageRepository.create(newPackage);
 
-            const resp = await request(server).put(`/api/package/${packageObj.package_id}`).send({...newPackage, from_name: 'Lobe serge'});
+            const resp = await request(server).put(`/api/package/${packageObj.package_id}`).send({...newPackage, from_name: 'Lobe serge'}).set("Authorization", "Bearer " + token);;
 
             expect(resp.status).toBe(HttpStatus.SUCCESS);
         });
@@ -273,7 +279,7 @@ describe("/api/package", () => {
             };
             const packageObj = await packageRepository.create({...newPackage, to_name: 'Suh Edmond',  description: "Bag of laptops",});
 
-            const resp = await request(server).put('/api/package/' + packageObj.package_id).send(packageObj);
+            const resp = await request(server).put('/api/package/' + packageObj.package_id).send(packageObj).set("Authorization", "Bearer " + token);;
             expect(resp.status).toBe(HttpStatus.BAD_REQUEST);
 
         });

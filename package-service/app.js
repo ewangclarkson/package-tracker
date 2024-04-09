@@ -1,11 +1,10 @@
-const {RPCObserver} =require("./brokers/rpc");
+const {RPCObserver} = require("./brokers/rpc");
 
 const express = require('express');
 const app = express();
 const logger = require('./logging/logger');
 const config = require('config');
 const db = require('./startup/database');
-
 
 
 const startServer = function () {
