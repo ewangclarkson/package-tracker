@@ -1,6 +1,6 @@
 const {deliveryService, validate} = require('../domain/service/delivery.service');
 const HttpStatus = require('pk-common-lib/http/http.status');
-const {RPCRequest} = require("../brokers/rpc");
+const rpc = require("../brokers/rpc");
 
 const RPC_QUEUE_NAME = "PACKAGE_SERVICE_QUEUE";
 
@@ -28,11 +28,11 @@ const DeliveryController = {
 
         const deliveryObj = await deliveryService.createDelivery(req.body);
 
-        const response = await RPCRequest(RPC_QUEUE_NAME, {
+        const response = await rpc.RPCRequest(RPC_QUEUE_NAME, {
             package_id: deliveryObj.package_id,
             delivery_id: deliveryObj.delivery_id
         });
-console.log(response);
+
         return res.status(HttpStatus.CREATED).send(deliveryObj);
     },
     async deleteDelivery(req, res) {

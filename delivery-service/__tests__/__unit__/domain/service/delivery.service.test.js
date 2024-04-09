@@ -2,9 +2,14 @@ const {describe, expect, it, beforeAll} = require("@jest/globals");
 const {deliveryService, validate} = require('../../../../domain/service/delivery.service');
 const deliveryRepository = require('../../../../domain/repository/delivery.repository');
 
+const locationService = require("pk-common-lib/service/location.service");
+
 jest.mock('../../../../domain/repository/delivery.repository');
+jest.mock('pk-common-lib/service/location.service');
+
 
 let deliveries;
+
 describe('delivery service', () => {
 
     beforeAll(() => {
@@ -55,11 +60,14 @@ describe('delivery service', () => {
             status: "picked-up"
         };
 
-        deliveryRepository.create.mockImplementation(() => deliveries[1]);
+        const location ={lat: 10, lng: 10};
+        deliveryRepository.create.mockImplementation(() => ({...deliveries[1],location:location}));
+        locationService.createLocation.mockImplementationOnce(() =>(location));
+        locationService.getLocationByLatLng.mockImplementationOnce(() =>(location));
         const dbDelivery = await deliveryService.createDelivery(newDelivery);
 
-        expect(deliveryRepository.create).toHaveBeenCalledWith(newDelivery);
-        expect(dbDelivery).toMatchObject(deliveries[1]);
+        expect(deliveryRepository.create).toHaveBeenCalledWith({...newDelivery,location:location});
+        expect(dbDelivery).toMatchObject({...deliveries[1],location:location});
     });
 
 
@@ -91,6 +99,8 @@ describe('delivery service', () => {
             status: "picked-up"
         };
         deliveryRepository.findOneAndUpdate.mockImplementationOnce(() => deliveries[1]);
+        locationService.createLocation.mockImplementationOnce(() =>({lat: 10, lng: 10}));
+        locationService.getLocationByLatLng.mockImplementationOnce(() =>({lat: 10, lng: 10}));
         const dbDelivery = await deliveryService.updateDeliveryById("9e304a25b1b43d48b2e2f6ce", newDelivery);
         expect(deliveryRepository.findOneAndUpdate.mock.calls[0][0]).toEqual({delivery_id: "9e304a25b1b43d48b2e2f6ce"});
         expect(dbDelivery).toMatchObject(deliveries[1]);
