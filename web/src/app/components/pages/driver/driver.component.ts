@@ -30,7 +30,7 @@ export class DriverComponent implements OnInit {
   deliveryResponse?: DeliveryResponse;
 
   markerOptions: google.maps.MarkerOptions = {draggable: false};
-  markerPositions: google.maps.LatLngLiteral[] = [];
+  markerPositions:any = [];
   status: any = {
     OPEN: Status.OPEN,
     PICKEDUP: Status.PICKEDUP,
@@ -54,10 +54,14 @@ export class DriverComponent implements OnInit {
 
   }
 
-  moveMap(event: google.maps.MapMouseEvent) {
-    if (event.latLng != null) this.center = (event.latLng.toJSON());
+  generatePolyline(): google.maps.PolylineOptions {
+    return {
+      path: [this.packageResponse!.from_location, this.packageResponse!.to_location],
+      strokeColor: "#179138",
+      strokeOpacity: 1.0,
+      strokeWeight: 3
+    };
   }
-
   move(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.show = event.latLng.toJSON();
   }
@@ -76,8 +80,8 @@ export class DriverComponent implements OnInit {
               (resp: PackageResponse) => {
                 this.packageResponse = resp;
                 this.deliveryResponse = response;
-                this.defineMapMarkers(resp.from_location.lat, resp.from_location.lng);
-                this.defineMapMarkers(resp.to_location.lat, resp.to_location.lng);
+                this.defineMapMarkers(resp.from_location.lat, resp.from_location.lng,"http://maps.google.com/mapfiles/ms/icons/green-dot.png");
+                this.defineMapMarkers(resp.to_location.lat, resp.to_location.lng,"http://maps.google.com/mapfiles/ms/icons/blue-dot.png");
                 this.defineMapOptions();
                 this.toastr.success(this.translate.getMessage("delivery_load_success"));
               },
@@ -95,8 +99,8 @@ export class DriverComponent implements OnInit {
     );
   }
 
-  defineMapMarkers(latitude: number, longitude: number) {
-    this.markerPositions.push({lat: latitude, lng: longitude});
+  defineMapMarkers(latitude: number, longitude: number,icon:string) {
+    this.markerPositions.push({position:{lat: latitude, lng: longitude},iconUrl:icon});
   }
 
 
@@ -113,7 +117,7 @@ export class DriverComponent implements OnInit {
       this.center.lat = latitude;
       this.center.lng = longitude;
       this.markerPositions.length == 3 ? this.markerPositions.pop() : '';
-      this.markerPositions.push({lat: latitude, lng: longitude});
+      this.markerPositions.push({position:{lat: latitude, lng: longitude},iconUrl:"http://maps.gstatic.com/mapfiles/ms2/micons/bus.png"});
       this.showMap = true;
     });
   }

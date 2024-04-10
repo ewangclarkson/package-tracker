@@ -105,7 +105,7 @@
                 <!--(mapClick)="addMarker($event)"
                 (mapMousemove)="move($event)"-->
                 @for (position of markerPositions; track position) {
-                <map-marker [position]="position" [options]="markerOptions" />
+                <map-marker [position]="position.position" [options]="{ icon: position.iconUrl,draggable: false }" />
                 }
               </google-map>
             </div>

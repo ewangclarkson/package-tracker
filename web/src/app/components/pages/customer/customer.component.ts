@@ -28,7 +28,7 @@ export class CustomerComponent {
   deliveryResponse?: DeliveryResponse;
 
   markerOptions: google.maps.MarkerOptions = {draggable: false};
-  markerPositions: google.maps.LatLngLiteral[] = [];
+  markerPositions: any=[];
 
 
   constructor(
@@ -66,16 +66,16 @@ export class CustomerComponent {
               (resp: DeliveryResponse) => {
                 this.packageResponse = response;
                 this.deliveryResponse = resp;
-                this.setMarkerPosition(response.from_location.lat, response.from_location.lng);
-                this.setMarkerPosition(response.to_location.lat, response.to_location.lng);
-                this.setMapCurrentPositions(resp.location.lat,resp.location.lng);
+                this.setMarkerPosition(response.from_location.lat, response.from_location.lng,"http://maps.google.com/mapfiles/ms/icons/green-dot.png");
+                this.setMarkerPosition(response.to_location.lat, response.to_location.lng,"http://maps.google.com/mapfiles/ms/icons/blue-dot.png");
+                this.setMapCurrentPositions(resp.location.lat,resp.location.lng,"http://maps.gstatic.com/mapfiles/ms2/micons/bus.png");
                 this.webSocketService.getMessage(Events.DELIVERY_UPDATED)
                   .subscribe((delivery: DeliveryResponse) => {
 
                     if (delivery.delivery_id == this.deliveryResponse!.delivery_id) {
                       this.deliveryResponse = delivery!;
                       this.markerPositions.pop();
-                      this.setMapCurrentPositions(delivery.location.lat,delivery.location.lng);
+                      this.setMapCurrentPositions(delivery.location.lat,delivery.location.lng,"http://maps.gstatic.com/mapfiles/ms2/micons/bus.png");
                     }
                   });
 
@@ -95,14 +95,14 @@ export class CustomerComponent {
     );
   }
 
-  setMarkerPosition(latitude: number, longitude: number) {
-    this.markerPositions.push({lat: latitude, lng: longitude});
+  setMarkerPosition(latitude: number, longitude: number,iconUrl:string) {
+    this.markerPositions.push({position:{lat: latitude, lng: longitude},iconUrl:iconUrl});
   }
 
-  setMapCurrentPositions(latitude:number,longitude:number) {
+  setMapCurrentPositions(latitude:number,longitude:number,iconUrl:string) {
     this.center.lat = latitude;
     this.center.lng = longitude;
-    this.markerPositions.push({lat: latitude, lng: longitude});
+    this.markerPositions.push({position:{lat: latitude, lng: longitude},iconUrl:iconUrl});
     this.displayMap = true;
   }
 }

@@ -8,7 +8,6 @@ module.exports = function (io) {
         });
 
         socket.on('status_changed',  async ({delivery_id,status}) => {
-            console.log(delivery_id + " " + status);
            const newDelivery = await deliveryService.updateDeliveryStatus(delivery_id, status);
 
             socket.broadcast.emit("delivery_updated", newDelivery);
