@@ -31,7 +31,7 @@ The Common Library is a shared library that contains common functionalities, uti
 
 To install and run the Package Tracker App, follow these steps:
 
-1. Clone the repository: `https://github.com/ewangclarkson/package-tracke.git`
+1. Clone the repository: `https://github.com/ewangclarkson/package-tracker.git`
 2. Install RabbitMq: 
     - install docker and docker compose
     - cd package-tracker and run docker-compose up
