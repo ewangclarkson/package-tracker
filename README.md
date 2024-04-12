@@ -48,9 +48,6 @@ Make sure you have Node.js and npm installed on your system
 
 Once the services are up and running, you can interact with the Package Tracker App through the API Gateway through http://localhost:8000.
 
-## Contributing
-
-If you'd like to contribute to the Package Tracker App, please follow the guidelines outlined in the CONTRIBUTING.md file.
 
 ## License
 
