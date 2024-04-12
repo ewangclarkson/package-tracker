@@ -1,6 +1,6 @@
 # Package Tracker App
 
-The Package Tracker App is a system that allows users to track their packages through various delivery services. It consists of several microservices including the Delivery Service, Package Service, User Service, API Gateway, and Common Library and a web app
+The Package Tracker App is a system that allows users to track their packages through various delivery services. It consists of several microservices including the Delivery Service, Package Service, User Service, API Gateway, Common Library and a web app
 
 ## Services
 
