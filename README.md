@@ -1,6 +1,6 @@
 # Package Tracker App
 
-The Package Tracker App is a system that allows users to track their packages through various delivery services. It consists of several microservices including the Delivery Service, Package Service, User Service, API Gateway, and Common Library and a web app
+The Package Tracker App is a system that allows users to track their packages through various delivery services. It consists of several microservices including the Delivery Service, Package Service, User Service, API Gateway, Common Library and a web app
 
 ## Services
 
@@ -31,7 +31,7 @@ The Common Library is a shared library that contains common functionalities, uti
 
 To install and run the Package Tracker App, follow these steps:
 
-1. Clone the repository: `https://github.com/ewangclarkson/package-tracke.git`
+1. Clone the repository: `https://github.com/ewangclarkson/package-tracker.git`
 2. Install RabbitMq: 
     - install docker and docker compose
     - cd package-tracker and run docker-compose up
@@ -48,9 +48,6 @@ Make sure you have Node.js and npm installed on your system
 
 Once the services are up and running, you can interact with the Package Tracker App through the API Gateway through http://localhost:8000.
 
-## Contributing
-
-If you'd like to contribute to the Package Tracker App, please follow the guidelines outlined in the CONTRIBUTING.md file.
 
 ## License
 
