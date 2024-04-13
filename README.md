@@ -51,4 +51,4 @@ Once the services are up and running, you can interact with the Package Tracker 
 
 ## License
 
-The Package Tracker App is licensed under the [MIT License](LICENSE).
+The Package Tracker App is licensed under the [GOZEM License](GOZEM).
