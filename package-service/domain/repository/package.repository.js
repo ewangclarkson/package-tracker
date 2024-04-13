@@ -32,7 +32,7 @@ const packageSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    form_name: {
+    from_name: {
         type: String
     },
     from_address: {
