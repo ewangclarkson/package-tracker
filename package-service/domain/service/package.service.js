@@ -58,7 +58,7 @@ const validate={
     },
     update: function(packageRequest) {
         const schema = Joi.object({
-            active_delivery_id: Joi.objectId(),
+            active_delivery_id: Joi.string().uuid({ version: 'uuidv4' }),
             description: Joi.string().required(),
             weight: Joi.number(),
             width: Joi.number(),

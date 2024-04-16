@@ -23,7 +23,7 @@
     "joi-objectid": "^4.0.2",
     "mongoose": "^8.2.2",
     "nodemon": "^3.1.0",
-    "pk-common-lib": "1.0.7",
+    "pk-common-lib": "1.0.8",
     "socket.io": "^4.7.5",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",

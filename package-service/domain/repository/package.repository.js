@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 const {locationSchema} = require('pk-common-lib/repository/location.repository');
-
+const { v4: uuidv4 } = require('uuid');
 
 const packageSchema = new mongoose.Schema({
     package_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: () => new mongoose.Types.ObjectId(),
+        type: String,
+        default: uuidv4,
         unique: true,
     },
     active_delivery_id: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String
         //required: true
     },
     description: {

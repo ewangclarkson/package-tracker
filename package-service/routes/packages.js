@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const PackageController = require('../controller/package.controller');
-const {validObjectId} = require("pk-common-lib/middleware/validateobjectid");
+const {validGUIDS} = require("pk-common-lib/middleware/validateguids");
 const {auth,admin,driver}= require("pk-common-lib/middleware/auth");
 
 /**
@@ -54,7 +54,7 @@ router.get('',[auth,admin], PackageController.getPackages);
  *     style: simple
  */
 
-router.get('/:id',[validObjectId,auth], PackageController.getPackage);
+router.get('/:id',[validGUIDS,auth], PackageController.getPackage);
 
 
 /** @openapi
@@ -115,7 +115,7 @@ router.post('',[auth,admin], PackageController.creatPackage);
  *        type: string
  *     style: simple
  */
-router.put('/:id',[validObjectId,auth,admin], PackageController.updatePackage);
+router.put('/:id',[validGUIDS,auth,admin], PackageController.updatePackage);
 
 /** @openapi
  * /package/{id}:
@@ -143,6 +143,6 @@ router.put('/:id',[validObjectId,auth,admin], PackageController.updatePackage);
  *        type: string
  *     style: simple
  */
-router.delete('/:id', [validObjectId,auth,admin],PackageController.deletePackage);
+router.delete('/:id', [validGUIDS,auth,admin],PackageController.deletePackage);
 
 module.exports = router;

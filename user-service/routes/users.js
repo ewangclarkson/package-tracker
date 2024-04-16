@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const UserController = require('../controller/user.controller');
-const {validObjectId} = require("pk-common-lib/middleware/validateobjectid");
+const {validObjectId} = require("../middleware/validateobjectid");
 const {auth,admin,driver} = require('pk-common-lib/middleware/auth');
 
 

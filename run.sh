@@ -8,7 +8,7 @@ rm -f package-lock.json
 npm install
 export jwt_private_key=5111d89f-dde5
 export loggly_token=5111d89f-dde5-4214-9e1e-00de70939e44
-export amqp_password="46"
+export amqp_password="7WYPz419s9eaNMWKy7RRfAx5-59UMTp2"
 export db_connection_url=mongodb://localhost:27017/superapp
 nodemon app.js &
 
@@ -20,7 +20,7 @@ rm -f package-lock.json
 npm install
 export jwt_private_key=5111d89f-dde5
 export loggly_token=5111d89f-dde5-4214-9e1e-00de70939e44
-export amqp_password="54"
+export amqp_password="7WYPz419s9eaNMWKy7RRfAx5-59UMTp2"
 export db_connection_url=mongodb://localhost:27017/superapp
 nodemon app.js &
 
