@@ -270,7 +270,7 @@ describe("/api/delivery", () => {
             };
             const deliveryObj = await deliveryRepository.create({
                 ...newDelivery,
-                package_id: "9e304a25b1b43d48b2e2f6ce",
+                package_id: "0fa5c333-530d-4872-82e9-afce4795bff3",
             });
 
             deliveryService.updateDeliveryById = jest.fn().mockImplementationOnce(() => ({
