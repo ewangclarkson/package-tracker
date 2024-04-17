@@ -37,6 +37,11 @@ const options = {
                     type: "object",
                     required: ['delivery_id', 'package_id', 'description', 'pickup_time', 'start_time', 'end_time', 'location', 'status'],
                     properties: {
+                        _id: {
+                            type: "string",
+                            description: 'The ID of the delivery',
+                            format: 'uuid'
+                        },
                         delivery_id: {
                             type: "string",
                             description: 'The ID of the delivery',
@@ -48,20 +53,32 @@ const options = {
                             format: 'uuid'
                         },
                         pickup_time: {
-                            type: "date",
-                            description: 'The pickup time'
+                            type: "string",
+                            description: 'The pickup time',
+                            format: "date-time"
                         },
                         start_time: {
-                            type: "date",
-                            description: 'The start time delivery'
+                            type: "string",
+                            description: 'The start time delivery',
+                            format: "date-time"
                         },
                         end_time: {
-                            type: "date",
-                            description: 'The end time of the delivery'
+                            type: "string",
+                            description: 'The end time of the delivery',
+                            format: "date-time"
                         },
                         location: {
-                            schema: {
-                                $ref: '#/components/schemas/Location'
+                            type: "object",
+                            required: ['lat', 'lng'],
+                            properties: {
+                                lat: {
+                                    type: 'number',
+                                    description: 'The latitude on the map'
+                                },
+                                lng: {
+                                    type: 'number',
+                                    description: 'The longitude on the map'
+                                }
                             }
                         },
                         status: {
@@ -72,6 +89,10 @@ const options = {
                                 'delivered',
                                 'failed'
                             ]
+                        },
+                        __v: {
+                            type: "number",
+                            description: 'The version',
                         },
                     }
                 },
@@ -85,20 +106,32 @@ const options = {
                             format: 'uuid'
                         },
                         pickup_time: {
-                            type: "date",
-                            description: 'The pickup time'
+                            type: "string",
+                            description: 'The pickup time',
+                            format: "date-time"
                         },
                         start_time: {
-                            type: "date",
-                            description: 'The start time delivery'
+                            type: "string",
+                            description: 'The start time delivery',
+                            format: "date-time"
                         },
                         end_time: {
-                            type: "date",
-                            description: 'The end time of the delivery'
+                            type: "string",
+                            description: 'The end time of the delivery',
+                            format: "date-time"
                         },
-                        location: {
-                            schema: {
-                                $ref: '#/components/schemas/Location'
+                        location:  {
+                            type: "object",
+                            required: ['lat', 'lng'],
+                            properties: {
+                                lat: {
+                                    type: 'number',
+                                    description: 'The latitude on the map'
+                                },
+                                lng: {
+                                    type: 'number',
+                                    description: 'The longitude on the map'
+                                }
                             }
                         },
                         status: {
@@ -129,7 +162,7 @@ const options = {
                     description: "Bad request",
                     content: {
                         'application/json': {
-                            example: 'Validation failure'
+                            example: 'must be one of [open, picked-up, in-transit, delivered, failed]'
                         }
                     }
                 },
@@ -145,7 +178,15 @@ const options = {
                     description: "Internal Server Error",
                     content: {
                         'application/json': {
-                            example: 'Could not connect to the DB'
+                            example: 'An unexpected error occurred ...'
+                        }
+                    }
+                },
+                '401': {
+                    description: "Unauthorized Request",
+                    content: {
+                        'application/json': {
+                            example: 'Access denied or invalid user'
                         }
                     }
                 },
@@ -159,7 +200,7 @@ const options = {
                         }
                     }
                 }
-            } ,
+            },
             securitySchemes: {
                 jwtAuth: {
                     type: "http",
