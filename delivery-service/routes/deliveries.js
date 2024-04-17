@@ -19,11 +19,17 @@ const {auth,admin,driver}= require("pk-common-lib/middleware/auth");
  *    operationId: getDeliveries
  *    responses:
  *      '200':
- *        $ref: '#/components/responses/200'
+ *        description: Success
+ *        content:
+ *         application/json:
+ *          schema:
+ *            type: array
+ *            items:
+ *              $ref: '#/components/schemas/Delivery'
  *      '401':
- *        $ref: '#/components/responses/401'
+ *         $ref: '#/components/responses/401'
  *      '500':
- *        $ref: '#/components/responses/500'
+ *         $ref: '#/components/responses/500'
  *    tags:
  *     - Delivery
  */

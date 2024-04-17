@@ -35,8 +35,12 @@ const options = {
                 },
                 Package: {
                     type: "object",
-                    required: ['package_id', 'active_delivery', 'description', 'weight', 'width', 'height', 'depth', 'from_name', 'from_address', 'from_location', 'to_name', 'to_address', 'to_location'],
                     properties: {
+                        _id:{
+                           type: "string",
+                           description: "Mongoose tracking id",
+                            format: "uuid"
+                        },
                         package_id: {
                             type: "string",
                             description: 'The ID of the package',
@@ -75,9 +79,18 @@ const options = {
                             type: "string",
                             description: 'The source address of the package'
                         },
-                        from_location: {
-                            schema: {
-                                $ref: '#/components/schemas/Location'
+                        from_location:  {
+                            type: "object",
+                            required: ['lat', 'lng'],
+                            properties: {
+                                lat: {
+                                    type: 'number',
+                                    description: 'The latitude on the map'
+                                },
+                                lng: {
+                                    type: 'number',
+                                    description: 'The longitude on the map'
+                                }
                             }
                         },
                         to_name: {
@@ -89,20 +102,102 @@ const options = {
                             description: 'The destination address of the package'
                         },
                         to_location: {
-                            schema: {
-                                $ref: '#/components/schemas/Location'
+                            type: "object",
+                            required: ['lat', 'lng'],
+                            properties: {
+                                lat: {
+                                    type: 'number',
+                                    description: 'The latitude on the map'
+                                },
+                                lng: {
+                                    type: 'number',
+                                    description: 'The longitude on the map'
+                                }
                             }
+                        },
+                        __v: {
+                            type: "number",
+                            description: 'The version',
                         },
                     }
                 },
                 PackageRequest: {
                     type: "object",
-                    required: ['active_delivery', 'description', 'weight', 'width', 'height', 'depth', 'from_name', 'from_address', 'from_location', 'to_name', 'to_address', 'to_location'],
+                    required: ['description', 'weight', 'width', 'height', 'depth', 'from_name', 'from_address', 'from_location', 'to_name', 'to_address', 'to_location'],
                     properties: {
-                        active_delivery_id: {
+                        description: {
                             type: "string",
-                            description: 'The active deliver ID',
-                            format: 'uuid'
+                            description: 'The description of the package'
+                        },
+                        weight: {
+                            type: "number",
+                            description: 'The weight of the package in grams'
+                        },
+                        width: {
+                            type: "number",
+                            description: 'The width of the package in cm'
+                        },
+                        height: {
+                            type: "number",
+                            description: 'The height of the package in cm'
+                        },
+                        depth: {
+                            type: "number",
+                            description: 'The depth of the package in cm'
+                        },
+                        from_name: {
+                            type: "string",
+                            description: 'The source name of the package'
+                        },
+                        from_address: {
+                            type: "string",
+                            description: 'The source address of the package'
+                        },
+                        from_location:  {
+                            type: "object",
+                            required: ['lat', 'lng'],
+                            properties: {
+                                lat: {
+                                    type: 'number',
+                                    description: 'The latitude on the map'
+                                },
+                                lng: {
+                                    type: 'number',
+                                    description: 'The longitude on the map'
+                                }
+                            }
+                        },
+                        to_name: {
+                            type: "string",
+                            description: 'The destination name of the package'
+                        },
+                        to_address: {
+                            type: "string",
+                            description: 'The destination address of the package'
+                        },
+                        to_location:  {
+                            type: "object",
+                            required: ['lat', 'lng'],
+                            properties: {
+                                lat: {
+                                    type: 'number',
+                                    description: 'The latitude on the map'
+                                },
+                                lng: {
+                                    type: 'number',
+                                    description: 'The longitude on the map'
+                                }
+                            }
+                        },
+                    }
+                },
+                UpdatePackageRequest: {
+                    type: "object",
+                    properties: {
+                        active_delivery_id:{
+                            type: "string",
+                            description: "The active delivery id",
+                            format: "uuid"
                         },
                         description: {
                             type: "string",
@@ -132,9 +227,18 @@ const options = {
                             type: "string",
                             description: 'The source address of the package'
                         },
-                        from_location: {
-                            schema: {
-                                $ref: '#/components/schemas/Location'
+                        from_location:  {
+                            type: "object",
+                            required: ['lat', 'lng'],
+                            properties: {
+                                lat: {
+                                    type: 'number',
+                                    description: 'The latitude on the map'
+                                },
+                                lng: {
+                                    type: 'number',
+                                    description: 'The longitude on the map'
+                                }
                             }
                         },
                         to_name: {
@@ -145,9 +249,18 @@ const options = {
                             type: "string",
                             description: 'The destination address of the package'
                         },
-                        to_location: {
-                            schema: {
-                                $ref: '#/components/schemas/Location'
+                        to_location:  {
+                            type: "object",
+                            required: ['lat', 'lng'],
+                            properties: {
+                                lat: {
+                                    type: 'number',
+                                    description: 'The latitude on the map'
+                                },
+                                lng: {
+                                    type: 'number',
+                                    description: 'The longitude on the map'
+                                }
                             }
                         },
                     }
@@ -169,7 +282,7 @@ const options = {
                     description: "Bad request",
                     content: {
                         'application/json': {
-                            example: 'Validation failure'
+                            example: 'description" is required'
                         }
                     }
                 },
@@ -196,6 +309,14 @@ const options = {
                             schema: {
                                 $ref: '#/components/schemas/Package'
                             }
+                        }
+                    }
+                },
+                '401': {
+                    description: "Unauthorized Request",
+                    content: {
+                        'application/json': {
+                            example: 'Access denied or invalid user'
                         }
                     }
                 }

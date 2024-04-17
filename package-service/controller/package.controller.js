@@ -38,7 +38,7 @@ const PackageController = {
             return res.status(HttpStatus.NOT_FOUND).send("Could not find the package with the given id")
         }
 
-        return res.send("Package with given id was deleted successfully")
+        return res.send(packageObj);
     },
 
     async updatePackage(req, res) {
