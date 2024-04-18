@@ -118,7 +118,7 @@ describe('validateDelivery', () => {
 
     it('should validate the delivery with success and populate the database', () => {
         const newDelivery = {
-            package_id: "9e304a25b1b43d48b2e2f6ce",
+            package_id: "0892f3f0-d4b9-4e2c-9331-54fc531c9cd5",
             pickup_time: new Date(),
             start_time: new Date(),
             end_time: new Date(),

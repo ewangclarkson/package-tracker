@@ -41,7 +41,7 @@ const DeliveryController = {
             return res.status(HttpStatus.NOT_FOUND).send("Could not find the delivery with the given id")
         }
 
-        return res.send("Delivery with given id was deleted successfully")
+        return res.send(deliveryObj);
     },
 
     async updateDelivery(req, res) {
@@ -50,7 +50,7 @@ const DeliveryController = {
             return res.status(HttpStatus.BAD_REQUEST).send(error.details[0].message)
         }
 
-        const exist = await deliveryService.deleteDeliveryById(req.params.id);
+        const exist = await deliveryService.getDeliveryById(req.params.id);
         if (!exist) {
             return res.status(HttpStatus.NOT_FOUND).send("Could not find the delivery with the given id")
         }

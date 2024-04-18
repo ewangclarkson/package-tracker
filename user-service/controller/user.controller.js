@@ -6,7 +6,7 @@ const config = require('config');
 const UserController = {
 
     async getAuthUser(req, res) {
-        return res.status(HttpStatus.SUCCESS).send(req.user);
+        return res.status(HttpStatus.SUCCESS).send(_.pick(req.user, ['_id', 'name', 'email', 'phoneNumber','roles']));
     },
 
     async registerUser(req, res) {
@@ -30,7 +30,7 @@ const UserController = {
 
         const newUser = await userService.registerUser(userRequest);
 
-        return res.status(HttpStatus.CREATED).send(_.pick(newUser, ['_id', 'name', 'email', 'phoneNumber']));
+        return res.status(HttpStatus.CREATED).send(_.pick(newUser, ['_id', 'name', 'email', 'phoneNumber','roles']));
     },
 
     async updateUser(req, res) {
@@ -51,7 +51,7 @@ const UserController = {
             roles: req.body.roles
         };
 
-        const newUser = userService.updateUpdateById(req.params.id, userRequest);
+        const newUser = await userService.updateUpdateById(req.params.id, userRequest);
         return res.status(HttpStatus.SUCCESS).send(_.pick(newUser, ['_id', 'name', 'email', 'phoneNumber', 'roles']));
     },
 

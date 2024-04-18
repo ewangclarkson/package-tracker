@@ -65,7 +65,7 @@ const deliveryService = {
 const validate = {
     update: function (deliveryRequest) {
         const schema = Joi.object({
-            package_id: Joi.objectId(),
+            package_id: Joi.string().uuid({ version: 'uuidv4' }),
             pickup_time: Joi.date(),
             start_time: Joi.date(),
             end_time: Joi.date(),
@@ -81,7 +81,7 @@ const validate = {
     },
     create: function (deliveryRequest) {
         const schema = Joi.object({
-            package_id: Joi.objectId().required(),
+            package_id: Joi.string().uuid({ version: 'uuidv4' }).required(),
             pickup_time: Joi.date().required(),
             start_time: Joi.date().required(),
             end_time: Joi.date().required(),

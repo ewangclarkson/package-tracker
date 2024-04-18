@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const HttpStatus = require('../http/http.status');
+const HttpStatus = require('pk-common-lib/http/http.status');
 
 
 const validObjectId = function (req, res, next) {

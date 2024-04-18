@@ -19,50 +19,133 @@ const options = {
         ],
         components: {
             schemas: {
-                User:{
+                User: {
                     type: "object",
-                    properties:{
-                        _id:{
-                          type: "string",
-                          description: "The id of the user",
+                    properties: {
+                        _id: {
+                            type: "string",
+                            description: "The id of the user",
                             format: "uuid"
                         },
                         name: {
-                            type:"string",
-                            description:"The name of the user"
+                            type: "string",
+                            description: "The name of the user"
                         },
                         email: {
-                            type:"string",
-                            description:"The email of the user",
-                            format:"email"
+                            type: "string",
+                            description: "The email of the user",
+                            format: "email"
                         },
-                        phoneNumber:{
-                            type:Number,
+                        phoneNumber: {
+                            type: Number,
+                            description: "The phone number of the user"
+                        },
+                        roles: {
+                            type: "array",
+                            items: {
+                                type: "string"
+                            }
+                        }
+                    }
+                },
+                UpdateUserRequest: {
+                    type: "object",
+                    required: ['name', 'email', 'password', 'phoneNumber'],
+                    properties: {
+                        name: {
+                            type: "string",
+                            description: "The name of the user"
+                        },
+                        password: {
+                            type: "string",
+                            description: "The password of the user"
+                        },
+                        phoneNumber: {
+                            type: Number,
                             description: "The phone number of the user"
                         }
                     }
                 },
-                UserRequest:{
+                UserRequest: {
                     type: "object",
-                    required: ['name','email','password','phoneNumber'],
-                    properties:{
+                    required: ['name', 'password', 'phoneNumber'],
+                    properties: {
                         name: {
-                            type:"string",
-                            description:"The name of the user"
+                            type: "string",
+                            description: "The name of the user"
                         },
                         email: {
-                            type:"string",
-                            description:"The email of the user",
-                            format:"email"
+                            type: "string",
+                            description: "The email of the user",
+                            format: "email"
                         },
                         password: {
-                            type:"string",
-                            description:"The password of the user"
+                            type: "string",
+                            description: "The password of the user"
                         },
-                        phoneNumber:{
-                            type:Number,
+                        phoneNumber: {
+                            type: Number,
                             description: "The phone number of the user"
                         }
+                    }
+                },
+                LoginRequest: {
+                    type: "object",
+                    required: ['email', 'password'],
+                    properties: {
+                        email: {
+                            type: "string",
+                            description: "The email of the user",
+                            format: "email"
+                        },
+                        password: {
+                            type: "string",
+                            description: "The password of the user"
+                        }
+                    }
+                },
+                LoginResponse: {
+                    type: "object",
+                    properties: {
+                        accessToken: {
+                            type: "string",
+                            description: "The access token ",
+                            format: "jwt"
+                        },
+                        userDetails: {
+                            type: "object",
+                            properties: {
+                                _id: {
+                                    type: "string",
+                                    description: "The id of the user",
+                                    format: "uuid"
+                                },
+                                name: {
+                                    type: "string",
+                                    description: "The name of the user"
+                                },
+                                email: {
+                                    type: "string",
+                                    description: "The email of the user",
+                                    format: "email"
+                                },
+                                phoneNumber: {
+                                    type: Number,
+                                    description: "The phone number of the user"
+                                },
+                                roles: {
+                                    type: "array",
+                                    items: {
+                                        type: "string"
+                                    },
+                                }
+                            }
+                        },
+                        expiresIn: {
+                            type: "string",
+                            description: 'The pickup time',
+                            format: "date-time"
+                        },
                     }
                 }
             },
@@ -82,7 +165,7 @@ const options = {
                     description: "Bad request",
                     content: {
                         'application/json': {
-                            example: 'Validation failure'
+                            example: 'password is not allowed to be empty'
                         }
                     }
                 },
@@ -98,7 +181,7 @@ const options = {
                     description: "Internal Server Error",
                     content: {
                         'application/json': {
-                            example: 'Could not connect to the DB'
+                            example: 'An unexpected error occurred...'
                         }
                     }
                 },
@@ -112,7 +195,7 @@ const options = {
                         }
                     }
                 }
-            } ,
+            },
             securitySchemes: {
                 jwtAuth: {
                     type: "http",

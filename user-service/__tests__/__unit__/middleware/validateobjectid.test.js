@@ -1,6 +1,6 @@
 const {describe, it, expect} = require('@jest/globals');
 const {validObjectId} = require('../../../middleware/validateobjectid');
-const HttpStatus = require('../../../http/http.status');
+const HttpStatus = require('pk-common-lib/http/http.status');
 const mongoose = require('mongoose');
 
 describe('ObjectIds', () => {

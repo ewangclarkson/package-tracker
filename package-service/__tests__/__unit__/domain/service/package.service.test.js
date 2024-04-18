@@ -10,7 +10,7 @@ describe('package service', () => {
     beforeAll(() => {
         packages = [
             {
-                active_delivery_id: "6c2b4a62bc2d2f67d7a9b9e1",
+                active_delivery_id: "3369758c-3b52-4962-b527-e0d62fd67cc3",
                 description: "Bag of laptops",
                 weight: 200,
                 width: 300,
@@ -30,7 +30,7 @@ describe('package service', () => {
                 }
             },
             {
-                active_delivery_id: "6a434b489e5d6b6b4b9f5d4f",
+                active_delivery_id: "86f90e77-3df0-4479-bb96-55459e9e3d92",
                 description: "Smart TV 4HD 45 inch",
                 weight: 400,
                 width: 500,
@@ -62,7 +62,7 @@ describe('package service', () => {
 
     it('should create a package', async () => {
         const newPackage = {
-            active_delivery_id: "9e304a25b1b43d48b2e2f6ce",
+            active_delivery_id: "12029f2f-b95d-45a4-9cb0-616bc7470e5e",
             description: "Bag of laptops",
             weight: 200,
             width: 300,
@@ -92,22 +92,22 @@ describe('package service', () => {
 
     it('should get a package by ID', async () => {
         packageRepository.findOne.mockImplementation(() => packages[0]);
-        const dbPackage = await packageService.getPackageById("9e304a25b1b43d48b2e2f6ce");
-        expect(packageRepository.findOne).toHaveBeenCalledWith({package_id:"9e304a25b1b43d48b2e2f6ce"});
+        const dbPackage = await packageService.getPackageById("12029f2f-b95d-45a4-9cb0-616bc7470e5e");
+        expect(packageRepository.findOne).toHaveBeenCalledWith({package_id:"12029f2f-b95d-45a4-9cb0-616bc7470e5e"});
         expect(dbPackage).toMatchObject(packages[0]);
 
     });
 
     it('should delete a package by ID', async () => {
         packageRepository.findOneAndDelete.mockImplementationOnce(() => packages[0]);
-        await packageService.deletePackageById("9e304a25b1b43d48b2e2f6ce");
-        expect(packageRepository.findOneAndDelete).toHaveBeenCalledWith({package_id:"9e304a25b1b43d48b2e2f6ce"});
+        await packageService.deletePackageById("12029f2f-b95d-45a4-9cb0-616bc7470e5e");
+        expect(packageRepository.findOneAndDelete).toHaveBeenCalledWith({package_id:"12029f2f-b95d-45a4-9cb0-616bc7470e5e"});
     });
 
 
     it('should update a package by ID', async () => {
         const newPackage = {
-            active_delivery_id: "9e304a25b1b43d48b2e2f6ce",
+            active_delivery_id: "12029f2f-b95d-45a4-9cb0-616bc7470e5e",
             description: "Bag of laptops",
             weight: 200,
             width: 300,
@@ -127,8 +127,8 @@ describe('package service', () => {
             }
         };
         packageRepository.findOneAndUpdate.mockImplementationOnce(() => packages[1]);
-        const dbPackage = await packageService.updatePackageById("9e304a25b1b43d48b2e2f6ce", newPackage);
-        expect(packageRepository.findOneAndUpdate.mock.calls[0][0]).toEqual({package_id:"9e304a25b1b43d48b2e2f6ce"});
+        const dbPackage = await packageService.updatePackageById("12029f2f-b95d-45a4-9cb0-616bc7470e5e", newPackage);
+        expect(packageRepository.findOneAndUpdate.mock.calls[0][0]).toEqual({package_id:"12029f2f-b95d-45a4-9cb0-616bc7470e5e"});
         expect(dbPackage).toMatchObject(packages[1]);
     });
 
@@ -144,7 +144,7 @@ describe('validatePackage', () => {
 
     it('should validate the package with success and populate the database', () => {
         const newPackage = {
-            active_delivery_id: "9e304a25b1b43d48b2e2f6ce",
+            active_delivery_id: "12029f2f-b95d-45a4-9cb0-616bc7470e5e",
             description: "Bag of laptops",
             weight: 200,
             width: 300,

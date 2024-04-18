@@ -203,6 +203,13 @@ export class PackageComponent implements OnInit {
     }).subscribe(
       (response: DeliveryResponse) => {
         this.deliveryList.push(response);
+        this.packageList = this.packageList.map((pk) =>{
+          if(pk.package_id == response.package_id){
+            pk.active_delivery_id = response.delivery_id;
+          }
+          return pk;
+        });
+
         this.toastr.success(this.translate.getMessage("delivery_created"));
         this.deliveryRequest = {
           package_id: undefined,

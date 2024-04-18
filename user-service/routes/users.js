@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const UserController = require('../controller/user.controller');
-const {validObjectId} = require("pk-common-lib/middleware/validateobjectid");
+const {validObjectId} = require("../middleware/validateobjectid");
 const {auth,admin,driver} = require('pk-common-lib/middleware/auth');
 
 
 /** @openapi
- * /users/me:
+ * /api/users/me:
  *  get:
  *    description: Get a user from the token
  *    summary: Get current auth user
@@ -14,8 +14,6 @@ const {auth,admin,driver} = require('pk-common-lib/middleware/auth');
  *    responses:
  *      '200':
  *        $ref: '#/components/responses/200'
- *      '404':
- *        $ref: '#/components/responses/404'
  *      '500':
  *        $ref: '#/components/responses/500'
  *    tags:
@@ -26,7 +24,7 @@ router.get('/me',auth, UserController.getAuthUser);
 
 
 /** @openapi
- * /users/register:
+ * /api/users/register:
  *  post:
  *    description: Create a new user
  *    summary: Create user
@@ -52,13 +50,13 @@ router.get('/me',auth, UserController.getAuthUser);
 router.post('/register', UserController.registerUser);
 
 /** @openapi
- * /users/{id}:
+ * /api/users/{id}:
  *  put:
  *    description: update user by ID
  *    summary: update user
  *    operationId: updateUser
  *    responses:
- *      '201':
+ *      '200':
  *        $ref: '#/components/responses/200'
  *      '400':
  *        $ref: '#/components/responses/400'
@@ -69,7 +67,7 @@ router.post('/register', UserController.registerUser);
  *      content:
  *       application/json:
  *        schema:
- *         $ref: '#/components/schemas/UserRequest'
+ *         $ref: '#/components/schemas/UpdateUserRequest'
  *    tags:
  *     - User
  *  parameters:
@@ -86,16 +84,28 @@ router.post('/register', UserController.registerUser);
 router.put('/:id',[validObjectId,auth], UserController.updateUser);
 
 /** @openapi
- * /users/login:
- *  delete:
+ * /api/users/login:
+ *  post:
  *    description: user authentication
  *    summary: authenticate user
  *    operationId: user login
  *    responses:
  *      '200':
- *        $ref: '#/components/responses/200'
- *      '404':
- *        $ref: '#/components/responses/404'
+ *        description: Success
+ *        content:
+ *         application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/LoginResponse'
+ *      '400':
+ *        description: Bad Request
+ *        content:
+ *         application/json:
+ *          example: Validation Failure
+ *      '401':
+ *        description: Unauthorized User
+ *        content:
+ *         application/json:
+ *          example: Invalid user email or password
  *      '500':
  *        $ref: '#/components/responses/500'
  *    requestBody:
@@ -103,7 +113,7 @@ router.put('/:id',[validObjectId,auth], UserController.updateUser);
  *      content:
  *       application/json:
  *        schema:
- *         $ref: '#/components/schemas/loginRequest'
+ *         $ref: '#/components/schemas/LoginRequest'
  *    tags:
  *     - User
  */

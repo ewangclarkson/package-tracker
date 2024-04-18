@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const DeliveryController = require('../controller/delivery.controller');
-const {validObjectId} = require("pk-common-lib/middleware/validateobjectid");
+const {validGUIDS} = require("pk-common-lib/middleware/validateguids");
 const {auth,admin,driver}= require("pk-common-lib/middleware/auth");
 
 /**
@@ -12,23 +12,31 @@ const {auth,admin,driver}= require("pk-common-lib/middleware/auth");
  */
 /**
  * @openapi
- * /delivery:
+ * /api/delivery:
  *  get:
  *    description: Get all delivery
  *    summary: Get  all created delivery from DB
  *    operationId: getDeliveries
  *    responses:
  *      '200':
- *        $ref: '#/components/responses/200'
+ *        description: Success
+ *        content:
+ *         application/json:
+ *          schema:
+ *            type: array
+ *            items:
+ *              $ref: '#/components/schemas/Delivery'
+ *      '401':
+ *         $ref: '#/components/responses/401'
  *      '500':
- *        $ref: '#/components/responses/500'
+ *         $ref: '#/components/responses/500'
  *    tags:
  *     - Delivery
  */
 router.get('/',[auth,admin],DeliveryController.getDeliveries);
 
 /** @openapi
- * /delivery/{id}:
+ * /api/delivery/{id}:
  *  get:
  *    description: Get a delivery by ID
  *    summary: Get a delivery by ID
@@ -36,6 +44,8 @@ router.get('/',[auth,admin],DeliveryController.getDeliveries);
  *    responses:
  *      '200':
  *        $ref: '#/components/responses/200'
+ *      '401':
+ *        $ref: '#/components/responses/401'
  *      '404':
  *        $ref: '#/components/responses/404'
  *      '500':
@@ -54,11 +64,11 @@ router.get('/',[auth,admin],DeliveryController.getDeliveries);
  *     style: simple
  */
 
-router.get('/:id',[auth,validObjectId], DeliveryController.getDelivery);
+router.get('/:id',[auth,validGUIDS], DeliveryController.getDelivery);
 
 
 /** @openapi
- * /delivery:
+ * /api/delivery:
  *  post:
  *    description: Create a new delivery
  *    summary: Create delivery
@@ -66,6 +76,8 @@ router.get('/:id',[auth,validObjectId], DeliveryController.getDelivery);
  *    responses:
  *      '201':
  *        $ref: '#/components/responses/201'
+ *      '401':
+ *        $ref: '#/components/responses/401'
  *      '400':
  *        $ref: '#/components/responses/400'
  *      '500':
@@ -84,14 +96,16 @@ router.get('/:id',[auth,validObjectId], DeliveryController.getDelivery);
 router.post('/',[auth,admin], DeliveryController.creatDelivery);
 
 /** @openapi
- * /delivery/{id}:
+ * /api/delivery/{id}:
  *  put:
  *    description: update delivery by ID
  *    summary: update delivery
  *    operationId: updateDelivery
  *    responses:
- *      '201':
+ *      '200':
  *        $ref: '#/components/responses/200'
+ *      '401':
+ *        $ref: '#/components/responses/401'
  *      '400':
  *        $ref: '#/components/responses/400'
  *      '500':
@@ -117,11 +131,11 @@ router.post('/',[auth,admin], DeliveryController.creatDelivery);
  */
 
 
-router.put('/:id',[validObjectId,auth,driver], DeliveryController.updateDelivery);
+router.put('/:id',[validGUIDS,auth,driver], DeliveryController.updateDelivery);
 
 
 /** @openapi
- * /delivery/{id}:
+ * /api/delivery/{id}:
  *  delete:
  *    description: Delete a delivery by id
  *    summary: Delete a delivery from the DB
@@ -129,6 +143,8 @@ router.put('/:id',[validObjectId,auth,driver], DeliveryController.updateDelivery
  *    responses:
  *      '200':
  *        $ref: '#/components/responses/200'
+ *      '401':
+ *        $ref: '#/components/responses/401'
  *      '404':
  *        $ref: '#/components/responses/404'
  *      '500':
@@ -146,6 +162,6 @@ router.put('/:id',[validObjectId,auth,driver], DeliveryController.updateDelivery
  *        type: string
  *     style: simple
  */
-router.delete('/:id', [validObjectId,auth,admin],DeliveryController.deleteDelivery);
+router.delete('/:id', [validGUIDS,auth,admin],DeliveryController.deleteDelivery);
 
 module.exports = router;

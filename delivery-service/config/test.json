@@ -1,6 +1,7 @@
 {
   "name": "SuperApp - Delivery Service: test",
   "db": {
+    "url": "mongodb://localhost:27017/superapp_test"
   },
   "app": {
     "host": "http://localhost",

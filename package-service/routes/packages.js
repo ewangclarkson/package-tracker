@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const PackageController = require('../controller/package.controller');
-const {validObjectId} = require("pk-common-lib/middleware/validateobjectid");
+const {validGUIDS} = require("pk-common-lib/middleware/validateguids");
 const {auth,admin,driver}= require("pk-common-lib/middleware/auth");
 
 /**
@@ -12,14 +12,22 @@ const {auth,admin,driver}= require("pk-common-lib/middleware/auth");
  */
 /**
  * @openapi
- * /package:
+ * /api/package:
  *  get:
  *    description: Get all packages
  *    summary: Get  all created packages from DB
  *    operationId: getPackages
  *    responses:
  *      '200':
- *        $ref: '#/components/responses/200'
+ *        description: Success
+ *        content:
+ *         application/json:
+ *          schema:
+ *           type: array
+ *           items:
+ *            $ref: '#/components/schemas/Package'
+ *      '401':
+ *        $ref: '#/components/responses/401'
  *      '500':
  *        $ref: '#/components/responses/500'
  *    tags:
@@ -28,7 +36,7 @@ const {auth,admin,driver}= require("pk-common-lib/middleware/auth");
 router.get('',[auth,admin], PackageController.getPackages);
 
 /** @openapi
- * /package/{id}:
+ * /api/package/{id}:
  *  get:
  *    description: Get a package by ID
  *    summary: Get a package by ID
@@ -36,6 +44,8 @@ router.get('',[auth,admin], PackageController.getPackages);
  *    responses:
  *      '200':
  *        $ref: '#/components/responses/200'
+ *      '401':
+ *        $ref: '#/components/responses/401'
  *      '404':
  *        $ref: '#/components/responses/404'
  *      '500':
@@ -54,11 +64,11 @@ router.get('',[auth,admin], PackageController.getPackages);
  *     style: simple
  */
 
-router.get('/:id',[validObjectId,auth], PackageController.getPackage);
+router.get('/:id',[validGUIDS,auth], PackageController.getPackage);
 
 
 /** @openapi
- * /package:
+ * /api/package:
  *  post:
  *    description: Create a new package
  *    summary: Create package
@@ -66,6 +76,8 @@ router.get('/:id',[validObjectId,auth], PackageController.getPackage);
  *    responses:
  *      '201':
  *        $ref: '#/components/responses/201'
+ *      '401':
+ *        $ref: '#/components/responses/401'
  *      '400':
  *        $ref: '#/components/responses/400'
  *      '500':
@@ -84,14 +96,16 @@ router.get('/:id',[validObjectId,auth], PackageController.getPackage);
 router.post('',[auth,admin], PackageController.creatPackage);
 
 /** @openapi
- * /package/{id}:
+ * /api/package/{id}:
  *  put:
  *    description: update package by ID
  *    summary: update package
  *    operationId: updatePackage
  *    responses:
- *      '201':
+ *      '200':
  *        $ref: '#/components/responses/200'
+ *      '401':
+ *        $ref: '#/components/responses/401'
  *      '400':
  *        $ref: '#/components/responses/400'
  *      '500':
@@ -101,7 +115,7 @@ router.post('',[auth,admin], PackageController.creatPackage);
  *      content:
  *       application/json:
  *        schema:
- *         $ref: '#/components/schemas/PackageRequest'
+ *         $ref: '#/components/schemas/UpdatePackageRequest'
  *    tags:
  *     - Package
  *  parameters:
@@ -115,10 +129,10 @@ router.post('',[auth,admin], PackageController.creatPackage);
  *        type: string
  *     style: simple
  */
-router.put('/:id',[validObjectId,auth,admin], PackageController.updatePackage);
+router.put('/:id',[validGUIDS,auth,admin], PackageController.updatePackage);
 
 /** @openapi
- * /package/{id}:
+ * /api/package/{id}:
  *  delete:
  *    description: Delete a package by id
  *    summary: Delete a package from the DB
@@ -126,6 +140,8 @@ router.put('/:id',[validObjectId,auth,admin], PackageController.updatePackage);
  *    responses:
  *      '200':
  *        $ref: '#/components/responses/200'
+ *      '401':
+ *        $ref: '#/components/responses/401'
  *      '404':
  *        $ref: '#/components/responses/404'
  *      '500':
@@ -143,6 +159,6 @@ router.put('/:id',[validObjectId,auth,admin], PackageController.updatePackage);
  *        type: string
  *     style: simple
  */
-router.delete('/:id', [validObjectId,auth,admin],PackageController.deletePackage);
+router.delete('/:id', [validGUIDS,auth,admin],PackageController.deletePackage);
 
 module.exports = router;
