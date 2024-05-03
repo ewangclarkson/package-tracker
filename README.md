@@ -33,8 +33,8 @@ To install and run the Package Tracker App, follow these steps:
 
 1. Clone the repository: `https://github.com/ewangclarkson/package-tracker.git`
 2. Run the application
-   - cd package-tracker,make the run.sh file executable
-   - run docker compose up
+   - cd package-tracker
+   - docker compose up
 
 Make sure you have Node.js, npm and docker installed on your system
 
