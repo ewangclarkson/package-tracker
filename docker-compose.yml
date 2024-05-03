@@ -7,17 +7,18 @@ services:
       - 5672:5672
       - 15672:15672
     networks:
-      - microservices-network
+      - package-tracker-network
   mongodb:
     image: mongo
     ports:
-      - 27017:27017
+      - 27018:27017
     volumes:
       - mongo-data:/data/db
     networks:
-      - microservices-network
+      - package-tracker-network
   package-service:
     build:
+      dockerfile: Dockerfile
       context: ./package-service
     ports:
       - 8001:8001
@@ -30,9 +31,10 @@ services:
       - db_connection_url=mongodb://mongodb:27017/superapp
       - NODE_ENV=development
     networks:
-      - microservices-network
+      - package-tracker-network
   delivery-service:
     build:
+      dockerfile: Dockerfile
       context: ./delivery-service
     ports:
       - 8002:8002
@@ -45,9 +47,10 @@ services:
       - db_connection_url=mongodb://mongodb:27017/superapp
       - NODE_ENV=development
     networks:
-      - microservices-network
+      - package-tracker-network
   user-service:
     build:
+      dockerfile: Dockerfile
       context: ./user-service
     ports:
       - 8003:8003
@@ -61,31 +64,33 @@ services:
       - bcrypt_salt=10
       - NODE_ENV=development
     networks:
-      - microservices-network
-  api-gateway:
-    build:
-      context: ./api-gateway
-    ports:
-      - 8000:8000
-    depends_on:
-      - mongodb
-    environment:
-      - loggly_token=5111d89f-dde5-4214-9e1e-00de70939e44
-      - NODE_ENV=development
-    networks:
-      - microservices-network
+      - package-tracker-network
   web:
     build:
+      dockerfile: Dockerfile
       context: ./web
     ports:
       - 4200:4200
     environment:
       - NODE_ENV=dev
     networks:
-      - microservices-network
+      - package-tracker-network
+  api-gateway:
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx-api-gateway
+    ports:
+      - 8000:80
+    depends_on:
+      - package-service
+      - user-service
+      - delivery-service
+      - web
+    networks:
+      - package-tracker-network
 
 networks:
-  microservices-network:
+  package-tracker-network:
 
 volumes:
   mongo-data:
