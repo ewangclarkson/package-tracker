@@ -1,9 +1,9 @@
 {
   "name": "SuperApp - Api Gateway: development",
   "service": {
-    "package": "http://localhost:8001",
-    "delivery": "http://localhost:8002",
-    "user": "http://localhost:8003",
-    "web": "http://localhost:4200"
+    "package": "http://package-service:8001",
+    "delivery": "http://delivery-service:8002",
+    "user": "http://user-service:8003",
+    "web": "http://web:4200"
   }
 }

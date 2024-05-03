@@ -6,3 +6,91 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+    networks:
+      - package-tracker-network
+  mongodb:
+    image: mongo
+    ports:
+      - 27018:27017
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - package-tracker-network
+  package-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./package-service
+    ports:
+      - 8001:8001
+    depends_on:
+      - mongodb
+    environment:
+      - jwt_private_key=5111d89f-dde5
+      - loggly_token=5111d89f-dde5-4214-9e1e-00de70939e44
+      - amqp_password=7WYPz419s9eaNMWKy7RRfAx5-59UMTp2
+      - db_connection_url=mongodb://mongodb:27017/superapp
+      - NODE_ENV=development
+    networks:
+      - package-tracker-network
+  delivery-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./delivery-service
+    ports:
+      - 8002:8002
+    depends_on:
+      - mongodb
+    environment:
+      - jwt_private_key=5111d89f-dde5
+      - loggly_token=5111d89f-dde5-4214-9e1e-00de70939e44
+      - amqp_password=7WYPz419s9eaNMWKy7RRfAx5-59UMTp2
+      - db_connection_url=mongodb://mongodb:27017/superapp
+      - NODE_ENV=development
+    networks:
+      - package-tracker-network
+  user-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./user-service
+    ports:
+      - 8003:8003
+    depends_on:
+      - mongodb
+    environment:
+      - jwt_private_key=5111d89f-dde5
+      - loggly_token=5111d89f-dde5-4214-9e1e-00de70939e44
+      - amqp_password=7WYPz419s9eaNMWKy7RRfAx5-59UMTp2
+      - db_connection_url=mongodb://mongodb:27017/superapp
+      - bcrypt_salt=10
+      - NODE_ENV=development
+    networks:
+      - package-tracker-network
+  web:
+    build:
+      dockerfile: Dockerfile
+      context: ./web
+    ports:
+      - 4200:4200
+    environment:
+      - NODE_ENV=dev
+    networks:
+      - package-tracker-network
+  api-gateway:
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx-api-gateway
+    ports:
+      - 8000:80
+    depends_on:
+      - package-service
+      - user-service
+      - delivery-service
+      - web
+    networks:
+      - package-tracker-network
+
+networks:
+  package-tracker-network:
+
+volumes:
+  mongo-data:

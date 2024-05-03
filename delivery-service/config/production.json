@@ -9,7 +9,7 @@
   "jwt": {
     "expiresIn": "1h"
   },
-  "origin": "http://localhost:8000",
+  "origin": "http://api-gateway:8000",
   "rabbitMq": {
     "prefix": "amqps://avczmdaq:",
     "host": "@chimpanzee.rmq.cloudamqp.com/avczmdaq"
