@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-deployment
+  labels:
+    app: gateway
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: gateway
+      labels:
+        app: gateway
+    spec:
+      containers:
+        - name: gateway
+          image: ewangclarks/node-back-end:ptgw
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+      imagePullSecrets:
+        - name: registry-credentials
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: gateway

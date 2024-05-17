@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+  labels:
+    app: web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: web
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: ewangclarks/node-back-end:ptw
+          ports:
+            - containerPort: 4200
+          env:
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: web-config-map
+                  key: nodeEnv
+          imagePullPolicy: IfNotPresent
+      imagePullSecrets:
+        - name: registry-credentials
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: web

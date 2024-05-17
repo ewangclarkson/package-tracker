@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config-map
+data:
+  dbConnectionUrl: mongo-service
+  nodeEnv: dev

@@ -1,7 +1,6 @@
 {
   "name": "SuperApp - Delivery Service: development",
   "db": {
-
   },
   "app": {
     "host": "http://localhost",
@@ -10,7 +9,8 @@
   "jwt": {
     "expiresIn": "1h"
   },
-  "origin": "http://localhost:8000",
+  //"origin": "http://localhost:8000",
+  "origin": "http://gateway", //using kubernetes
   "rabbitMq": {
     "prefix": "amqps://avczmdaq:",
     "host": "@chimpanzee.rmq.cloudamqp.com/avczmdaq"

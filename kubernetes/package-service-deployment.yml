@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: package-service-deployment
+  labels:
+    app: package-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: package-service
+      labels:
+        app: package-service
+    spec:
+      containers:
+        - name: package-service
+          image: ewangclarks/node-back-end:ptps
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8001
+          env:
+            - name: jwt_private_key
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: jwtPrivateKey
+            - name: loggly_token
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: logglyToken
+            - name: amqp_password
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: amqpPassword
+            - name: db_connection_url
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config-map
+                  key: dbConnectionUrl
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config-map
+                  key: nodeEnv
+      imagePullSecrets:
+        - name: registry-credentials
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: package-service
